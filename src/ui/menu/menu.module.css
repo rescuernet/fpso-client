@@ -1,0 +1,33 @@
+.menuButton {
+    margin-left: 10px!important;
+    border: 1px solid #3f51b5!important;
+}
+.menuButtonIcon {
+    color: #fff;
+    font-size: 40px!important;
+}
+.menuButton:hover {
+    border: 1px solid #fff!important;
+}
+
+.menuItem a {
+    color: #333!important;
+    text-decoration: none!important;
+    text-transform: uppercase!important;
+}
+.activeLink > span {
+    color: #333!important;
+    font-weight: bold!important;
+}
+
+@media (max-width: 1030px) {
+    .menuButtonIcon {
+        font-size: 35px!important;
+    }
+}
+
+@media (max-width: 770px) {
+    .menuButtonIcon {
+        font-size: 30px!important;
+    }
+}
