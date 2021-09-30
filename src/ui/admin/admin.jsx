@@ -8,7 +8,7 @@ import {observer} from "mobx-react-lite";
 const Admin = (props) => {
     if(!AuthStore.isAuth){return <Redirect to={MAIN_ROUTE}/>}
     return (
-        <div>Admin Page!</div>
+        <div>Admin Page</div>
     );
 };
 
