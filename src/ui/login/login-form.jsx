@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {Button} from "@material-ui/core";
+import {Box, Button, TextField} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {Redirect} from "react-router-dom";
 import {ADMIN_ROUTE} from "../../const/const";
+import s from "./login-form.module.css";
+import {runInAction} from "mobx";
 
 const LoginForm = () => {
 
@@ -11,29 +13,68 @@ const LoginForm = () => {
     const [ password , setPassword ] = useState('');
 
     if(AuthStore.isAuth){return <Redirect to={ADMIN_ROUTE}/>}
+    const authError = AuthStore?.authError?.data?.message
+
+    const clearAuthError = () => {
+        if(authError){
+            runInAction(() => {AuthStore.authError = {}})
+        }
+    }
+
+    console.log(AuthStore.authError.data)
+
 
     return (
-        <>
-            {!AuthStore.isLoading &&
-            <div>
-                <input type="text"
-                       onChange={e => setEmail(e.target.value)}
-                       value={email}
-                       placeholder={'email'}
-                       autoComplete='no'
-                />
-                <input type="password"
-                       onChange={e => setPassword(e.target.value)}
-                       value={password}
-                       placeholder={'password'}
-                />
-                <div>
-                    <Button variant="outlined" size="small" onClick={() => AuthStore.login(email,password)}>Логин</Button>
-                    <Button variant="outlined" size="small" onClick={() => AuthStore.registration(email,password)}>Регистрация</Button>
-                </div>
+        <div className={s.wrap}>
+            <div className={s.form}>
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': { m: 1, width: '25ch' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <TextField
+                        className={s.text_field}
+                        id="login"
+                        label="логин"
+                        variant="outlined"
+                        autoComplete='off'
+                        value={email}
+                        onChange={(e)=>setEmail(e.target.value)}
+                        error={!!authError}
+                        onFocus={()=>{clearAuthError()}}
+                    />
+                    <TextField
+                        className={s.text_field}
+                        id="outlined-basic"
+                        label="password"
+                        variant="outlined"
+                        type="password"
+                        autoComplete='new-password'
+                        value={password}
+                        onChange={(e)=>setPassword(e.target.value)}
+                        error={!!authError}
+                        onFocus={()=>{clearAuthError()}}
+                    />
+                </Box>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => AuthStore.login(email,password)}
+                >
+                    Войти
+                </Button>
+                {authError &&
+                <div className={s.auth_error}>{authError}</div>
+                }
             </div>
-            }
-        </>
+
+
+        </div>
     );
 };
 

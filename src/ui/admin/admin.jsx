@@ -1,14 +1,18 @@
 import React from 'react';
-import AuthStore from "../../bll/auth-store";
-import {Redirect} from "react-router-dom";
-import {MAIN_ROUTE} from "../../const/const";
+/*import AuthStore from "../../bll/auth-store";
+import {useHistory} from "react-router-dom";*/
 import {observer} from "mobx-react-lite";
 
 
+
 const Admin = (props) => {
-    if(!AuthStore.isAuth){return <Redirect to={MAIN_ROUTE}/>}
+    /*const history = useHistory();*/
+
+    /*if(AuthStore.isAuth){history.push(MAIN_ROUTE)}*/
     return (
-        <div>Admin Page</div>
+        <div>
+            <div>Admin Page</div>
+        </div>
     );
 };
 

@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import AuthService from "../services/auth-service";
 import axios from "axios";
 import {API_URL} from "../const/const";
@@ -9,67 +9,76 @@ class AuthStore {
     user = {}
     isAuth = false
     isLoading = false
+    isInit = false
+    authError = {}
+
     constructor() {
         makeAutoObservable(this);
     }
 
-    setAuth(bool) {
-        this.isAuth = bool;
-    }
-
-    setUser(user) {
-        this.user = user;
-    }
 
 
-
-    async login(email,password) {
-        this.setLoading(true);
+    login = async (email,password) => {
+        runInAction(() => {this.authError = {}})
+        runInAction(() => {this.isLoading = true})
         try {
             const response = await AuthService.login(email,password);
             localStorage.setItem('token',response.data.accessToken);
-            this.setAuth(true);
-            this.setUser(response.data.user);
+            runInAction(() => {this.user = response.data.user})
+            runInAction(() => {this.isAuth = true})
         } catch (e) {
-            console.log(e.response?.data?.message);
+            runInAction(() => {this.authError = e.response})
+            console.log(e.response);
         } finally {
-            this.setLoading(false);
+            runInAction(() => {this.isInit = true})
+            runInAction(() => {this.isLoading = false})
         }
     }
 
-    async registration(email,password) {
+    registration = async (email,password) => {
+        runInAction(() => {this.isInit = false})
+        runInAction(() => {this.isLoading = true})
         try {
             const response = await AuthService.registration(email,password);
             localStorage.setItem('token',response.data.accessToken);
-            this.setAuth(true);
-            this.setUser(response.data.user)
+            runInAction(() => {this.user = response.data.user})
+            runInAction(() => {this.isAuth = true})
         } catch (e) {
             console.log(e.response?.data?.message);
+        }finally {
+            runInAction(() => {this.isInit = true})
+            runInAction(() => {this.isLoading = false})
         }
     }
 
-    async logout() {
+    logout = async () => {
+        runInAction(() => {this.isLoading = true})
         try {
             const response = await AuthService.logout();
             localStorage.removeItem('token');
-            this.setAuth(false);
-            this.setUser({});
+            runInAction(() => {this.user = {}})
+            runInAction(() => {this.isAuth = false})
         } catch (e) {
             console.log(e.response?.data?.message);
+        }finally {
+            runInAction(() => {this.isLoading = false})
         }
     }
 
-    async authMe() {
-        this.isLoading = true;
+
+    authMe = async () => {
+        runInAction(() => {this.isInit = false})
+        runInAction(() => {this.isLoading = true})
         try {
             const response = await axios.get(`${API_URL}/refresh`,{withCredentials:true});
             localStorage.setItem('token',response.data.accessToken);
-            this.setAuth(true);
-            this.setUser(response.data.user)
+            runInAction(() => {this.user = response.data.user})
+            runInAction(() => {this.isAuth = true})
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally {
-            this.isLoading = false;
+            runInAction(() => {this.isInit = true})
+            runInAction(() => {this.isLoading = false})
         }
     }
 }

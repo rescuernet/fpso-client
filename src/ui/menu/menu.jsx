@@ -1,12 +1,39 @@
 import * as React from 'react';
-import {Box, Button, Divider, Drawer, List, ListItem, ListItemText} from "@material-ui/core";
+import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import s from './menu.module.css'
 import {ADMIN_ROUTE, COMPETITIONS_ROUTE, MAIN_ROUTE} from "../../const/const";
 import {NavLink, useLocation} from "react-router-dom";
+import {observer} from "mobx-react-lite";
+import AuthStore from "../../bll/auth-store";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    menuItem: {
+        '& a': {
+            textDecoration: 'none',
+            textTransform: 'uppercase',
+        }
+    },
+    activeLink: {
+        '& span': {
+            color: '#333',
+            fontWeight: 'bold'
+        }
+    },
+    root: {
+        padding: 0,
+        [theme.breakpoints.down('xs')]: {
+            width: 340
+        },
+    }
 
 
-export default function Menu(props) {
+}))
+
+
+const Menu = (props) => {
+
+    const classes = useStyles()
 
     const location = useLocation();
 
@@ -19,7 +46,6 @@ export default function Menu(props) {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState({ ...state, [anchor]: open });
     };
 
@@ -42,15 +68,18 @@ export default function Menu(props) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-           {/* <div onClick={props.logout}>456546564</div>*/}
             <List>
+                {AuthStore.isAuth &&
+                    <div onClick={AuthStore.logout}>Logout</div>
+                }
+                <Divider />
                 {itemsMenu.map((i) => (
                     !props.isAuth && i.adm === 1
                         ?
                         null
-                        : (<ListItem button key={i.id} className={s.menuItem}>
+                        : (<ListItem button key={i.id} className={classes.menuItem}>
                             <NavLink to={i.url}>
-                                <ListItemText className={i.url === location.pathname ? s.activeLink : ""} primary={i.title} />
+                                <ListItemText className={i.url === location.pathname ? classes.activeLink : ""} primary={i.title} />
                             </NavLink>
                         </ListItem>)
                     )
@@ -69,16 +98,22 @@ export default function Menu(props) {
 
     return (
         <div>
-            <React.Fragment key={anchor}>
-                <Button className={s.menuButton} variant="outlined" onClick={toggleDrawer(anchor, true)}><MenuIcon className={s.menuButtonIcon} /></Button>
-                <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                >
-                    {list(anchor)}
-                </Drawer>
-            </React.Fragment>
+            <IconButton
+                color={"inherit"}
+                onClick={toggleDrawer(anchor, true)}
+            >
+                <MenuIcon fontSize="large"/>
+            </IconButton>
+            <Drawer
+                anchor={"left"}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+            >
+                {list(anchor)}
+            </Drawer>
         </div>
     );
 }
+
+
+export default observer(Menu);
