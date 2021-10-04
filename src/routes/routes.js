@@ -12,7 +12,7 @@ const RouterManager = {
             return `/`
         },
         exacts: true,
-        auth: false
+        auth: true
     },
     Competitions: {
         path:'/competitions',
@@ -36,7 +36,7 @@ const RouterManager = {
         path:'/777/admin',
         Component: Admin,
         getUrl() {
-            return `/777/admin`
+            return `/777/admin/`
         },
         exacts: true,
         auth: true

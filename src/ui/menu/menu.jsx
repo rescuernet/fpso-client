@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import {ADMIN_ROUTE, COMPETITIONS_ROUTE, MAIN_ROUTE} from "../../const/const";
 import {NavLink, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
@@ -59,13 +58,7 @@ const Menu = (props) => {
     const itemsMenu = [
         {id: 1, title: 'Главная', url: RM.Main.path,adm:0},
         {id: 2, title: 'Соревнования', url: RM.Competitions.path,adm:0},
-        {id: 3, title: 'Admin', url: RM.Admin.path,adm:1},
-        {id: 4, title: 'Судейский корпус', url: RM.Main.path,adm:0},
-        {id: 5, title: 'Settings', url: RM.Main.path,adm:0},
-        {id: 6, title: 'Reference Books', url: RM.Main.path,adm:0},
-        {id: 7, title: 'Offers', url: RM.Main.path,adm:0},
-        {id: 8, title: 'Offers art', url: RM.Main.path,adm:0},
-        {id: 9, title: 'Daily bonus', url: RM.Main.path,adm:0},
+        {id: 3, title: 'Admin', url: RM.Admin.path,adm:1}
     ]
 
     const list = (anchor) => (
@@ -92,7 +85,8 @@ const Menu = (props) => {
                         null
                         : (<ListItem button key={i.id} className={classes.menuItem}>
                             <NavLink to={i.url}>
-                                <ListItemText className={i.url === location.pathname ? classes.activeLink : ""} primary={i.title} />
+                                {/*<ListItemText className={i.url === location.pathname ? classes.activeLink : ""} primary={i.title} />*/}
+                                <ListItemText className={location.pathname.indexOf(i.url) === -1 ? classes.activeLink : ""} primary={i.title} />
                             </NavLink>
                         </ListItem>)
                     )

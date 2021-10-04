@@ -7,7 +7,6 @@ import {runInAction} from "mobx";
 import {makeStyles} from "@material-ui/core/styles";
 import {Container} from "@material-ui/core";
 import {RM} from "./routes/routes"
-import PrivateRoute from "./routes/private-route";
 
 
 
@@ -58,13 +57,18 @@ const App = () => {
             <Header/>
             <Container fixed className={classes.root}>
                 {isInit &&
-                <Switch>
-                    {Routes.map(({path,Component,auth}) =>
-                        isAuth && auth &&
-                        <Route key={path} exact path={path} component={Component}/>
-                    )}
-                    <Redirect to={'/'}/>
-                </Switch>
+                    <Switch>
+                        {
+                            isAuth &&
+                            Routes.map(({path,Component}) =>
+                                <Route key={path} path={path} component={Component}/>
+                            )
+                        }
+                        {Routes.map(({path,Component}) =>
+                            <Route key={path} path={path} component={Component}/>
+                        )}
+                        {/*<Redirect to={'/'}/>*/}
+                    </Switch>
                 }
             </Container>
         </div>

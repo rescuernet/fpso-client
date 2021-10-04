@@ -2,7 +2,6 @@ import {makeAutoObservable, runInAction} from "mobx";
 import AuthService from "../services/auth-service";
 import axios from "axios";
 import {API_URL} from "../const/const";
-import {Redirect} from "react-router-dom";
 
 
 
