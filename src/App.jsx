@@ -1,13 +1,16 @@
 import React, {useEffect} from "react";
 import Header from "./ui/header/header";
-import {AR, PR} from "./routes/routes";
 import {Redirect, Route, Switch} from "react-router-dom";
-import {ADMIN_ROUTE, MAIN_ROUTE} from "./const/const";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import {runInAction} from "mobx";
 import {makeStyles} from "@material-ui/core/styles";
 import {Container} from "@material-ui/core";
+import {RM} from "./routes/routes"
+import PrivateRoute from "./routes/private-route";
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,9 +21,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const Routes = []
+for (let key in RM) {Routes.push(RM[key])}
+
+console.log('Routes',Routes)
+
 /*import {useLocation} from "react-router-dom";*/
 
 const App = () => {
+
     const classes = useStyles()
     //проверка нужно ли отображать HEADER на странице
     /*const location = useLocation().pathname;
@@ -36,9 +45,9 @@ const App = () => {
         }
     }, []);
 
-    const isAuth = AuthStore.isAuth
     const isLoading = AuthStore.isLoading
     const isInit = AuthStore.isInit
+    const isAuth = AuthStore.isAuth
 
 
     return (
@@ -50,13 +59,11 @@ const App = () => {
             <Container fixed className={classes.root}>
                 {isInit &&
                 <Switch>
-                    {isAuth && AR.map(({path,Component}) =>
-                        <Route key={path} path={path} component={Component}/>
-                    )}
-                    {PR.map(({path,Component}) =>
+                    {Routes.map(({path,Component,auth}) =>
+                        isAuth && auth &&
                         <Route key={path} exact path={path} component={Component}/>
                     )}
-                    <Redirect to={MAIN_ROUTE}/>
+                    <Redirect to={'/'}/>
                 </Switch>
                 }
             </Container>

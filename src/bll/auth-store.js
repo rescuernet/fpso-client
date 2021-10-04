@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from "mobx";
 import AuthService from "../services/auth-service";
 import axios from "axios";
 import {API_URL} from "../const/const";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -16,8 +17,6 @@ class AuthStore {
         makeAutoObservable(this);
     }
 
-
-
     login = async (email,password) => {
         runInAction(() => {this.authError = {}})
         runInAction(() => {this.isLoading = true})
@@ -28,7 +27,6 @@ class AuthStore {
             runInAction(() => {this.isAuth = true})
         } catch (e) {
             runInAction(() => {this.authError = e.response})
-            console.log(e.response);
         } finally {
             runInAction(() => {this.isInit = true})
             runInAction(() => {this.isLoading = false})
@@ -58,6 +56,7 @@ class AuthStore {
             localStorage.removeItem('token');
             runInAction(() => {this.user = {}})
             runInAction(() => {this.isAuth = false})
+            return response
         } catch (e) {
             console.log(e.response?.data?.message);
         }finally {

@@ -3,16 +3,16 @@ import {Box, Button, TextField} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {Redirect} from "react-router-dom";
-import {ADMIN_ROUTE} from "../../const/const";
 import s from "./login-form.module.css";
 import {runInAction} from "mobx";
+import {RM} from "../../routes/routes";
 
 const LoginForm = () => {
 
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
 
-    if(AuthStore.isAuth){return <Redirect to={ADMIN_ROUTE}/>}
+    if(AuthStore.isAuth){return <Redirect to={RM.Admin.path}/>}
     const authError = AuthStore?.authError?.data?.message
 
     const clearAuthError = () => {
@@ -20,8 +20,6 @@ const LoginForm = () => {
             runInAction(() => {AuthStore.authError = {}})
         }
     }
-
-    console.log(AuthStore.authError.data)
 
 
     return (
