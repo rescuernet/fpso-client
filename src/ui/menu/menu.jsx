@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme) => ({
         '& a': {
             textDecoration: 'none',
             textTransform: 'uppercase',
-        }
+        },
     },
-    activeLink: {
+    /*activeLink: {
         '& span': {
             color: '#333',
             fontWeight: 'bold'
         }
-    },
+    },*/
     menuIcon: {
         fontSize: 35,
         [theme.breakpoints.down('md')]: {
@@ -41,7 +41,7 @@ const Menu = (props) => {
 
     const classes = useStyles()
 
-    const location = useLocation();
+    const location = useLocation().pathname;
 
     const anchor = 'left';
     const [state, setState] = React.useState({
@@ -84,10 +84,7 @@ const Menu = (props) => {
                         ?
                         null
                         : (<ListItem button key={i.id} className={classes.menuItem}>
-                            <NavLink to={i.url}>
-                                {/*<ListItemText className={i.url === location.pathname ? classes.activeLink : ""} primary={i.title} />*/}
-                                <ListItemText className={location.pathname.indexOf(i.url) === -1 ? classes.activeLink : ""} primary={i.title} />
-                            </NavLink>
+                            <NavLink to={i.url} className={location === i.url ? `activeLink` : ''}>{i.title}</NavLink>
                         </ListItem>)
                     )
                 )}

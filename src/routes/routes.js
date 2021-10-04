@@ -12,7 +12,7 @@ const RouterManager = {
             return `/`
         },
         exacts: true,
-        auth: true
+        auth: false
     },
     Competitions: {
         path:'/competitions',

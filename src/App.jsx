@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 const Routes = []
 for (let key in RM) {Routes.push(RM[key])}
 
-console.log('Routes',Routes)
-
 /*import {useLocation} from "react-router-dom";*/
 
 const App = () => {
@@ -58,16 +56,9 @@ const App = () => {
             <Container fixed className={classes.root}>
                 {isInit &&
                     <Switch>
-                        {
-                            isAuth &&
-                            Routes.map(({path,Component}) =>
-                                <Route key={path} path={path} component={Component}/>
-                            )
-                        }
-                        {Routes.map(({path,Component}) =>
-                            <Route key={path} path={path} component={Component}/>
-                        )}
-                        {/*<Redirect to={'/'}/>*/}
+                        {isAuth && Routes.map(({path,Component,auth}) => auth && <Route key={path} exact path={path} component={Component}/>)}
+                        {Routes.map(({path,Component,auth}) => !auth && <Route key={path} exact path={path} component={Component}/>)}
+                        <Redirect to={'/'}/>
                     </Switch>
                 }
             </Container>
