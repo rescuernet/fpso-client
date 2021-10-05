@@ -6,6 +6,7 @@ import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
+import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles((theme) => ({
     menuItem: {
@@ -18,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     activeLink: {
-        color: '#333!important',
-        fontWeight: 'bold!important'
+        fontWeight: 500
     },
     menuIcon: {
         fontSize: 35,
@@ -32,6 +32,19 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             fontSize: 20
         }
+    },
+    logoutButton: {
+        marginBottom: 10
+    },
+    logoutButtonItem: {
+        display: "flex",
+        flexDirection: "row",
+        textTransform: "uppercase",
+        fontSize: 16
+    },
+    logoutButtonIcon: {
+        marginRight: 10,
+        fontSize: 18
     }
 }))
 
@@ -69,12 +82,14 @@ const Menu = (props) => {
         >
             <List>
                 {AuthStore.isAuth &&
-                    <div>
-                        <NavLink
-                            to={'/'}
+                    <div className={classes.logoutButton}>
+                        <ListItem
+                            button key={1}
+                            className={classes.logoutButtonItem}
                             onClick={AuthStore.logout}>
-                            Logout
-                        </NavLink>
+                            <LockIcon className={classes.logoutButtonIcon}/>
+                            <span>выход</span>
+                        </ListItem>
                         <Divider />
                     </div>
                 }
