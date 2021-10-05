@@ -41,6 +41,15 @@ const RouterManager = {
         exacts: true,
         auth: true
     },
+    AdminA: {
+        path:'/777/admin/:id',
+        Component: Admin,
+        getUrl(id) {
+            return `/777/admin/${id}`
+        },
+        exacts: true,
+        auth: true
+    },
 }
 
 export const RM = RouterManager;

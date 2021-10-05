@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useHistory, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {makeStyles} from "@material-ui/core/styles";
@@ -9,17 +9,18 @@ import {RM} from "../../routes/routes";
 
 const useStyles = makeStyles((theme) => ({
     menuItem: {
-        '& a': {
-            textDecoration: 'none',
-            textTransform: 'uppercase',
+        fontSize: 18,
+        textTransform: "uppercase",
+        '& span': {
+            fontSize: 0,
+            padding: 0,
+            margin: 0
         },
     },
-    /*activeLink: {
-        '& span': {
-            color: '#333',
-            fontWeight: 'bold'
-        }
-    },*/
+    activeLink: {
+        color: '#333!important',
+        fontWeight: 'bold!important'
+    },
     menuIcon: {
         fontSize: 35,
         [theme.breakpoints.down('md')]: {
@@ -32,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 20
         }
     }
-
-
 }))
 
 
@@ -42,6 +41,7 @@ const Menu = (props) => {
     const classes = useStyles()
 
     const location = useLocation().pathname;
+    const history = useHistory()
 
     const anchor = 'left';
     const [state, setState] = React.useState({
@@ -56,7 +56,6 @@ const Menu = (props) => {
     };
 
     const itemsMenu = [
-        {id: 1, title: 'Главная', url: RM.Main.path,adm:0},
         {id: 2, title: 'Соревнования', url: RM.Competitions.path,adm:0},
         {id: 3, title: 'Admin', url: RM.Admin.path,adm:1}
     ]
@@ -79,12 +78,21 @@ const Menu = (props) => {
                         <Divider />
                     </div>
                 }
+                <ListItem
+                    button key={1}
+                    className={location === '/' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                    onClick={()=> history.push('/')}>
+                    {'Главная'}
+                </ListItem>
                 {itemsMenu.map((i) => (
                     !props.isAuth && i.adm === 1
                         ?
                         null
-                        : (<ListItem button key={i.id} className={classes.menuItem}>
-                            <NavLink to={i.url} className={location === i.url ? `activeLink` : ''}>{i.title}</NavLink>
+                        : (<ListItem
+                            button key={i.id}
+                            className={location.includes(i.url) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                            onClick={()=> history.push(i.url)}>
+                            {i.title}
                         </ListItem>)
                     )
                 )}
