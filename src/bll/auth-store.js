@@ -73,6 +73,7 @@ class AuthStore {
             runInAction(() => {this.user = response.data.user})
             runInAction(() => {this.isAuth = true})
         } catch (e) {
+            this.logout();
             console.log(e.response?.data?.message);
         } finally {
             runInAction(() => {this.isInit = true})

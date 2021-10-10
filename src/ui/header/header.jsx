@@ -1,51 +1,40 @@
 import React from 'react';
-import {AppBar, Container} from "@material-ui/core";
+import {AppBar, Container, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
+import {useGridPoint} from "../../utils/breakpoints";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '5px 0',
-        [theme.breakpoints.down('xs')]: {
-            width: 340
-        },
+    appBar: {
+        display:'flex',
+        flexDirection:'row',
+        alignItems: "center",
+        position: "static"
+    },
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+    },
+    toolBar: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        minHeight:0,
+        flexGrow: 1,
     },
     brand: {
-        fontSize: 25,
-        fontFamily: "'Montserrat', sans-serif",
-        textShadow: '#000 2px 2px 5px',
-        textTransform: 'uppercase',
-        margin: '0 20px',
-        textAlign: 'center',
-        flexGrow: 1,
+        textTransform: "uppercase",
         '& span' : {
             whiteSpace: 'pre'
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 16,
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: 12,
-        },
+        }
     },
     contact: {
-        fontSize: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        textShadow: '#000 2px 2px 5px',
-        '& span': {
-            whiteSpace: 'pre'
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 10,
-        },
-        [theme.breakpoints.down('xs')]: {
+        [useGridPoint.breakpoints.down('xs')]: {
             display: 'none'
-        },
+        }
     }
 }))
 
@@ -56,17 +45,18 @@ const Header = (props) => {
     const isAuth = AuthStore.isAuth
 
     return (
-        <AppBar position="static">
-            <Container fixed className={classes.root}>
+        <AppBar className={classes.appBar}>
+            <Container className={classes.container} fixed>
                 <Menu isAuth={isAuth} logout={AuthStore.logout}/>
-                <div className={classes.brand}>
-                    <span>Федерация плавания</span> <span>Самарской области</span>
-                </div>
-                <div className={classes.contact}>
-                    <span>Самара, Волжский проспект, 10</span>
-                    <span>8 (846) 375-92-45</span>
-                    <span>swimclub@mail.ru</span>
-                </div>
+                <Toolbar className={classes.toolBar}>
+                    <Typography className={classes.brand}>
+                        <span>Федерация плавания</span> <span>Самарской области</span>
+                    </Typography>
+                    <Typography className={classes.contact}>
+                        <div>8 (846) 375-92-45</div>
+                        <div>swimclub@mail.ru</div>
+                    </Typography>
+                </Toolbar>
             </Container>
         </AppBar>
     );

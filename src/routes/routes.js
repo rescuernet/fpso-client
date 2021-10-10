@@ -1,7 +1,8 @@
-import Main from "../ui/main/main";
+
 import Admin from "../ui/admin/admin";
 import Competitions from "../ui/competitions/competitions";
 import LoginForm from "../ui/login/login-form";
+import Main from "../ui/main/main";
 
 
 const RouterManager = {

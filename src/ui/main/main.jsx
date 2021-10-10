@@ -1,24 +1,73 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import {Grid} from "@material-ui/core";
-import {NavLink} from "react-router-dom";
-import {RM} from "../../routes/routes";
+import {Container, Grid, Paper, Typography} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import {makeStyles} from "@material-ui/core/styles";
+
+import s3 from '../../common/assets/image/3.jpg'
+
+const useStyles = makeStyles((Theme) => ({
+    paper: {
+        position: "relative",
+        backgroundImage: `url(${s3})`,
+        color: '#fff',
+        marginBottom: 30,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center"
+    },
+    container: {
+        flexWrap: "wrap"
+    },
+    gridContainer: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
+    mainFeaturesContent: {
+        position: "relative",
+        padding: 33,
+        minWidth: 350
+    }
+}))
 
 
-const Main = (props) => {
+const Main = () => {
+    const classes = useStyles();
 
     return (
-        <>
-            <Grid container>
-                <Grid xs={2} style={{border:'1px solid #333'}}>1sdfsd</Grid>
-                <Grid xs={2} style={{border:'1px solid #333'}}>2</Grid>
-                <Grid xs={8} style={{border:'1px solid #333'}}>1</Grid>
-                <Grid xs={12} style={{border:'1px solid #333'}}>2</Grid>
-            </Grid>
-            
-            <NavLink to={RM.AdminA.getUrl('a')}>adminA</NavLink>
-        </>
-
+        <Paper className={classes.paper}>
+            <Container className={classes.container} fixed>
+                <Grid className={classes.gridContainer}>
+                    <Grid className={classes.mainFeaturesContent} item sm={6}>
+                        <div>
+                            <Typography
+                                component={'h1'}
+                                variant={'h3'}
+                                color={'y'}
+                                gutterBottom
+                            >
+                                Samara swimming
+                            </Typography>
+                            <Typography
+                                variant={'h5'}
+                                color={'inherit'}
+                                paragraph
+                            >
+                                t is a long established fact
+                                that a reader will be distracted
+                                by the readable content of a page
+                                when looking at its layout.
+                                The point of using Lorem Ipsum is
+                                that it has a more-or-less normal
+                                distribution of letters
+                            </Typography>
+                            <Button variant="contained" color={"primary"}>Подробнее</Button>
+                        </div>
+                    </Grid>
+                </Grid>
+            </Container>
+        </Paper>
     );
 };
 

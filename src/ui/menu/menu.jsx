@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import {NavLink, useHistory, useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
 import LockIcon from '@material-ui/icons/Lock';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
     menuItem: {

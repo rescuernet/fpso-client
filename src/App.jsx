@@ -4,21 +4,11 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import {runInAction} from "mobx";
-import {makeStyles} from "@material-ui/core/styles";
-import {Container} from "@material-ui/core";
 import {RM} from "./routes/routes"
+import {useGridPoint} from "./utils/breakpoints";
+import {ThemeProvider } from "@material-ui/core/styles";
 
 
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: 0,
-        [theme.breakpoints.down('xs')]: {
-            width: 340
-        },
-    }
-}))
 
 const Routes = []
 for (let key in RM) {Routes.push(RM[key])}
@@ -27,7 +17,6 @@ for (let key in RM) {Routes.push(RM[key])}
 
 const App = () => {
 
-    const classes = useStyles()
     //проверка нужно ли отображать HEADER на странице
     /*const location = useLocation().pathname;
     const arr = [
@@ -48,21 +37,22 @@ const App = () => {
 
 
     return (
-        <div className="App">
-            <div className={`isLoading ${isLoading ? 'isLoadingView' : ""}`}/>
-            {/*включить при проверке на отображение HEADER на странице*/}
-            {/*{ !arr.includes(location) && <Header/> }*/}
-            <Header/>
-            <Container fixed className={classes.root}>
+        <ThemeProvider theme={useGridPoint}>
+            <div className="App">
+                <div className={`isLoading ${isLoading ? 'isLoadingView' : ""}`}/>
+                {/*включить при проверке на отображение HEADER на странице*/}
+                {/*{ !arr.includes(location) && <Header/> }*/}
+                <Header/>
                 {isInit &&
-                    <Switch>
-                        {isAuth && Routes.map(({path,Component,auth}) => auth && <Route key={path} exact path={path} component={Component}/>)}
-                        {Routes.map(({path,Component,auth}) => !auth && <Route key={path} exact path={path} component={Component}/>)}
-                        <Redirect to={'/'}/>
-                    </Switch>
+                <Switch>
+                    {isAuth && Routes.map(({path,Component,auth}) => auth && <Route key={path} exact path={path} component={Component}/>)}
+                    {Routes.map(({path,Component,auth}) => !auth && <Route key={path} exact path={path} component={Component}/>)}
+                    <Redirect to={'/'}/>
+                </Switch>
                 }
-            </Container>
-        </div>
+            </div>
+        </ThemeProvider>
+
     );
 }
 
