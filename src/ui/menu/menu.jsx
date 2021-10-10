@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import AuthStore from "../../bll/auth-store";
 import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
 import LockIcon from '@material-ui/icons/Lock';
@@ -48,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const menuItems = []
+for (let key in RM) {menuItems.push(RM[key])}
+
 
 const Menu = (props) => {
 
@@ -68,10 +70,6 @@ const Menu = (props) => {
         setState({ ...state, [anchor]: open });
     };
 
-    const itemsMenu = [
-        {id: 2, title: 'Соревнования', url: RM.Competitions.path,adm:0},
-        {id: 3, title: 'Admin', url: RM.Admin.path,adm:1}
-    ]
 
     const list = (anchor) => (
         <Box
@@ -81,12 +79,12 @@ const Menu = (props) => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {AuthStore.isAuth &&
+                {props.isAuth &&
                     <div className={classes.logoutButton}>
                         <ListItem
                             button key={1}
                             className={classes.logoutButtonItem}
-                            onClick={AuthStore.logout}>
+                            onClick={props.logout}>
                             <LockIcon className={classes.logoutButtonIcon}/>
                             <span>выход</span>
                         </ListItem>
@@ -99,17 +97,18 @@ const Menu = (props) => {
                     onClick={()=> history.push('/')}>
                     {'Главная'}
                 </ListItem>
-                {itemsMenu.map((i) => (
-                    !props.isAuth && i.adm === 1
+                {menuItems.map((i) =>
+                    !props.isAuth && i.auth
                         ?
                         null
-                        : (<ListItem
-                            button key={i.id}
-                            className={location.includes(i.url) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                            onClick={()=> history.push(i.url)}>
-                            {i.title}
-                        </ListItem>)
-                    )
+                        : i.menu?.type !== 'main'
+                            ? null
+                            : (<ListItem
+                                button key={i.path}
+                                className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                                onClick={()=> history.push(i.path)}>
+                                {i.menu.title}
+                            </ListItem>)
                 )}
             </List>
             <Divider />

@@ -4,52 +4,44 @@ import Competitions from "../ui/competitions/competitions";
 import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
 
+export const MenuTypes = {
+    admin:'admin',
+    main: 'main'
+}
+
 
 const RouterManager = {
     Main: {
         path:'/',
         Component: Main,
-        getUrl() {
-            return `/`
-        },
-        exacts: true,
-        auth: false
+        getUrl() {return `/`},
+        auth: false,
     },
     Competitions: {
         path:'/competitions',
         Component: Competitions,
-        getUrl() {
-            return `/competitions`
-        },
-        exacts: true,
-        auth: false
+        getUrl() {return `/competitions`},
+        auth: false,
+        menu: {
+            type: MenuTypes.main,
+            title: 'Соревнования'
+        }
     },
     Login: {
         path:'/555/',
         Component: LoginForm,
-        getUrl() {
-            return `/555/`
-        },
-        exacts: true,
+        getUrl() {return `/555/`},
         auth: false
     },
     Admin: {
         path:'/777/admin',
         Component: Admin,
-        getUrl() {
-            return `/777/admin/`
-        },
-        exacts: true,
-        auth: true
-    },
-    AdminA: {
-        path:'/777/admin/:id',
-        Component: Admin,
-        getUrl(id) {
-            return `/777/admin/${id}`
-        },
-        exacts: true,
-        auth: true
+        getUrl() {return `/777/admin/`},
+        auth: true,
+        menu: {
+            type: MenuTypes.main,
+            title: 'Панель управления'
+        }
     },
 }
 

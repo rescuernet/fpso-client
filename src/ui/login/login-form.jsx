@@ -21,6 +21,12 @@ const LoginForm = () => {
         }
     }
 
+    const onKeyDown = (event) => {
+        if(event.key == 'Enter'){
+            AuthStore.login(email,password)
+        }
+    }
+
 
     return (
         <div className={s.wrap}>
@@ -55,6 +61,7 @@ const LoginForm = () => {
                         onChange={(e)=>setPassword(e.target.value)}
                         error={!!authError}
                         onFocus={()=>{clearAuthError()}}
+                        onKeyDown={onKeyDown}
                     />
                 </Box>
                 <Button

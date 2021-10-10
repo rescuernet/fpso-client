@@ -45,8 +45,7 @@ const App = () => {
                 <Header/>
                 {isInit &&
                 <Switch>
-                    {isAuth && Routes.map(({path,Component,auth}) => auth && <Route key={path} exact path={path} component={Component}/>)}
-                    {Routes.map(({path,Component,auth}) => !auth && <Route key={path} exact path={path} component={Component}/>)}
+                    {Routes.map(({path,Component,auth}) => (auth === isAuth || !auth) && <Route key={path} exact path={path} component={Component}/>)}
                     <Redirect to={'/'}/>
                 </Switch>
                 }

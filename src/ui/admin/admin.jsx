@@ -1,32 +1,7 @@
-/*
-import React from 'react';
-/!*import {useHistory} from "react-router-dom";*!/
-import {observer} from "mobx-react-lite";
-
-
-
-const Admin = (props) => {
-    /!*const history = useHistory();*!/
-
-    /!*if(AuthStore.isAuth){history.push(MAIN_ROUTE)}*!/
-
-
-
-    return (
-        <div>
-            <div>Admin</div>
-        </div>
-    );
-};
-
-export default observer(Admin);*/
-
-
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -35,6 +10,9 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {observer} from "mobx-react-lite";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Aaa from "./aaa";
+import Bbb from "./bbb";
+
 
 
 
@@ -65,6 +43,9 @@ const Admin = () => {
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:750px)');
 
+    const [link,setLink] = useState()
+
+    console.log(link)
 
     return (
         <div className={classes.root}>
@@ -79,10 +60,10 @@ const Admin = () => {
             >
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    {['Aaa', 'Bbb', 'Send email', 'Drafts'].map((text, index) => (
                         <ListItem button key={text}>
                             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={text} onClick={()=> {setLink(text)}} />
                         </ListItem>
                     ))}
                 </List>
@@ -97,29 +78,10 @@ const Admin = () => {
                 </List>
             </Drawer>
             <main className={classes.content}>
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
+                {!link
+                    ? <div>admin</div>
+                    : <link/>
+                  }
             </main>
         </div>
     );
