@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
 import LockIcon from '@material-ui/icons/Lock';
 import MenuIcon from '@material-ui/icons/Menu';
+import {useEffect} from "react";
 
 const useStyles = makeStyles((theme) => ({
     menuItem: {
@@ -61,18 +62,24 @@ const Menu = (props) => {
     const history = useHistory()
 
     const anchor = 'left';
-    const [state, setState] = React.useState({
-        left: false
-    });
+    const [state, setState] = React.useState({left: false});
+    const [link, setLink] = React.useState('');
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-        setState({ ...state, [anchor]: open });
-        console.log("close",state)
+        setState({...state,[anchor]: open});
     };
 
+    useEffect(() => {
+        if(link) {
+            const goToLink = setTimeout(() => {
+                history.push(link)
+            }, 300);
+            return () => clearTimeout(goToLink);
+        }
+    }, [link,history]);
 
     const list = (anchor) => (
         <Box
@@ -97,7 +104,8 @@ const Menu = (props) => {
                 <ListItem
                     button key={1}
                     className={location === '/' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                    onClick={()=> history.push('/')}>
+                    onClick={()=> setLink('/')}
+                >
                     {'Главная'}
                 </ListItem>
                 {menuItems.map((i) =>
@@ -109,7 +117,8 @@ const Menu = (props) => {
                             : (<ListItem
                                 button key={i.path}
                                 className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                                onClick={()=> history.push(i.path)}>
+                                onClick={()=> setLink(i.path)}
+                            >
                                 {i.menu.title}
                             </ListItem>)
                 )}
@@ -134,7 +143,7 @@ const Menu = (props) => {
                 <MenuIcon className={classes.menuIcon}/>
             </IconButton>
             <Drawer
-                anchor={"left"}
+                anchor={anchor}
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
             >
