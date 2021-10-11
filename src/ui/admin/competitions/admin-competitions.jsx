@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import AdminMenu from "./admin-menu";
+import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,17 +15,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AdminNews = () => {
+const AdminCompetitions = () => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <AdminMenu/>
             <div className={classes.content}>
-                AdminNews
+                AdminCompetitions
             </div>
         </div>
     );
 };
 
-export default observer(AdminNews);
+export default observer(AdminCompetitions);

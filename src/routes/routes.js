@@ -2,12 +2,19 @@ import Admin from "../ui/admin/admin";
 import Competitions from "../ui/competitions/competitions";
 import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
-import AdminNews from "../ui/admin/admin-news";
-import AdminCompetitions from "../ui/admin/admin-competitions";
+import AdminNews from "../ui/admin/news/admin-news";
+import AdminCompetitions from "../ui/admin/competitions/admin-competitions";
+import AdminNewsCreate from "../ui/admin/news/admin-news-create";
+
 
 export const MenuTypes = {
     admin:'admin',
     main: 'main'
+}
+
+const PrefixPath = {
+    admin: '/777/admin',
+    login: '/555'
 }
 
 
@@ -31,16 +38,16 @@ const RouterManager = {
         }
     },
     Login: {
-        path:'/555',
+        path: PrefixPath.login,
         Component: LoginForm,
-        getUrl() {return `/555`},
+        getUrl() {return PrefixPath.login},
         auth: false,
         header: true
     },
     Admin: {
-        path:'/777/admin',
+        path: PrefixPath.admin,
         Component: Admin,
-        getUrl() {return `/777/admin`},
+        getUrl() {return PrefixPath.admin},
         auth: true,
         header: false,
         menu: {
@@ -48,10 +55,10 @@ const RouterManager = {
             title: 'Панель управления'
         }
     },
-    AdminNews: {
-        path:'/777/admin/news',
+    Admin__News: {
+        path: `${PrefixPath.admin}/news`,
         Component: AdminNews,
-        getUrl() {return `/777/admin/news`},
+        getUrl() {return `${PrefixPath.admin}/news`},
         auth: true,
         header: false,
         menu: {
@@ -59,10 +66,17 @@ const RouterManager = {
             title: 'Новости'
         }
     },
-    AdminCompetitions: {
-        path:'/777/admin/competitions',
+    Admin__News__Create: {
+        path: `${PrefixPath.admin}/news/create`,
+        Component: AdminNewsCreate,
+        getUrl() {return `${PrefixPath.admin}/news`},
+        auth: true,
+        header: false,
+    },
+    Admin__Competitions: {
+        path:`${PrefixPath.admin}/competitions`,
         Component: AdminCompetitions,
-        getUrl() {return `/777/admin/competitions`},
+        getUrl() {return `${PrefixPath.admin}/competitions`},
         auth: true,
         header: false,
         menu: {
