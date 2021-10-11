@@ -15,18 +15,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Admin = () => {
+const AdminNews = () => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <AdminMenu/>
             <div className={classes.content}>
-                admin
+                AdminNews
             </div>
         </div>
     );
-}
+};
 
-export default observer(Admin)
-
+export default observer(AdminNews);

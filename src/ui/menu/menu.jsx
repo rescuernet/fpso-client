@@ -9,8 +9,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
     menuItem: {
-        fontSize: 18,
-        textTransform: "uppercase",
+        fontSize: 16,
+        fontFamily: "Roboto",
+        fontWeight: 400,
+        color: "#29353d",
         '& span': {
             fontSize: 0,
             padding: 0,
@@ -18,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     activeLink: {
-        fontWeight: 500
+        fontWeight: 700
     },
     menuIcon: {
         fontSize: 35,
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "row",
         textTransform: "uppercase",
-        fontSize: 16
+        fontSize: 15
     },
     logoutButtonIcon: {
         marginRight: 10,
@@ -68,6 +70,7 @@ const Menu = (props) => {
             return;
         }
         setState({ ...state, [anchor]: open });
+        console.log("close",state)
     };
 
 

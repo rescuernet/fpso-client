@@ -22,7 +22,7 @@ const LoginForm = () => {
     }
 
     const onKeyDown = (event) => {
-        if(event.key == 'Enter'){
+        if(event.key === 'Enter'){
             AuthStore.login(email,password)
         }
     }

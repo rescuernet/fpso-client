@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Header from "./ui/header/header";
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import {runInAction} from "mobx";
@@ -9,19 +9,12 @@ import {useGridPoint} from "./utils/breakpoints";
 import {ThemeProvider } from "@material-ui/core/styles";
 
 
-
 const Routes = []
 for (let key in RM) {Routes.push(RM[key])}
 
-/*import {useLocation} from "react-router-dom";*/
-
 const App = () => {
 
-    //проверка нужно ли отображать HEADER на странице
-    /*const location = useLocation().pathname;
-    const arr = [
-        ADMIN_ROUTE
-    ];*/
+    const location = useLocation().pathname;
 
     useEffect(() => {
         if(localStorage.getItem('token')){
@@ -40,9 +33,7 @@ const App = () => {
         <ThemeProvider theme={useGridPoint}>
             <div className="App">
                 <div className={`isLoading ${isLoading ? 'isLoadingView' : ""}`}/>
-                {/*включить при проверке на отображение HEADER на странице*/}
-                {/*{ !arr.includes(location) && <Header/> }*/}
-                <Header/>
+                {Routes.map(({path, header}) => (path === location && header) && <Header/>)}
                 {isInit &&
                 <Switch>
                     {Routes.map(({path,Component,auth}) => (auth === isAuth || !auth) && <Route key={path} exact path={path} component={Component}/>)}
