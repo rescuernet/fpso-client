@@ -75,8 +75,8 @@ const AdminMenu = () => {
                 <List>
                     <ListItem
                         button key={2}
-                        className={location === '/777/admin' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                        onClick={()=> history.push('/777/admin')}>
+                        className={location === RM.Admin.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                        onClick={()=> history.push(RM.Admin.path)}>
                         {'Главная панель'}
                     </ListItem>
                     {menuItems.map((i) =>

@@ -13,8 +13,8 @@ export const MenuTypes = {
 }
 
 const PrefixPath = {
-    admin: '/777/admin',
-    login: '/555'
+    admin: '/5070/admin',
+    login: '/5070/login'
 }
 
 

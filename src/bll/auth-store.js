@@ -2,14 +2,13 @@ import {makeAutoObservable, runInAction} from "mobx";
 import AuthService from "../services/auth-service";
 import axios from "axios";
 import {API_URL} from "../const/const";
+import Store from "./store"
 
 
 
 class AuthStore {
     user = {}
     isAuth = false
-    isLoading = false
-    isInit = false
     authError = {}
 
     constructor() {
@@ -18,7 +17,7 @@ class AuthStore {
 
     login = async (email,password) => {
         runInAction(() => {this.authError = {}})
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AuthService.login(email,password);
             localStorage.setItem('token',response.data.accessToken);
@@ -27,14 +26,14 @@ class AuthStore {
         } catch (e) {
             runInAction(() => {this.authError = e.response})
         } finally {
-            runInAction(() => {this.isInit = true})
-            runInAction(() => {this.isLoading = false})
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
         }
     }
 
     registration = async (email,password) => {
-        runInAction(() => {this.isInit = false})
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isInit = false})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AuthService.registration(email,password);
             localStorage.setItem('token',response.data.accessToken);
@@ -43,13 +42,13 @@ class AuthStore {
         } catch (e) {
             console.log(e.response?.data?.message);
         }finally {
-            runInAction(() => {this.isInit = true})
-            runInAction(() => {this.isLoading = false})
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
         }
     }
 
     logout = async () => {
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AuthService.logout();
             localStorage.removeItem('token');
@@ -59,14 +58,14 @@ class AuthStore {
         } catch (e) {
             console.log(e.response?.data?.message);
         }finally {
-            runInAction(() => {this.isLoading = false})
+            runInAction(() => {Store.isLoading = false})
         }
     }
 
 
     authMe = async () => {
-        runInAction(() => {this.isInit = false})
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isInit = false})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await axios.get(`${API_URL}/refresh`,{withCredentials:true});
             localStorage.setItem('token',response.data.accessToken);
@@ -76,8 +75,8 @@ class AuthStore {
             this.logout();
             console.log(e.response?.data?.message);
         } finally {
-            runInAction(() => {this.isInit = true})
-            runInAction(() => {this.isLoading = false})
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
         }
     }
 }

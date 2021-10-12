@@ -3,6 +3,7 @@ import Header from "./ui/header/header";
 import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
+import Store from "./bll/store";
 import {runInAction} from "mobx";
 import {RM} from "./routes/routes"
 import {useGridPoint} from "./utils/breakpoints";
@@ -14,18 +15,19 @@ for (let key in RM) {Routes.push(RM[key])}
 
 const App = () => {
 
+
     const location = useLocation().pathname;
 
     useEffect(() => {
         if(localStorage.getItem('token')){
             AuthStore.authMe();
         }else{
-            runInAction(() => {AuthStore.isInit = true})
+            runInAction(() => {Store.isInit = true})
         }
     }, []);
 
-    const isLoading = AuthStore.isLoading
-    const isInit = AuthStore.isInit
+    const isLoading = Store.isLoading
+    const isInit = Store.isInit
     const isAuth = AuthStore.isAuth
 
 

@@ -2,10 +2,7 @@ import {makeAutoObservable} from "mobx";
 
 
 
-class Store {
-
-    isLoading = false
-    isInit = false
+class __store {
 
     constructor() {
         makeAutoObservable(this);
@@ -13,4 +10,4 @@ class Store {
 
 }
 
-export default new Store();
+export default new __store();

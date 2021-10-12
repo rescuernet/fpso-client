@@ -77,8 +77,6 @@ const LoginForm = () => {
                 <div className={s.auth_error}>{authError}</div>
                 }
             </div>
-
-
         </div>
     );
 };
