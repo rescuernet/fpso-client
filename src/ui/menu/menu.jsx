@@ -87,6 +87,7 @@ const Menu = (props) => {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
+            className={classes.aaa}
         >
             <List>
                 {props.isAuth &&
@@ -134,6 +135,7 @@ const Menu = (props) => {
         </Box>
     );
 
+
     return (
         <div>
             <IconButton
@@ -146,6 +148,9 @@ const Menu = (props) => {
                 anchor={anchor}
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
+                classes={{
+                    paper: classes.drawerPaper
+                }}
             >
                 {list(anchor)}
             </Drawer>

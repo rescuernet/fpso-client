@@ -1,13 +1,34 @@
 import React, {useState} from 'react';
-import {Box, Button, TextField} from "@material-ui/core";
+import {Box, Button, Container, TextField} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../bll/auth-store";
 import {Redirect} from "react-router-dom";
-import s from "./login-form.module.css";
 import {runInAction} from "mobx";
 import {RM} from "../../routes/routes";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 340,
+        margin: '50px auto 0 auto'
+    },
+    textField: {
+        width: 340,
+        marginBottom: 20
+    },
+    authError: {
+        margin: '20px 0',
+        color: '#999',
+        fontFamily: 'Roboto'
+    }
+}))
 
 const LoginForm = () => {
+    const classes = useStyles()
 
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
@@ -29,18 +50,15 @@ const LoginForm = () => {
 
 
     return (
-        <div className={s.wrap}>
-            <div className={s.form}>
+        <Container>
+            <Box className={classes.container}>
                 <Box
                     component="form"
-                    sx={{
-                        '& > :not(style)': { m: 1, width: '25ch' },
-                    }}
                     noValidate
                     autoComplete="off"
                 >
                     <TextField
-                        className={s.text_field}
+                        className={classes.textField}
                         id="login"
                         label="логин"
                         variant="outlined"
@@ -51,7 +69,7 @@ const LoginForm = () => {
                         onFocus={()=>{clearAuthError()}}
                     />
                     <TextField
-                        className={s.text_field}
+                        className={classes.textField}
                         id="outlined-basic"
                         label="password"
                         variant="outlined"
@@ -74,10 +92,10 @@ const LoginForm = () => {
                     Войти
                 </Button>
                 {authError &&
-                <div className={s.auth_error}>{authError}</div>
+                <div className={classes.authError}>{authError}</div>
                 }
-            </div>
-        </div>
+            </Box>
+        </Container>
     );
 };
 

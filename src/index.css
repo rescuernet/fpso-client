@@ -33,4 +33,7 @@ a {
 .isLoadingView {
   display: block;
 }
+.MuiBackdrop-root {
+  background-color: transparent!important;
+}
 
