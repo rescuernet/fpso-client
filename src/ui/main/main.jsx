@@ -15,8 +15,7 @@ const Main = () => {
     return (
         <div>
             <Brand/>
-            <Container>
-                jkjkj
+            <Container fixed>
             </Container>
         </div>
 

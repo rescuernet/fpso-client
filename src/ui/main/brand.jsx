@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import s1 from '../../common/assets/image/11.jpg'
-import s2 from '../../common/assets/image/12.jpg'
+import BrandFull from '../../common/assets/image/brand_full.jpg'
+import BrandMob from '../../common/assets/image/brand_mob.jpg'
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((Theme) => ({
@@ -22,7 +22,7 @@ const Brand = () => {
 
     return (
         <div className={classes.brand}>
-            <img src={matches ? s2 : s1} alt=""/>
+            <img src={matches ? BrandMob : BrandFull} alt=""/>
         </div>
     );
 };

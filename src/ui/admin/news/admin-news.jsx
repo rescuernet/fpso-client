@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
 const AdminNews = () => {
     const classes = useStyles();
     const history = useHistory()
+
+    /*useEffect(()=>{
+        console.log('effect')
+    },[])*/
 
     return (
         <div className={classes.root}>

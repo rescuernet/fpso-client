@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, TextField} from "@material-ui/core";
+import {Button, Divider, Fab, TextField} from "@material-ui/core";
 import {dateToString} from "../../../utils/dateToString";
 import AdminStore from "../../../services/admin-service";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
+import AddOneFile from "../../../components/addOneFile";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     header: {
         marginBottom: 10,
-        textAlign: "center",
-        fontSize: 25,
+        fontSize: 20,
     },
     fieldsGroup: {
         padding: '20px 10px',
@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     fieldText: {
         margin: '10px 0'
     },
+    addFile: {
+        marginBottom: 10
+    },
     control: {
         display: "flex",
         flexDirection: "row",
@@ -69,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminNewsCreate = () => {
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:750px)');
 
     const [dateStart,setDateStart] = useState(dateToString(new Date(Date.parse(Date()))))
     const [dateEnd,setDateEnd] = useState('')
@@ -164,6 +166,9 @@ const AdminNewsCreate = () => {
                             rows={10}
                             rowsMax={10}
                         />
+                    </div>
+                    <div className={classes.addFile}>
+                        <AddOneFile/>
                     </div>
                     <Divider/>
                     <div className={classes.control}>

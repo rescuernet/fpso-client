@@ -7,6 +7,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {useHistory, useLocation} from "react-router-dom";
 import {RM} from "../../routes/routes";
 import {Divider} from "@material-ui/core";
+import AuthStore from '../../bll/auth-store'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
+
 
 
 const drawerWidth = 240;
@@ -22,7 +26,28 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
         top: "auto",
-        backgroundColor: "#233044"
+        backgroundColor: "#233044",
+        padding: '20px 10px 0 10px'
+    },
+    menuHeader: {
+        textAlign: "center"
+    },
+    avatar: {
+        display: "flex",
+        justifyContent: "center",
+        marginBottom: 10,
+        '& img': {
+            width: 80,
+            height: 'auto',
+            borderRadius: 40
+        }
+    },
+    userEmail: {
+        color: '#ccc',
+        fontSize: 16,
+        padding: {
+
+        }
     },
     menuItem: {
         fontSize: 16,
@@ -63,14 +88,22 @@ const AdminMenu = () => {
                 }}
                 anchor="left"
             >
-                <List>
+                <div className={classes.menuHeader}>
+                    <div className={classes.avatar}>{AuthStore.user.avatar ? <img src={AuthStore.user.avatar} alt=""/> : <img src={NoAvatar__img} alt=""/>}</div>
+                    <div className={classes.userEmail}>{AuthStore.user.email}</div>
                     <ListItem
                         button key={1}
-                        className={location === '/' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                        onClick={()=> history.push('/')}>
-                        {'Перейти на сайт'}
+                        className={classes.menuItem}
+                        style={{justifyContent: 'center'}}
+                        onClick={()=> history.push('/')}
+                    >
+                        Перейти на сайт
                     </ListItem>
-                    <Divider/>
+                </div>
+
+                <List>
+
+                    <Divider style={{backgroundColor: '#ccc'}}/>
                 </List>
                 <List>
                     <ListItem
