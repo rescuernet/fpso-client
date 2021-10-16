@@ -88,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminNewsCreate = () => {
     const classes = useStyles();
-    const [avatarHeader, setAvatarHeader] = useState();
     const [dateStart,setDateStart] = useState(dateToString(new Date(Date.parse(Date()))))
     const [dateEnd,setDateEnd] = useState('')
     const [headerFirst,setHeaderFirst] = useState('')
@@ -102,6 +101,10 @@ const AdminNewsCreate = () => {
         data.append('files',event.target.files[0]);
         AdminStore.newsAvatarCreate(data)
     };
+
+    const DeleteAvatarHeader = () => {
+        AdminStore.news_tmp_avatar=''
+    }
 
 
 
@@ -131,7 +134,7 @@ const AdminNewsCreate = () => {
             <div className={classes.content}>
                 <div className={classes.header}>Создание новости</div>
                 <Divider/>
-                <div className={classes.avatar}>
+                <div className={classes.avatar} id={'avatar'}>
                     {AdminStore.news_tmp_avatar
                         ?
                         <div className={classes.avatarControl}>
@@ -142,7 +145,7 @@ const AdminNewsCreate = () => {
                                 <Button
                                     variant={"outlined"}
                                     color={"primary"}
-                                    onClick={()=> {AdminStore.news_tmp_avatar=''}}
+                                    onClick={()=> {DeleteAvatarHeader()}}
                                 >
                                     изменить / удалить
                                 </Button>

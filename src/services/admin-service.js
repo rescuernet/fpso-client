@@ -4,7 +4,6 @@ import {RM} from "../routes/routes";
 export default class AdminService {
 
     static async newsAvatarCreate(avatar) {
-        console.log(avatar)
         return $api.post(RM.Admin__News__Avatar__Create.path,avatar)
     }
 
