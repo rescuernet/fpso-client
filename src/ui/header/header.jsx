@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         alignItems: "center",
         position: "static",
-        marginBottom: 10,
         [useGridPoint.breakpoints.down('xs')]: {
             marginBottom: 5,
-        }
+        },
+        /*backgroundColor: '#585858'*/
     },
     container: {
         display: "flex",
@@ -66,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
                 fontSize: 13
             }
         }
+    },
+    underHeader: {
+        height: 3,
+        backgroundColor: '#ff6200',
+        marginBottom: 10,
     }
 }))
 
@@ -76,23 +81,27 @@ const Header = (props) => {
     const isAuth = AuthStore.isAuth
 
     return (
-        <AppBar className={classes.appBar}>
-            <Menu isAuth={isAuth} logout={AuthStore.logout}/>
-            <Container className={classes.container} fixed>
-                <Toolbar className={classes.toolBar}>
-                    <div className={classes.contact}>
-                        <div className={classes.contactItem}>
-                            <PhoneIcon />
-                            <div>8 (846) 375-92-45</div>
+        <>
+            <AppBar className={classes.appBar}>
+                <Menu isAuth={isAuth} logout={AuthStore.logout}/>
+                <Container className={classes.container} fixed>
+                    <Toolbar className={classes.toolBar}>
+                        <div className={classes.contact}>
+                            <div className={classes.contactItem}>
+                                <PhoneIcon />
+                                <div>8 (846) 375-92-45</div>
+                            </div>
+                            <div className={classes.contactItem}>
+                                <MailOutlineIcon />
+                                <div>swimclub@mail.ru</div>
+                            </div>
                         </div>
-                        <div className={classes.contactItem}>
-                            <MailOutlineIcon />
-                            <div>swimclub@mail.ru</div>
-                        </div>
-                    </div>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <div className={classes.underHeader}/>
+        </>
+
     );
 };
 

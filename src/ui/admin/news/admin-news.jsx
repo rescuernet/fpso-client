@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../../routes/routes";
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import AdminStore from '../../../bll/admin-store';
 
 
 
@@ -24,6 +25,11 @@ const AdminNews = () => {
     const classes = useStyles();
     const history = useHistory()
 
+    const createNews = () => {
+        AdminStore.news_tmp_avatar = '';
+        history.push(RM.Admin__News__Create.path);
+    }
+
     /*useEffect(()=>{
         console.log('effect')
     },[])*/
@@ -33,7 +39,7 @@ const AdminNews = () => {
             <AdminMenu/>
             <div className={classes.content}>
                 <div>AdminNews</div>
-                <Button onClick={()=>{history.push(RM.Admin__News__Create.path)}}>Создать</Button>
+                <Button onClick={()=>{createNews()}}>Создать</Button>
             </div>
         </div>
     );

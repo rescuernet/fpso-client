@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     activeLink: {
-        fontWeight: 700
+        color: "#ff6200"
     },
     menuIcon: {
         fontSize: 35,
@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     logoutButtonIcon: {
         marginRight: 10,
         fontSize: 18
+    },
+    divider: {
+        backgroundColor: "#ff6200"
     }
 }))
 
@@ -87,7 +90,6 @@ const Menu = (props) => {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
-            className={classes.aaa}
         >
             <List>
                 {props.isAuth &&
@@ -99,7 +101,7 @@ const Menu = (props) => {
                             <LockIcon className={classes.logoutButtonIcon}/>
                             <span>выход</span>
                         </ListItem>
-                        <Divider />
+                        <Divider className={classes.divider} />
                     </div>
                 }
                 <ListItem
@@ -124,7 +126,7 @@ const Menu = (props) => {
                             </ListItem>)
                 )}
             </List>
-            <Divider />
+            <Divider className={classes.divider} />
             <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem button key={text}>

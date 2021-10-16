@@ -69,9 +69,13 @@ const RouterManager = {
     Admin__News__Create: {
         path: `${PrefixPath.admin}/news/create`,
         Component: AdminNewsCreate,
-        getUrl() {return `${PrefixPath.admin}/news`},
+        getUrl() {return `${PrefixPath.admin}/news/create`},
         auth: true,
         header: false,
+    },
+    Admin__News__Avatar__Create: {
+        path: `${PrefixPath.admin}/news/avatar-create`,
+        getUrl() {return `${PrefixPath.admin}/news/avatar-create`},
     },
     Admin__Competitions: {
         path:`${PrefixPath.admin}/competitions`,

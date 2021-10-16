@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, Fab, TextField} from "@material-ui/core";
+import {Button, Divider, TextField} from "@material-ui/core";
 import {dateToString} from "../../../utils/dateToString";
-import AdminStore from "../../../services/admin-service";
-import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined';
-import AddOneFile from "../../../components/addOneFile";
+import AdminStore from "../../../bll/admin-store";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,6 +23,23 @@ const useStyles = makeStyles((theme) => ({
     header: {
         marginBottom: 10,
         fontSize: 20,
+    },
+    avatar: {
+
+    },
+    avatarControl: {
+        position: "relative",
+        display: "flex",
+        justifyContent: "space-around",
+        alignItems: "center"
+    },
+    avatarControlButton: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        '& button': {
+            margin: '10px 0'
+        }
     },
     fieldsGroup: {
         padding: '20px 10px',
@@ -56,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 0'
     },
     addFile: {
-        marginBottom: 10
+        margin: '10px 0'
     },
     control: {
         display: "flex",
@@ -72,12 +88,22 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminNewsCreate = () => {
     const classes = useStyles();
-
+    const [avatarHeader, setAvatarHeader] = useState();
     const [dateStart,setDateStart] = useState(dateToString(new Date(Date.parse(Date()))))
     const [dateEnd,setDateEnd] = useState('')
     const [headerFirst,setHeaderFirst] = useState('')
     const [headerSecond,setHeaderSecond] = useState('')
     const [textMain,setTextMain] = useState('')
+    const [avatarHeaderFile, setAvatarHeaderFile] = useState([]);
+
+    const UploadAvatarHeader = (event) => {
+        event.preventDefault();
+        const data = new FormData()
+        data.append('files',event.target.files[0]);
+        AdminStore.newsAvatarCreate(data)
+    };
+
+
 
     const ClearForm = () => {
         setDateStart(dateToString(new Date(Date.parse(Date()))));
@@ -85,6 +111,7 @@ const AdminNewsCreate = () => {
         setHeaderFirst('');
         setHeaderSecond('');
         setTextMain('');
+        setAvatarHeaderFile('')
     }
 
     const CreateArr = () => {
@@ -103,6 +130,50 @@ const AdminNewsCreate = () => {
             <AdminMenu/>
             <div className={classes.content}>
                 <div className={classes.header}>Создание новости</div>
+                <Divider/>
+                <div className={classes.avatar}>
+                    {AdminStore.news_tmp_avatar
+                        ?
+                        <div className={classes.avatarControl}>
+                            <div>
+                                <img src={`http://localhost:5000/tmp/${AdminStore.news_tmp_avatar}`} alt=""/>
+                            </div>
+                            <div className={classes.avatarControlButton}>
+                                <Button
+                                    variant={"outlined"}
+                                    color={"primary"}
+                                    onClick={()=> {AdminStore.news_tmp_avatar=''}}
+                                >
+                                    изменить / удалить
+                                </Button>
+                            </div>
+                        </div>
+                        :
+                        <div className={classes.addFile}>
+                            <label htmlFor="avatarHeader">
+                                <input
+                                    style={{ display: 'none' }}
+                                    id="avatarHeader"
+                                    name="avatarImage"
+                                    type="file"
+                                    onChange={UploadAvatarHeader}
+                                />
+
+                                <Button
+                                    color="primary"
+                                    size="small"
+                                    variant={"outlined"}
+                                    component={'span'}
+                                >
+                                    выбрать аватар новости
+                                </Button>
+                            </label>
+                        </div>
+                    }
+                </div>
+
+
+
                 <Divider/>
                 <div className={classes.fieldsGroup} >
                     <div className={classes.fieldsDates}>
@@ -167,8 +238,11 @@ const AdminNewsCreate = () => {
                             rowsMax={10}
                         />
                     </div>
-                    <div className={classes.addFile}>
-                        <AddOneFile/>
+                    <Divider/>
+                    <div>
+                        {avatarHeaderFile && avatarHeaderFile.map((i)=> (
+                            <img src="" alt=""/>
+                        ))}
                     </div>
                     <Divider/>
                     <div className={classes.control}>

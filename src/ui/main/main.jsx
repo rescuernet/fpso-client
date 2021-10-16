@@ -15,7 +15,10 @@ const Main = () => {
     return (
         <div>
             <Brand/>
-            <Container fixed>
+            <Container fixed style={{backgroundColor: '#ccc', padding: 0, display: 'flex',justifyContent: "space-evenly", flexWrap:"wrap" }}>
+                <div style={{backgroundColor: 'red',width: 360,height: 300, border: '1px solid #ccc'}}>sdf</div>
+                <div style={{backgroundColor: 'red',width: 360,height: 300, border: '1px solid #ccc'}}>sdf</div>
+                <div style={{backgroundColor: 'red',width: 360,height: 300, border: '1px solid #ccc'}}>sdf</div>
             </Container>
         </div>
 
