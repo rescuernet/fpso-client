@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Container, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Container, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";

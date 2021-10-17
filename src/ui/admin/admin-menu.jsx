@@ -8,7 +8,6 @@ import {useHistory, useLocation} from "react-router-dom";
 import {RM} from "../../routes/routes";
 import {Divider} from "@material-ui/core";
 import AuthStore from '../../bll/auth-store'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
 
 
@@ -69,20 +68,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminMenu = () => {
+const AdminMenu = (props) => {
     const menuItems = []
     for (let key in RM) {menuItems.push(RM[key])}
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:750px)');
+
     const location = useLocation().pathname;
     const history = useHistory();
 
     return (
         <div className={classes.root}>
             <Drawer
-                open={matches}
+                open={props.open}
                 className={classes.drawer}
-                variant={matches && "permanent"}
+                variant={props.variant}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
