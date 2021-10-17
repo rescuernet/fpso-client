@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
     contact: {
         display: "flex",
         padding: '5px 0',
-        [theme.breakpoints.down(350)]: {
+        [theme.breakpoints.down(380)]: {
             flexDirection: "column"
         }
     },
-    contactItem: {
+    phone: {
         display: "flex",
         flexDirection: "row",
         marginLeft: 20,
@@ -50,6 +50,34 @@ const useStyles = makeStyles((theme) => ({
         },
         [useGridPoint.breakpoints.down('xs')]: {
             fontSize: 12
+        },
+        '& div': {
+            marginLeft: 20,
+            [useGridPoint.breakpoints.down('sm')]: {
+                marginLeft: 5,
+            },
+        },
+        '& svg': {
+            fontSize: 22,
+            [useGridPoint.breakpoints.down('md')]: {
+                fontSize: 17
+            },
+            [useGridPoint.breakpoints.down('xs')]: {
+                fontSize: 13
+            }
+        }
+    },
+    email: {
+        display: "flex",
+        flexDirection: "row",
+        marginLeft: 20,
+        alignItems: "flex-end",
+        fontSize: 22,
+        [useGridPoint.breakpoints.down('md')]: {
+            fontSize: 17
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            fontSize: 15
         },
         '& div': {
             marginLeft: 20,
@@ -87,11 +115,11 @@ const Header = (props) => {
                 <Container className={classes.container} fixed>
                     <Toolbar className={classes.toolBar}>
                         <div className={classes.contact}>
-                            <div className={classes.contactItem}>
+                            <div className={classes.phone}>
                                 <PhoneIcon />
                                 <div>8 (846) 375-92-45</div>
                             </div>
-                            <div className={classes.contactItem}>
+                            <div className={classes.email}>
                                 <MailOutlineIcon />
                                 <div>swimclub@mail.ru</div>
                             </div>

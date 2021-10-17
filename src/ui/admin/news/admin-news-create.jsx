@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, TextField, Typography} from "@material-ui/core";
@@ -7,7 +6,8 @@ import {dateToString} from "../../../utils/dateToString";
 import AdminStore from "../../../bll/admin-store";
 import {runInAction} from "mobx";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import MenuIcon from "@material-ui/icons/Menu";
+import AdminHeader from "../header/admin-header";
+import {observer} from "mobx-react-lite";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         maxWidth: 600,
         width: 600,
-        padding: 20
+        padding: 20,
+        '@media (max-width: 750px)' : {
+            marginTop: 45
+        },
     },
     header: {
         display: "flex",
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         padding: '20px 0'
     },
-    addFile: {
+    avatarAdd: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -82,6 +85,13 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: 20
         }
     },
+    images: {
+        padding: '20px 0'
+    },
+    imageAdd: {
+        display: "flex",
+        justifyContent: "center"
+    },
     control: {
         display: "flex",
         justifyContent: "space-evenly",
@@ -104,10 +114,11 @@ const AdminNewsCreate = () => {
 
     const matches = useMediaQuery('(min-width:750px)');
 
+    //зачиска input type file
     useEffect(()=>{
         const inputClear = document.getElementById('avatarHeader')
         inputClear.value = ''
-        runInAction(() => {AdminStore.news_tmp_avatar_errors = null})
+        runInAction(() => {AdminStore.news_tmp_images_errors = null})
     },[])
 
     const classes = useStyles();
@@ -117,7 +128,9 @@ const AdminNewsCreate = () => {
     const [headerFirst,setHeaderFirst] = useState('')
     const [headerSecond,setHeaderSecond] = useState('')
     const [textMain,setTextMain] = useState('')
+    const [images,setImages] = useState('')
 
+    // загрузка аватар
     const UploadAvatarHeader = (event) => {
         event.preventDefault();
         const data = new FormData()
@@ -125,20 +138,24 @@ const AdminNewsCreate = () => {
         runInAction(() => {AdminStore.newsAvatarCreate(data)})
     };
 
+    //установка аватара в локальный state
     useEffect(()=>{
         setAvatar(AdminStore.news_tmp_avatar)
     },[AdminStore.news_tmp_avatar])
 
+    //удаление аватара
     const DeleteAvatarHeader = () => {
-        runInAction(() => {AdminStore.news_tmp_avatar=''})
+        runInAction(() => {AdminStore.news_tmp_avatar = null})
     }
 
+    //очистка ошибки загрузки аватара
     const ClearAvatarError = () => {
         const inputClear = document.getElementById('avatarHeader')
         inputClear.value = ''
-        runInAction(() => {AdminStore.news_tmp_avatar_errors = null})
+        runInAction(() => {AdminStore.news_tmp_images_errors = null})
     }
 
+    //зачистка всей формы
     const ClearForm = () => {
         setAvatar('')
         setDateStart(dateToString(new Date(Date.parse(Date()))));
@@ -148,25 +165,25 @@ const AdminNewsCreate = () => {
         setTextMain('');
     }
 
+    //создание массива для для сохранения
     const CreateArr = () => {
         const Arr = {
+            avatar,
             dateStart,
             dateEnd,
             headerFirst,
             headerSecond,
             textMain
         }
-        AdminStore.newsCreate(Arr)
+        runInAction(() => {AdminStore.newsCreate(Arr)})
     }
 
 
     return (
         <div className={classes.root}>
-            <AdminMenu/>
+            {matches ? <AdminMenu/> : <AdminHeader header={'Создание новости'}/>}
             <div className={classes.content}>
-                <div className={classes.header}>
-                    <Typography>Создание новости</Typography>
-                </div>
+                {matches && <div className={classes.header}><Typography>Создание новости</Typography></div>}
                 <Divider/>
                 <div className={classes.avatar} id={'avatar'}>
                     {avatar
@@ -182,7 +199,7 @@ const AdminNewsCreate = () => {
                             </Button>
                         </div>
                         :
-                        <div className={classes.addFile}>
+                        <div className={classes.avatarAdd}>
                             <label htmlFor="avatarHeader">
                                 <input
                                     style={{ display: 'none' }}
@@ -201,8 +218,8 @@ const AdminNewsCreate = () => {
                                     выбрать аватар новости
                                 </Button>
                             </label>
-                            {AdminStore.news_tmp_avatar_errors &&
-                                AdminStore.news_tmp_avatar_errors
+                            {AdminStore.news_tmp_images_errors &&
+                                AdminStore.news_tmp_images_errors
                             }
                         </div>
                     }
@@ -270,7 +287,29 @@ const AdminNewsCreate = () => {
                 </div>
                 <Divider/>
                 <div className={classes.images}>
-
+                    <div className={classes.imageAdd}>
+                        <label htmlFor="image">
+                            <input
+                                style={{ display: 'none' }}
+                                id="image"
+                                name="image"
+                                type="file"
+                                /*onChange={UploadAvatarHeader}*/
+                            />
+                            <Button
+                                color="primary"
+                                size="small"
+                                variant={"outlined"}
+                                component={'span'}
+                                /*onClick={()=>{ClearAvatarError()}}*/
+                            >
+                                добавить фотографию
+                            </Button>
+                        </label>
+                        {AdminStore.news_tmp_images_errors &&
+                        AdminStore.news_tmp_images_errors
+                        }
+                    </div>
                 </div>
                 <Divider/>
                 <div className={classes.control}>

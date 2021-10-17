@@ -161,4 +161,4 @@ const Menu = (props) => {
 }
 
 
-export default observer(Menu);
+export default Menu;

@@ -6,9 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {useHistory, useLocation} from "react-router-dom";
 import {RM} from "../../routes/routes";
-import {Divider} from "@material-ui/core";
+import {Box, Divider, IconButton} from "@material-ui/core";
 import AuthStore from '../../bll/auth-store'
 import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
+import MenuIcon from "@material-ui/icons/Menu";
 
 
 
@@ -17,6 +18,18 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    menuIcon: {
+        fontSize: 35,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 30
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 25
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: 20
+        }
     },
     drawer: {
         width: drawerWidth,
@@ -69,74 +82,105 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminMenu = (props) => {
+    const location = useLocation().pathname;
+    const history = useHistory();
     const matches = useMediaQuery('(min-width:750px)');
-    const [menuOpen,setMenuOpen] = useState(true)
+    const [menuOpen,setMenuOpen] = useState()
     const [menuVariant,setMenuVariant] = useState()
+    const [link, setLink] = useState(null);
 
     useEffect(()=>{
         if(matches){
-            setMenuVariant('permanent')
             setMenuOpen(true)
-        }else {
-            setMenuVariant(null)
+            setMenuVariant('permanent')
+        }else{
             setMenuOpen(false)
+            setMenuVariant(null)
         }
     },[matches])
+
+    const toggleDrawer = (menuOpen) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setMenuOpen(menuOpen)
+    };
+
+    useEffect(() => {
+        if(link) {
+            const goToLink = setTimeout(() => {
+                history.push(link)
+            }, 300);
+            return () => clearTimeout(goToLink);
+        }
+    }, [link,history]);
+
     const menuItems = []
     for (let key in RM) {menuItems.push(RM[key])}
     const classes = useStyles();
 
-    const location = useLocation().pathname;
-    const history = useHistory();
+
 
     return (
         <div className={classes.root}>
+            {!matches &&
+                <IconButton
+                    color={"inherit"}
+                    onClick={toggleDrawer(true)}
+                >
+                    <MenuIcon className={classes.menuIcon}/>
+                </IconButton>
+            }
+
             <Drawer
+                anchor="left"
                 open={menuOpen}
+                onClose={toggleDrawer(false)}
                 className={classes.drawer}
                 variant={menuVariant}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-                anchor="left"
+                classes={{paper: classes.drawerPaper,}}
             >
-                <div className={classes.menuHeader}>
-                    <div className={classes.avatar}>{AuthStore.user.avatar ? <img src={AuthStore.user.avatar} alt=""/> : <img src={NoAvatar__img} alt=""/>}</div>
-                    <div className={classes.userEmail}>{AuthStore.user.email}</div>
-                    <ListItem
-                        button key={1}
-                        className={classes.menuItem}
-                        style={{justifyContent: 'center'}}
-                        onClick={()=> history.push('/')}
-                    >
-                        Перейти на сайт
-                    </ListItem>
-                </div>
-
-                <List>
-
+                <Box
+                    role="presentation"
+                    onClick={toggleDrawer(false)}
+                    onKeyDown={toggleDrawer(false)}
+                >
+                    <div className={classes.menuHeader}>
+                        <div className={classes.avatar}>{AuthStore.user.avatar ? <img src={AuthStore.user.avatar} alt=""/> : <img src={NoAvatar__img} alt=""/>}</div>
+                        <div className={classes.userEmail}>{AuthStore.user.email}</div>
+                        <ListItem
+                            button key={1}
+                            className={classes.menuItem}
+                            style={{justifyContent: 'center'}}
+                            onClick={()=> setLink('/')}
+                        >
+                            Перейти на сайт
+                        </ListItem>
+                    </div>
                     <Divider style={{backgroundColor: '#ccc'}}/>
-                </List>
-                <List>
-                    <ListItem
-                        button key={2}
-                        className={location === RM.Admin.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                        onClick={()=> history.push(RM.Admin.path)}>
-                        {'Главная панель'}
-                    </ListItem>
-                    {menuItems.map((i) =>
-                        i.menu?.type !== 'admin'
-                            ? null
-                            : (
-                                <ListItem
-                                    button key={i.path}
-                                    className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                                    onClick={()=> history.push(i.path)}>
+                    <List>
+                        <ListItem
+                            button key={2}
+                            className={location === RM.Admin.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                            onClick={()=> setLink(RM.Admin.path)}
+                        >
+                            Главная панель
+                        </ListItem>
+                        {menuItems.map((i) =>
+                            i.menu?.type !== 'admin'
+                                ? null
+                                : (
+                                    <ListItem
+                                        button key={i.path}
+                                        className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                                        onClick={()=> setLink(i.path)}
+                                    >
                                         {i.menu.title}
-                                </ListItem>
-                            )
-                    )}
-                </List>
+                                    </ListItem>
+                                )
+                        )}
+                    </List>
+                </Box>
             </Drawer>
         </div>
     );

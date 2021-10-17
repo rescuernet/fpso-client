@@ -7,7 +7,8 @@ import AdminService from "../services/admin-service";
 class AdminStore {
 
     news_tmp_avatar = null
-    news_tmp_avatar_errors = null
+    news_tmp_images_errors = null
+    news_tmp_images = null
 
     constructor() {
         makeAutoObservable(this);
@@ -18,11 +19,12 @@ class AdminStore {
         try {
             const response = await AdminService.newsAvatarCreate(avatar);
             runInAction(() => {this.news_tmp_avatar = response.data.name})
+            return response.data.name
         } catch (e) {
-            runInAction(() => {this.news_tmp_avatar_errors =
+            runInAction(() => {this.news_tmp_images_errors =
                 <div>
-                    <div>Аватар не загрузился!</div>
-                    <div>размер максимум 4 мб</div>
+                    <div>Изображение не загрузилось!</div>
+                    <div>максимальный размер 4 мб</div>
                     <div>тип файла JPEG/JPG</div>
                 </div>})
         } finally {
