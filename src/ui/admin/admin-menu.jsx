@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -69,6 +69,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminMenu = (props) => {
+    const matches = useMediaQuery('(min-width:750px)');
+    const [menuOpen,setMenuOpen] = useState(true)
+    const [menuVariant,setMenuVariant] = useState()
+
+    useEffect(()=>{
+        if(matches){
+            setMenuVariant('permanent')
+            setMenuOpen(true)
+        }else {
+            setMenuVariant(null)
+            setMenuOpen(false)
+        }
+    },[matches])
     const menuItems = []
     for (let key in RM) {menuItems.push(RM[key])}
     const classes = useStyles();
@@ -79,9 +92,9 @@ const AdminMenu = (props) => {
     return (
         <div className={classes.root}>
             <Drawer
-                open={props.open}
+                open={menuOpen}
                 className={classes.drawer}
-                variant={props.variant}
+                variant={menuVariant}
                 classes={{
                     paper: classes.drawerPaper,
                 }}

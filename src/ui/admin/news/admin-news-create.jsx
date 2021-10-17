@@ -104,19 +104,6 @@ const AdminNewsCreate = () => {
 
     const matches = useMediaQuery('(min-width:750px)');
 
-    const [menuOpen,setMenuOpen] = useState(true)
-    const [menuVariant,setMenuVariant] = useState()
-
-    useEffect(()=>{
-        if(matches){
-            setMenuVariant('permanent')
-            setMenuOpen(true)
-        }else {
-            setMenuVariant(null)
-            setMenuOpen(false)
-        }
-    },[matches])
-
     useEffect(()=>{
         const inputClear = document.getElementById('avatarHeader')
         inputClear.value = ''
@@ -175,12 +162,9 @@ const AdminNewsCreate = () => {
 
     return (
         <div className={classes.root}>
-            <AdminMenu open={menuOpen} variant={menuVariant}/>
+            <AdminMenu/>
             <div className={classes.content}>
                 <div className={classes.header}>
-                    {!matches &&
-                        <MenuIcon onClick={()=> {setMenuOpen(true)}}/>
-                    }
                     <Typography>Создание новости</Typography>
                 </div>
                 <Divider/>
