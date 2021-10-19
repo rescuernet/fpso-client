@@ -8,6 +8,10 @@ import {runInAction} from "mobx";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import AdminHeader from "../header/admin-header";
 import {observer} from "mobx-react-lite";
+import {AlertDialog} from "./alert";
+import { toJS } from 'mobx';
+import {useHistory} from "react-router-dom";
+import {RM} from "../../../routes/routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,6 +92,15 @@ const useStyles = makeStyles((theme) => ({
     images: {
         padding: '20px 0'
     },
+    imagesItem: {
+        display: "flex",
+        justifyContent: "space-evenly",
+        flexWrap: "wrap",
+        marginBottom: 20,
+        '& img': {
+            margin: 5
+        }
+    },
     imageAdd: {
         display: "flex",
         justifyContent: "center"
@@ -113,46 +126,63 @@ const useStyles = makeStyles((theme) => ({
 const AdminNewsCreate = () => {
 
     const matches = useMediaQuery('(min-width:750px)');
+    const history = useHistory();
 
-    //зачиска input type file
-    useEffect(()=>{
-        const inputClear = document.getElementById('avatarHeader')
-        inputClear.value = ''
+    //очистка ошибки загрузки изображения
+    const ClearImageError = () => {
+        const avatarImage = document.getElementById('avatarImage')
+        const image = document.getElementById('image')
+        if(avatarImage){avatarImage.value = ''}
+        if(image){image.value = ''}
         runInAction(() => {AdminStore.news_tmp_images_errors = null})
+    }
+    //очистка input type file
+    useEffect(()=>{
+        ClearImageError()
     },[])
 
     const classes = useStyles();
-    const [avatar,setAvatar] = useState()
+
+    const [avatar,setAvatar] = useState(null)
     const [dateStart,setDateStart] = useState(dateToString(new Date(Date.parse(Date()))))
     const [dateEnd,setDateEnd] = useState('')
     const [headerFirst,setHeaderFirst] = useState('')
     const [headerSecond,setHeaderSecond] = useState('')
     const [textMain,setTextMain] = useState('')
-    const [images,setImages] = useState('')
+    const [images,setImages] = useState()
 
     // загрузка аватар
     const UploadAvatarHeader = (event) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
-        runInAction(() => {AdminStore.newsAvatarCreate(data)})
+        runInAction(async () => {
+            await AdminStore.newsAvatarCreate(data)
+            setAvatar(AdminStore.news_tmp_avatar)
+        })
+
     };
 
-    //установка аватара в локальный state
-    useEffect(()=>{
-        setAvatar(AdminStore.news_tmp_avatar)
-    },[AdminStore.news_tmp_avatar])
+    //загрузка фотографий
+    const UploadImage = (event) => {
+        event.preventDefault();
+        const data = new FormData()
+        data.append('files',event.target.files[0]);
+        runInAction( async () => {
+            await runInAction(()=>{AdminStore.newsImageCreate(data)})
+            setImages(toJS(AdminStore.news_tmp_images))
+        })
+    };
+
+    //удаление одной фоографии
+    const DeleteOneImage = (id) => {
+        runInAction(() => {AdminStore.news_tmp_images.splice(id,1)})
+    }
 
     //удаление аватара
     const DeleteAvatarHeader = () => {
         runInAction(() => {AdminStore.news_tmp_avatar = null})
-    }
-
-    //очистка ошибки загрузки аватара
-    const ClearAvatarError = () => {
-        const inputClear = document.getElementById('avatarHeader')
-        inputClear.value = ''
-        runInAction(() => {AdminStore.news_tmp_images_errors = null})
+        setAvatar(null)
     }
 
     //зачистка всей формы
@@ -166,18 +196,23 @@ const AdminNewsCreate = () => {
     }
 
     //создание массива для для сохранения
-    const CreateArr = () => {
+    const CreateArr = async () => {
         const Arr = {
-            avatar,
+            avatar: AdminStore.news_tmp_avatar,
             dateStart,
             dateEnd,
             headerFirst,
             headerSecond,
-            textMain
+            textMain,
+            images: toJS(AdminStore.news_tmp_images)
         }
-        runInAction(() => {AdminStore.newsCreate(Arr)})
+        const aaa = await AdminStore.newsCreate(Arr)
+        if(aaa === 'ok'){
+            history.push(RM.Admin__News.path)
+        }else{
+            alert(aaa)
+        }
     }
-
 
     return (
         <div className={classes.root}>
@@ -200,10 +235,10 @@ const AdminNewsCreate = () => {
                         </div>
                         :
                         <div className={classes.avatarAdd}>
-                            <label htmlFor="avatarHeader">
+                            <label htmlFor="avatarImage">
                                 <input
                                     style={{ display: 'none' }}
-                                    id="avatarHeader"
+                                    id="avatarImage"
                                     name="avatarImage"
                                     type="file"
                                     onChange={UploadAvatarHeader}
@@ -213,14 +248,11 @@ const AdminNewsCreate = () => {
                                     size="small"
                                     variant={"outlined"}
                                     component={'span'}
-                                    onClick={()=>{ClearAvatarError()}}
+                                    onClick={()=>{ClearImageError()}}
                                 >
                                     выбрать аватар новости
                                 </Button>
                             </label>
-                            {AdminStore.news_tmp_images_errors &&
-                                AdminStore.news_tmp_images_errors
-                            }
                         </div>
                     }
                 </div>
@@ -287,6 +319,17 @@ const AdminNewsCreate = () => {
                 </div>
                 <Divider/>
                 <div className={classes.images}>
+                    {AdminStore.news_tmp_images.length > 0 &&
+                        <div className={classes.imagesItem}>
+                            {
+                                AdminStore.news_tmp_images.map((i,index)=>(
+                                    <div key={index} onClick={()=> {DeleteOneImage(index)}}>
+                                        <img id={index} src={`http://localhost:5000/tmp/crop_${i}`} alt=""/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    }
                     <div className={classes.imageAdd}>
                         <label htmlFor="image">
                             <input
@@ -294,21 +337,18 @@ const AdminNewsCreate = () => {
                                 id="image"
                                 name="image"
                                 type="file"
-                                /*onChange={UploadAvatarHeader}*/
+                                onChange={UploadImage}
                             />
                             <Button
                                 color="primary"
                                 size="small"
                                 variant={"outlined"}
                                 component={'span'}
-                                /*onClick={()=>{ClearAvatarError()}}*/
+                                onClick={()=>{ClearImageError()}}
                             >
                                 добавить фотографию
                             </Button>
                         </label>
-                        {AdminStore.news_tmp_images_errors &&
-                        AdminStore.news_tmp_images_errors
-                        }
                     </div>
                 </div>
                 <Divider/>
@@ -331,6 +371,13 @@ const AdminNewsCreate = () => {
                     </Button>
                 </div>
             </div>
+            {AdminStore.news_tmp_images_errors &&
+                <AlertDialog
+                    open={true}
+                    header={'Ошибка загрузки аватара'}
+                    text={AdminStore.news_tmp_images_errors}
+                />
+            }
         </div>
     );
 };

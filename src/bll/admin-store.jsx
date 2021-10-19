@@ -8,7 +8,7 @@ class AdminStore {
 
     news_tmp_avatar = null
     news_tmp_images_errors = null
-    news_tmp_images = null
+    news_tmp_images = []
 
     constructor() {
         makeAutoObservable(this);
@@ -19,13 +19,32 @@ class AdminStore {
         try {
             const response = await AdminService.newsAvatarCreate(avatar);
             runInAction(() => {this.news_tmp_avatar = response.data.name})
-            return response.data.name
         } catch (e) {
             runInAction(() => {this.news_tmp_images_errors =
                 <div>
                     <div>Изображение не загрузилось!</div>
-                    <div>максимальный размер 4 мб</div>
-                    <div>тип файла JPEG/JPG</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    newsImageCreate = async (image) => {
+        runInAction(() => {Store.isLoading = true})
+        const imageArr = this.news_tmp_images
+        try {
+            const response = await AdminService.newsImageCreate(image);
+            imageArr.push(response.data.name)
+            runInAction(() => {this.news_tmp_images = imageArr})
+        } catch (e) {
+            runInAction(() => {this.news_tmp_images_errors =
+                <div>
+                    <div>Изображение не загрузилось!</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
                 </div>})
         } finally {
             runInAction(() => {Store.isInit = true})
@@ -37,7 +56,14 @@ class AdminStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminService.newsCreate(Arr);
-            console.log(response)
+            if(response.data?.error){
+                return response.data.error
+            }else{
+                runInAction(() => {this.news_tmp_avatar = null})
+                runInAction(() => {this.news_tmp_images_errors = null})
+                runInAction(() => {this.news_tmp_images = []})
+                return 'ok'
+            }
         } catch (e) {
             console.log(e)
         } finally {

@@ -7,6 +7,10 @@ export default class AdminService {
         return $api.post(RM.Admin__News__Avatar__Create.path,avatar)
     }
 
+    static async newsImageCreate(image) {
+        return $api.post(RM.Admin__News__Image__Create.path,image)
+    }
+
     static async newsCreate(Arr) {
         return $api.post(RM.Admin__News__Create.path,Arr)
     }
