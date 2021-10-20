@@ -5,6 +5,7 @@ import Main from "../ui/main/main";
 import AdminNews from "../ui/admin/news/admin-news";
 import AdminCompetitions from "../ui/admin/competitions/admin-competitions";
 import AdminNewsCreate from "../ui/admin/news/admin-news-create";
+import News from "../ui/news/news";
 
 
 export const MenuTypes = {
@@ -35,6 +36,17 @@ const RouterManager = {
         menu: {
             type: MenuTypes.main,
             title: 'Соревнования'
+        }
+    },
+    News: {
+        path:'/news',
+        Component: News,
+        getUrl() {return `/news`},
+        auth: false,
+        header: true,
+        menu: {
+            type: MenuTypes.main,
+            title: 'Новости'
         }
     },
     Login: {

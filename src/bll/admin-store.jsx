@@ -7,8 +7,9 @@ import AdminService from "../services/admin-service";
 class AdminStore {
 
     news_tmp_avatar = null
-    news_tmp_images_errors = null
     news_tmp_images = []
+    news_tmp_errors = null
+    news = []
 
     constructor() {
         makeAutoObservable(this);
@@ -20,7 +21,7 @@ class AdminStore {
             const response = await AdminService.newsAvatarCreate(avatar);
             runInAction(() => {this.news_tmp_avatar = response.data.name})
         } catch (e) {
-            runInAction(() => {this.news_tmp_images_errors =
+            runInAction(() => {this.news_tmp_errors =
                 <div>
                     <div>Изображение не загрузилось!</div>
                     <div>Максимальный размер 4 мб</div>
@@ -40,7 +41,7 @@ class AdminStore {
             imageArr.push(response.data.name)
             runInAction(() => {this.news_tmp_images = imageArr})
         } catch (e) {
-            runInAction(() => {this.news_tmp_images_errors =
+            runInAction(() => {this.news_tmp_errors =
                 <div>
                     <div>Изображение не загрузилось!</div>
                     <div>Максимальный размер 4 мб</div>
@@ -57,13 +58,29 @@ class AdminStore {
         try {
             const response = await AdminService.newsCreate(Arr);
             if(response.data?.error){
-                return response.data.error
+                runInAction(() => {this.news_tmp_errors =
+                    <div>
+                        <div>{response.data.error}</div>
+                    </div>})
             }else{
                 runInAction(() => {this.news_tmp_avatar = null})
-                runInAction(() => {this.news_tmp_images_errors = null})
+                runInAction(() => {this.news_tmp_errors = null})
                 runInAction(() => {this.news_tmp_images = []})
-                return 'ok'
+                return 200
             }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    getNews = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminService.getNews();
+            runInAction(() => {this.news = response.data})
         } catch (e) {
             console.log(e)
         } finally {

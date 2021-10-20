@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
+import AdminStore from "../../../bll/admin-store";
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -20,6 +21,7 @@ export const AlertDialog = (props) => {
     const [open, setOpen] = useState(props.open);
 
     const handleClose = () => {
+        AdminStore.news_tmp_errors = null
         setOpen(false);
     };
 

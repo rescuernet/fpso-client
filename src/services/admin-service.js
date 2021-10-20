@@ -14,4 +14,8 @@ export default class AdminService {
     static async newsCreate(Arr) {
         return $api.post(RM.Admin__News__Create.path,Arr)
     }
+
+    static async getNews() {
+        return $api.get(RM.Admin__News.path)
+    }
 }
