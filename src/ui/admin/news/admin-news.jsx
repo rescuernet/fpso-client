@@ -8,8 +8,7 @@ import {useHistory} from "react-router-dom";
 import AdminStore from '../../../bll/admin-store';
 import {toJS} from "mobx";
 import AdminHeader from "../header/admin-header";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-
+import AdminNewsItem from "./admin-news-item";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,44 +37,54 @@ const useStyles = makeStyles((theme) => ({
             marginTop: 45,
         },
     },
+    control: {
+        padding: 20
+    },
+    newsList: {
+
+    }
 
 }));
 
 
 const AdminNews = () => {
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:750px)');
+    const width = window.outerWidth
     const history = useHistory();
 
     useEffect(()=>{
         AdminStore.getNews()
+
     },[])
 
     const news = toJS(AdminStore.news)
-    console.log(news)
 
     const createNews = () => {
         AdminStore.news_tmp_avatar = '';
         history.push(RM.Admin__News__Create.path);
     }
 
-
     return (
         <div className={classes.root}>
-            {matches ? <AdminMenu/> : <AdminHeader header={'Новости'}/>}
+            {width > 750 ? <AdminMenu/> : <AdminHeader header={'Новости'}/>}
             <div className={classes.wrapper}>
-                {matches && <div className={classes.header}><Typography>Новости</Typography></div>}
+                {width > 750 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
                 <Divider/>
+                <div className={classes.control}>
+                    <Button
+                        variant={"contained"}
+                        color={"primary"}
+                        onClick={() => {createNews()}}
+                    >
+                        Создать новость
+                    </Button>
+                </div>
+                <Divider />
                 <div className={classes.content}>
-                    <div>
-                        <Button onClick={() => {
-                            createNews()
-                        }}>Создать</Button>
-                    </div>
-                    <div>
-                        {/*{news.map((i) => (
-
-                        ))}*/}
+                    <div className={classes.newsList}>
+                        {news.map((i) => (
+                            <AdminNewsItem key={i._id} news={i}/>
+                        ))}
                     </div>
                 </div>
             </div>

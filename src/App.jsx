@@ -15,7 +15,6 @@ for (let key in RM) {Routes.push(RM[key])}
 
 const App = () => {
 
-
     const location = useLocation().pathname;
 
     useEffect(() => {

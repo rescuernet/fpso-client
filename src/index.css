@@ -20,8 +20,8 @@ a {
 }
 
 .isLoading {
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   position: fixed;
   z-index: 1999;
   height: 100vh;

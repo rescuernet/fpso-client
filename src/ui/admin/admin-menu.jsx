@@ -84,20 +84,20 @@ const useStyles = makeStyles((theme) => ({
 const AdminMenu = (props) => {
     const location = useLocation().pathname;
     const history = useHistory();
-    const matches = useMediaQuery('(min-width:750px)');
-    const [menuOpen,setMenuOpen] = useState()
+    const width = window.outerWidth > 750 ? true : false
+    const [menuOpen,setMenuOpen] = React.useState(true)
     const [menuVariant,setMenuVariant] = useState()
     const [link, setLink] = useState(null);
 
     useEffect(()=>{
-        if(matches){
+        if(width){
             setMenuOpen(true)
             setMenuVariant('permanent')
         }else{
             setMenuOpen(false)
             setMenuVariant(null)
         }
-    },[matches])
+    },[width])
 
     const toggleDrawer = (menuOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -119,11 +119,9 @@ const AdminMenu = (props) => {
     for (let key in RM) {menuItems.push(RM[key])}
     const classes = useStyles();
 
-
-
     return (
         <div className={classes.root}>
-            {!matches &&
+            {!width &&
                 <IconButton
                     color={"inherit"}
                     onClick={toggleDrawer(true)}
