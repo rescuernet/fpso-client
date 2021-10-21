@@ -6,7 +6,8 @@ import AdminService from "../services/admin-service";
 
 class AdminStore {
 
-    news_tmp_avatar = null
+    news_tmp_avatar_old = null
+    news_tmp_avatar_new = null
     news_tmp_images = []
     news_tmp_errors = null
     news = []
@@ -19,7 +20,7 @@ class AdminStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminService.newsAvatarCreate(avatar);
-            runInAction(() => {this.news_tmp_avatar = response.data.name})
+            runInAction(() => {this.news_tmp_avatar_new = response.data.name})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>

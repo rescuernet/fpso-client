@@ -150,7 +150,7 @@ const AdminNewsCreateEdit = () => {
         const image = document.getElementById('image')
         if(avatarImage){avatarImage.value = ''}
         if(image){image.value = ''}
-        AdminStore.news_tmp_avatar = null;
+        AdminStore.news_tmp_avatar_new = null;
         AdminStore.news_tmp_images = [];
     }
     //очистка input type file
@@ -167,7 +167,7 @@ const AdminNewsCreateEdit = () => {
     const [images,setImages] = useState();
     const [fixedNews, setFixedNews] = useState(newsEdit ? newsEdit.fixedNews : false);
     const [importantNews, setImportantNews] = useState(newsEdit ? newsEdit.importantNews : false);
-    newsEdit && runInAction(() => {AdminStore.news_tmp_avatar = newsEdit.avatar})
+    newsEdit && runInAction(() => {AdminStore.news_tmp_avatar_old = newsEdit.avatar})
 
 
     // загрузка аватар
@@ -182,7 +182,10 @@ const AdminNewsCreateEdit = () => {
     };
     //удаление аватара
     const DeleteAvatarHeader = () => {
-        runInAction(() => {AdminStore.news_tmp_avatar = null})
+        runInAction(() => {
+            AdminStore.news_tmp_avatar_new = null
+            AdminStore.news_tmp_avatar_old = null
+        })
     };
 
     //загрузка фотографий
@@ -212,7 +215,7 @@ const AdminNewsCreateEdit = () => {
 
     //зачистка всей формы
     const ClearForm = () => {
-        AdminStore.news_tmp_avatar = null;
+        AdminStore.news_tmp_avatar_new = null
         setDateStart(dateToString(new Date(Date.parse(Date()))));
         setDateEnd('');
         setHeaderFirst('');
@@ -226,7 +229,7 @@ const AdminNewsCreateEdit = () => {
     //создание массива для для сохранения
     const CreateArr = async () => {
         const Arr = {
-            avatar: AdminStore.news_tmp_avatar,
+            avatar: AdminStore.news_tmp_avatar_new,
             dateStart,
             dateEnd,
             headerFirst,
@@ -255,7 +258,7 @@ const AdminNewsCreateEdit = () => {
 
                         }*/}
                         <div className={classes.avatarControl}>
-                            <img src={`${SRV_URL}/tmp/${AdminStore.news_tmp_avatar}`} alt=""/>
+                            <img src={`${SRV_URL}/tmp/${AdminStore.news_tmp_avatar_new}`} alt=""/>
                             <Button
                                 variant={"outlined"}
                                 color={"primary"}
@@ -408,6 +411,7 @@ const AdminNewsCreateEdit = () => {
                         </div>
                         <Divider/>
                         <div className={classes.controlButton}>
+                            {!id &&
                             <Button
                                 className={classes.Button}
                                 variant={"outlined"}
@@ -416,6 +420,7 @@ const AdminNewsCreateEdit = () => {
                             >
                                 Очистить форму
                             </Button>
+                            }
                             <Button
                                 className={classes.Button}
                                 variant="contained"
