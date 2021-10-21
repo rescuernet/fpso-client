@@ -10,8 +10,13 @@ import {useGridPoint} from "./utils/breakpoints";
 import {ThemeProvider } from "@material-ui/core/styles";
 
 
+
 const Routes = []
 for (let key in RM) {Routes.push(RM[key])}
+
+window.addEventListener("resize", (event) => {
+    Store.width = window.outerWidth
+})
 
 const App = () => {
 

@@ -24,7 +24,7 @@ const AdminHeader = (props) => {
 
     return (
         <AppBar className={classes.appBar}>
-            <AdminMenu/>
+            <AdminMenu open={false} menuIconView={true}/>
             <div>{props.header}</div>
         </AppBar>
     );

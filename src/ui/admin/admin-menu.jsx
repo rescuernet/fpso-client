@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {useHistory, useLocation} from "react-router-dom";
 import {RM} from "../../routes/routes";
 import {Box, Divider, IconButton} from "@material-ui/core";
@@ -84,12 +83,12 @@ const useStyles = makeStyles((theme) => ({
 const AdminMenu = (props) => {
     const location = useLocation().pathname;
     const history = useHistory();
-    const width = window.outerWidth > 750 ? true : false
-    const [menuOpen,setMenuOpen] = React.useState(true)
-    const [menuVariant,setMenuVariant] = useState()
+    /*const width = window.outerWidth > 750 ? true : false*/
+    const [menuOpen,setMenuOpen] = React.useState(props.open)
+    /*const [menuVariant,setMenuVariant] = useState()*/
     const [link, setLink] = useState(null);
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         if(width){
             setMenuOpen(true)
             setMenuVariant('permanent')
@@ -97,7 +96,7 @@ const AdminMenu = (props) => {
             setMenuOpen(false)
             setMenuVariant(null)
         }
-    },[width])
+    },[width])*/
 
     const toggleDrawer = (menuOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -121,7 +120,7 @@ const AdminMenu = (props) => {
 
     return (
         <div className={classes.root}>
-            {!width &&
+            {props.menuIconView &&
                 <IconButton
                     color={"inherit"}
                     onClick={toggleDrawer(true)}
@@ -132,11 +131,11 @@ const AdminMenu = (props) => {
 
             <Drawer
                 anchor="left"
-                open={menuOpen}
+                open={(menuOpen === 'undefined' || null) ? props.open : menuOpen}
                 onClose={toggleDrawer(false)}
                 className={classes.drawer}
-                variant={menuVariant}
-                classes={{paper: classes.drawerPaper,}}
+                variant={props.variant}
+                classes={{paper: classes.drawerPaper}}
             >
                 <Box
                     role="presentation"

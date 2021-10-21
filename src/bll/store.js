@@ -6,6 +6,7 @@ class Store {
 
     isLoading = false
     isInit = false
+    width = window.outerWidth
 
     constructor() {
         makeAutoObservable(this);

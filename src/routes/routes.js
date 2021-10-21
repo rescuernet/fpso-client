@@ -4,7 +4,7 @@ import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
 import AdminNews from "../ui/admin/news/admin-news";
 import AdminCompetitions from "../ui/admin/competitions/admin-competitions";
-import AdminNewsCreate from "../ui/admin/news/admin-news-create";
+import AdminNewsCreate from "../ui/admin/news/admin-news-create-edit";
 import News from "../ui/news/news";
 
 
@@ -82,6 +82,13 @@ const RouterManager = {
         path: `${PrefixPath.admin}/news/create`,
         Component: AdminNewsCreate,
         getUrl() {return `${PrefixPath.admin}/news/create`},
+        auth: true,
+        header: false,
+    },
+    Admin__News__Edit: {
+        path: `${PrefixPath.admin}/news/edit/:id`,
+        Component: AdminNewsCreate,
+        getUrl(id) {return `${PrefixPath.admin}/news/edit/${id}`},
         auth: true,
         header: false,
     },

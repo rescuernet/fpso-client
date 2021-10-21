@@ -58,9 +58,7 @@ class AdminStore {
             const response = await AdminService.newsCreate(Arr);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
-                    <div>
-                        <div>{response.data.error}</div>
-                    </div>})
+                    <div>{response.data.error}</div>})
             }else{
                 runInAction(() => {this.news_tmp_avatar = null})
                 runInAction(() => {this.news_tmp_errors = null})
