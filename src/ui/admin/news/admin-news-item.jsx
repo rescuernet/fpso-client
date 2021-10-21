@@ -35,9 +35,8 @@ const AdminNewsItem = ({news}) => {
 
 
     return (
-        <tr onDoubleClick={()=>{newsEdit(news._id)}} id={news._id}>
+        <tr onClick={()=>{newsEdit(news._id)}} id={news._id}>
             {Store.width > 750 && <td className={Store.width > 750 && classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>}
-
             <td>{news.headerFirst}</td>
             {Store.width > 750 &&
                 <>

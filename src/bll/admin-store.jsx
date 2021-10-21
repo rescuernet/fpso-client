@@ -8,7 +8,8 @@ class AdminStore {
 
     news_tmp_avatar_old = null
     news_tmp_avatar_new = null
-    news_tmp_images = []
+    news_tmp_images_old = []
+    news_tmp_images_new = []
     news_tmp_errors = null
     news = []
 
@@ -35,11 +36,11 @@ class AdminStore {
 
     newsImageCreate = async (image) => {
         runInAction(() => {Store.isLoading = true})
-        const imageArr = this.news_tmp_images
+        const imageArr = this.news_tmp_images_new
         try {
             const response = await AdminService.newsImageCreate(image);
             imageArr.push(response.data.name)
-            runInAction(() => {this.news_tmp_images = imageArr})
+            runInAction(() => {this.news_tmp_images_new = imageArr})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -61,9 +62,9 @@ class AdminStore {
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
             }else{
-                runInAction(() => {this.news_tmp_avatar = null})
+                runInAction(() => {this.news_tmp_avatar_new = null})
                 runInAction(() => {this.news_tmp_errors = null})
-                runInAction(() => {this.news_tmp_images = []})
+                runInAction(() => {this.news_tmp_images_new = []})
                 return 200
             }
         } catch (e) {

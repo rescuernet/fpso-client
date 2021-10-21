@@ -12,7 +12,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {RM} from "../../../routes/routes";
 import Store from "../../../bll/store";
 import * as dateFns from "date-fns";
-import {SRV_URL} from "../../../const/const";
+import {IMG_TMP_URL, NEWS_URL, SRV_URL} from "../../../const/const";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -142,20 +142,17 @@ const AdminNewsCreateEdit = () => {
     const newsEdit = id && toJS(AdminStore.news).find(item => item._id === id)
     id && !newsEdit && history.push(RM.Admin__News.path)
 
-
-
-    //очистка ошибки загрузки изображения
-    const ClearImageError = () => {
-        const avatarImage = document.getElementById('avatarImage')
-        const image = document.getElementById('image')
-        if(avatarImage){avatarImage.value = ''}
-        if(image){image.value = ''}
-        AdminStore.news_tmp_avatar_new = null;
-        AdminStore.news_tmp_images = [];
-    }
-    //очистка input type file
+    //очистка Store перед размонтированием
     useEffect(()=>{
-        ClearImageError()
+        newsEdit && runInAction(() => {AdminStore.news_tmp_avatar_old = newsEdit.avatar})
+        return ()=> {
+            runInAction(() => {
+                AdminStore.news_tmp_avatar_new = null
+                AdminStore.news_tmp_avatar_old = null
+                AdminStore.news_tmp_images_new = []
+                AdminStore.news_tmp_images_old = []
+            })
+        }
     },[])
 
     const classes = useStyles();
@@ -167,7 +164,7 @@ const AdminNewsCreateEdit = () => {
     const [images,setImages] = useState();
     const [fixedNews, setFixedNews] = useState(newsEdit ? newsEdit.fixedNews : false);
     const [importantNews, setImportantNews] = useState(newsEdit ? newsEdit.importantNews : false);
-    newsEdit && runInAction(() => {AdminStore.news_tmp_avatar_old = newsEdit.avatar})
+
 
 
     // загрузка аватар
@@ -195,13 +192,13 @@ const AdminNewsCreateEdit = () => {
         data.append('files',event.target.files[0]);
         runInAction( async () => {
             await runInAction(()=>{AdminStore.newsImageCreate(data)})
-            setImages(toJS(AdminStore.news_tmp_images))
+            setImages(toJS(AdminStore.news_tmp_images_new))
         })
     };
 
     //удаление одной фоографии
     const DeleteOneImage = (id) => {
-        runInAction(() => {AdminStore.news_tmp_images.splice(id,1)})
+        runInAction(() => {AdminStore.news_tmp_images_new.splice(id,1)})
     };
 
     //смена закрепления новости
@@ -223,7 +220,7 @@ const AdminNewsCreateEdit = () => {
         setTextMain('');
         setFixedNews(false);
         setImportantNews(false);
-        AdminStore.news_tmp_images = [];
+        AdminStore.news_tmp_images_new = [];
     };
 
     //создание массива для для сохранения
@@ -237,7 +234,7 @@ const AdminNewsCreateEdit = () => {
             textMain,
             fixedNews,
             importantNews,
-            images: toJS(AdminStore.news_tmp_images)
+            images: toJS(AdminStore.news_tmp_images_new)
         }
         const result = await AdminStore.newsCreate(Arr)
         if(result === 200){
@@ -253,40 +250,53 @@ const AdminNewsCreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
                     <div className={classes.avatar} id={'avatar'}>
-                        {/*{AdminStore.news_tmp_avatar
-                            ?
-
-                        }*/}
                         <div className={classes.avatarControl}>
-                            <img src={`${SRV_URL}/tmp/${AdminStore.news_tmp_avatar_new}`} alt=""/>
-                            <Button
-                                variant={"outlined"}
-                                color={"primary"}
-                                onClick={()=> {DeleteAvatarHeader()}}
-                            >
-                                удалить аватар
-                            </Button>
+                            {!AdminStore.news_tmp_avatar_new && AdminStore.news_tmp_avatar_old &&
+                                <>
+                                    <img src={`${NEWS_URL}${id}/${AdminStore.news_tmp_avatar_old}`} alt=""/>
+                                    <Button
+                                        variant={"outlined"}
+                                        color={"primary"}
+                                        onClick={()=> {DeleteAvatarHeader()}}
+                                    >
+                                        удалить аватар
+                                    </Button>
+                                </>
+                            }
+                            {AdminStore.news_tmp_avatar_new &&
+                                <>
+                                    <img src={`${IMG_TMP_URL}${AdminStore.news_tmp_avatar_new}`} alt=""/>
+                                    <Button
+                                        variant={"outlined"}
+                                        color={"primary"}
+                                        onClick={()=> {DeleteAvatarHeader()}}
+                                    >
+                                        удалить аватар
+                                    </Button>
+                                </>
+                            }
                         </div>
-                        <div className={classes.avatarAdd}>
-                            <label htmlFor="avatarImage">
-                                <input
-                                    style={{ display: 'none' }}
-                                    id="avatarImage"
-                                    name="avatarImage"
-                                    type="file"
-                                    onChange={UploadAvatarHeader}
-                                />
-                                <Button
-                                    color="primary"
-                                    size="small"
-                                    variant={"outlined"}
-                                    component={'span'}
-                                    onClick={()=>{ClearImageError()}}
-                                >
-                                    выбрать аватар новости
-                                </Button>
-                            </label>
-                        </div>
+                        {!AdminStore.news_tmp_avatar_new && !AdminStore.news_tmp_avatar_old &&
+                            <div className={classes.avatarAdd}>
+                                <label htmlFor="avatarImage">
+                                    <input
+                                        style={{ display: 'none' }}
+                                        id="avatarImage"
+                                        name="avatarImage"
+                                        type="file"
+                                        onChange={UploadAvatarHeader}
+                                    />
+                                    <Button
+                                        color="primary"
+                                        size="small"
+                                        variant={"outlined"}
+                                        component={'span'}
+                                    >
+                                        выбрать аватар новости
+                                    </Button>
+                                </label>
+                            </div>
+                        }
                     </div>
                     <Divider/>
                     <div className={classes.fieldsDates}>
@@ -351,10 +361,10 @@ const AdminNewsCreateEdit = () => {
                     </div>
                     <Divider/>
                     <div className={classes.images}>
-                        {AdminStore.news_tmp_images.length > 0 &&
+                        {AdminStore.news_tmp_images_new.length > 0 &&
                         <div className={classes.imagesItem}>
                             {
-                                AdminStore.news_tmp_images.map((i,index)=>(
+                                AdminStore.news_tmp_images_new.map((i,index)=>(
                                     <div key={index} onClick={()=> {DeleteOneImage(index)}}>
                                         <img id={index} src={`${SRV_URL}/tmp/crop_${i}`} alt=""/>
                                     </div>
@@ -376,7 +386,7 @@ const AdminNewsCreateEdit = () => {
                                     size="small"
                                     variant={"outlined"}
                                     component={'span'}
-                                    onClick={()=>{ClearImageError()}}
+                                    /*onClick={()=>{ClearImageError()}}*/
                                 >
                                     добавить фотографию
                                 </Button>
