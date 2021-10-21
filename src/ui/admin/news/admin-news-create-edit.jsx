@@ -144,7 +144,10 @@ const AdminNewsCreateEdit = () => {
 
     //очистка Store перед размонтированием
     useEffect(()=>{
-        newsEdit && runInAction(() => {AdminStore.news_tmp_avatar_old = newsEdit.avatar})
+        newsEdit && runInAction(() => {
+            AdminStore.news_tmp_avatar_old = newsEdit.avatar
+            AdminStore.news_tmp_images_old = newsEdit.images
+        })
         return ()=> {
             runInAction(() => {
                 AdminStore.news_tmp_avatar_new = null
@@ -161,7 +164,6 @@ const AdminNewsCreateEdit = () => {
     const [headerFirst,setHeaderFirst] = useState(newsEdit ? newsEdit.headerFirst : '');
     const [headerSecond,setHeaderSecond] = useState(newsEdit ? newsEdit.headerSecond : '');
     const [textMain,setTextMain] = useState(newsEdit ? newsEdit.textMain : '');
-    const [images,setImages] = useState();
     const [fixedNews, setFixedNews] = useState(newsEdit ? newsEdit.fixedNews : false);
     const [importantNews, setImportantNews] = useState(newsEdit ? newsEdit.importantNews : false);
 
@@ -192,13 +194,15 @@ const AdminNewsCreateEdit = () => {
         data.append('files',event.target.files[0]);
         runInAction( async () => {
             await runInAction(()=>{AdminStore.newsImageCreate(data)})
-            setImages(toJS(AdminStore.news_tmp_images_new))
         })
     };
 
     //удаление одной фоографии
-    const DeleteOneImage = (id) => {
+    const DeleteOneImageNew = (id) => {
         runInAction(() => {AdminStore.news_tmp_images_new.splice(id,1)})
+    };
+    const DeleteOneImageOld = (id) => {
+        runInAction(() => {AdminStore.news_tmp_images_old.splice(id,1)})
     };
 
     //смена закрепления новости
@@ -211,16 +215,8 @@ const AdminNewsCreateEdit = () => {
     };
 
     //зачистка всей формы
-    const ClearForm = () => {
-        AdminStore.news_tmp_avatar_new = null
-        setDateStart(dateToString(new Date(Date.parse(Date()))));
-        setDateEnd('');
-        setHeaderFirst('');
-        setHeaderSecond('');
-        setTextMain('');
-        setFixedNews(false);
-        setImportantNews(false);
-        AdminStore.news_tmp_images_new = [];
+    const Cancel = () => {
+        history.push(RM.Admin__News.path)
     };
 
     //создание массива для для сохранения
@@ -253,7 +249,7 @@ const AdminNewsCreateEdit = () => {
                         <div className={classes.avatarControl}>
                             {!AdminStore.news_tmp_avatar_new && AdminStore.news_tmp_avatar_old &&
                                 <>
-                                    <img src={`${NEWS_URL}${id}/${AdminStore.news_tmp_avatar_old}`} alt=""/>
+                                    <img src={`${NEWS_URL}/${id}/${AdminStore.news_tmp_avatar_old}`} alt=""/>
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
@@ -265,7 +261,7 @@ const AdminNewsCreateEdit = () => {
                             }
                             {AdminStore.news_tmp_avatar_new &&
                                 <>
-                                    <img src={`${IMG_TMP_URL}${AdminStore.news_tmp_avatar_new}`} alt=""/>
+                                    <img src={`${IMG_TMP_URL}/${AdminStore.news_tmp_avatar_new}`} alt=""/>
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
@@ -361,17 +357,19 @@ const AdminNewsCreateEdit = () => {
                     </div>
                     <Divider/>
                     <div className={classes.images}>
-                        {AdminStore.news_tmp_images_new.length > 0 &&
                         <div className={classes.imagesItem}>
-                            {
+                            {AdminStore.news_tmp_images_old.length > 0 &&
+                                AdminStore.news_tmp_images_old.map((i,index)=>(
+                                    <img key={index} src={`${NEWS_URL}/${id}/crop_${i}`} onClick={()=> {DeleteOneImageOld(index)}} alt=""/>
+                                ))
+                            }
+                            {AdminStore.news_tmp_images_new.length > 0 &&
                                 AdminStore.news_tmp_images_new.map((i,index)=>(
-                                    <div key={index} onClick={()=> {DeleteOneImage(index)}}>
-                                        <img id={index} src={`${SRV_URL}/tmp/crop_${i}`} alt=""/>
-                                    </div>
+                                    <img id={index} src={`${IMG_TMP_URL}/crop_${i}`} onClick={()=> {DeleteOneImageNew(index)}} alt=""/>
                                 ))
                             }
                         </div>
-                        }
+
                         <div className={classes.imageAdd}>
                             <label htmlFor="image">
                                 <input
@@ -386,7 +384,6 @@ const AdminNewsCreateEdit = () => {
                                     size="small"
                                     variant={"outlined"}
                                     component={'span'}
-                                    /*onClick={()=>{ClearImageError()}}*/
                                 >
                                     добавить фотографию
                                 </Button>
@@ -421,16 +418,14 @@ const AdminNewsCreateEdit = () => {
                         </div>
                         <Divider/>
                         <div className={classes.controlButton}>
-                            {!id &&
                             <Button
                                 className={classes.Button}
                                 variant={"outlined"}
                                 color={"primary"}
-                                onClick={()=>{ClearForm()}}
+                                onClick={()=>{Cancel()}}
                             >
-                                Очистить форму
+                                Отмена
                             </Button>
-                            }
                             <Button
                                 className={classes.Button}
                                 variant="contained"
