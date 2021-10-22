@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         maxWidth: 1200,
         padding: 20,
-        '@media (max-width: 750px)' : {
+        '@media (max-width: 1050px)' : {
             marginTop: 45,
         },
     },
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminNews = (props) => {
+    window.scrollTo(0,0)
     const classes = useStyles();
     const history = useHistory();
 
@@ -85,7 +86,6 @@ const AdminNews = (props) => {
 
 
     const createNews = () => {
-        AdminStore.news_tmp_avatar = '';
         history.push(RM.Admin__News__Create.path);
     }
 
@@ -94,7 +94,7 @@ const AdminNews = (props) => {
         <div className={classes.root}>
             {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
             <div className={classes.wrapper}>
-                {Store.width > 750 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
+                {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
                     <div className={classes.control}>
@@ -109,19 +109,16 @@ const AdminNews = (props) => {
                     <div className={classes.newsList}>
                         <table className={classes.table}>
                             {Store.width > 750 &&
-                            <>
-                                <th className={Store.width > 750 && classes.min}>Создана</th>
-                                <th>Заголовок</th>
-                            </>
+                                <>
+                                    <th className={classes.min}>Создана</th>
+                                    <th></th>
+                                    <th>Заголовок</th>
+                                    <th className={classes.min}>старт</th>
+                                    <th className={classes.min}>финиш</th>
+                                    <th className={classes.min}>закреплена</th>
+                                    <th className={classes.min}>важная</th>
+                                </>
                              }
-                            {Store.width > 750 &&
-                            <>
-                                <th className={classes.min}>старт</th>
-                                <th className={classes.min}>финиш</th>
-                                <th className={classes.min}>закреплена</th>
-                                <th className={classes.min}>важная</th>
-                            </>
-                            }
                             {news.map((i) => (
                                 <AdminNewsItem key={i._id} news={i}/>
                             ))}

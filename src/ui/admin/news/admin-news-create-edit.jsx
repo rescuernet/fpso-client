@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         maxWidth: 600,
         padding: 20,
-        '@media (max-width: 750px)' : {
+        '@media (max-width: 1050px)' : {
             marginTop: 45,
         },
     },
@@ -100,14 +100,28 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-evenly",
         flexWrap: "wrap",
-        marginBottom: 20,
         '& img': {
-            margin: 5
+            margin: '5px 5px 20px 5px'
         }
     },
     imageAdd: {
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+    },
+    docs: {
+        padding: '20px 0'
+    },
+    docsItem: {
+        display: "flex",
+        justifyContent: "space-evenly",
+        flexWrap: "wrap",
+        '& img': {
+            margin: '5px 5px 20px 5px'
+        }
+    },
+    docsAdd: {
+        display: "flex",
+        justifyContent: "center",
     },
     control: {
         display: "flex",
@@ -118,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
     },
     controlCheckBox: {
         display: "flex",
+        flexDirection: 'column',
         flexWrap: "wrap",
         padding: 10
     },
@@ -166,6 +181,7 @@ const AdminNewsCreateEdit = () => {
     const [textMain,setTextMain] = useState(newsEdit ? newsEdit.textMain : '');
     const [fixedNews, setFixedNews] = useState(newsEdit ? newsEdit.fixedNews : false);
     const [importantNews, setImportantNews] = useState(newsEdit ? newsEdit.importantNews : false);
+    const [published, setPublishAfterSave] = useState(newsEdit ? newsEdit.published : false);
 
 
 
@@ -213,13 +229,17 @@ const AdminNewsCreateEdit = () => {
     const ChangeImportantNews = (event) => {
         setImportantNews(event.target.checked);
     };
+    //опубликовать после сохранения
+    const ChangePublishAfterSave = (event) => {
+        setPublishAfterSave(event.target.checked);
+    };
 
-    //зачистка всей формы
+    //отмена
     const Cancel = () => {
         history.push(RM.Admin__News.path)
     };
 
-    //создание массива для для сохранения
+    //создание массива для сохранения
     const CreateArr = async () => {
         const Arr = {
             avatar: AdminStore.news_tmp_avatar_new,
@@ -230,7 +250,8 @@ const AdminNewsCreateEdit = () => {
             textMain,
             fixedNews,
             importantNews,
-            images: toJS(AdminStore.news_tmp_images_new)
+            published,
+            images: toJS(AdminStore.news_tmp_images_new),
         }
         const result = await AdminStore.newsCreate(Arr)
         if(result === 200){
@@ -238,18 +259,41 @@ const AdminNewsCreateEdit = () => {
         }
     };
 
+    //создание массива для обновления
+    const UpdateArr = async () => {
+        const Arr = {
+            avatarNew: AdminStore.news_tmp_avatar_new,
+            avatarOld: AdminStore.news_tmp_avatar_old,
+            dateStart,
+            dateEnd,
+            headerFirst,
+            headerSecond,
+            textMain,
+            fixedNews,
+            importantNews,
+            published,
+            imagesNew: toJS(AdminStore.news_tmp_images_new),
+            imagesOld: toJS(AdminStore.news_tmp_images_old)
+        }
+        console.log(Arr)
+        /*const result = await AdminStore.newsCreate(Arr)
+        if(result === 200){
+            history.push(RM.Admin__News.path)
+        }*/
+    };
+
     return (
         <div className={classes.root}>
-            {Store.width > 750 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
+            {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
             <div className={classes.wrapper}>
-                {Store.width > 750 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
+                {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
                     <div className={classes.avatar} id={'avatar'}>
                         <div className={classes.avatarControl}>
                             {!AdminStore.news_tmp_avatar_new && AdminStore.news_tmp_avatar_old &&
                                 <>
-                                    <img src={`${NEWS_URL}/${id}/${AdminStore.news_tmp_avatar_old}`} alt=""/>
+                                    <img src={`${NEWS_URL}/${id}/avatar/${AdminStore.news_tmp_avatar_old}`} alt=""/>
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
@@ -360,7 +404,7 @@ const AdminNewsCreateEdit = () => {
                         <div className={classes.imagesItem}>
                             {AdminStore.news_tmp_images_old.length > 0 &&
                                 AdminStore.news_tmp_images_old.map((i,index)=>(
-                                    <img key={index} src={`${NEWS_URL}/${id}/crop_${i}`} onClick={()=> {DeleteOneImageOld(index)}} alt=""/>
+                                    <img key={index} src={`${NEWS_URL}/${id}/images/crop_${i}`} onClick={()=> {DeleteOneImageOld(index)}} alt=""/>
                                 ))
                             }
                             {AdminStore.news_tmp_images_new.length > 0 &&
@@ -369,7 +413,6 @@ const AdminNewsCreateEdit = () => {
                                 ))
                             }
                         </div>
-
                         <div className={classes.imageAdd}>
                             <label htmlFor="image">
                                 <input
@@ -391,6 +434,31 @@ const AdminNewsCreateEdit = () => {
                         </div>
                     </div>
                     <Divider/>
+                    <div className={classes.docs}>
+                        <div className={classes.docsItem}>
+
+                        </div>
+                        <div className={classes.docsAdd}>
+                            <label htmlFor="docs">
+                                <input
+                                    style={{ display: 'none' }}
+                                    id="docs"
+                                    name="docs"
+                                    type="file"
+                                    /*onChange={UploadDocs}*/
+                                />
+                                <Button
+                                    color="primary"
+                                    size="small"
+                                    variant={"outlined"}
+                                    component={'span'}
+                                >
+                                    добавить документ
+                                </Button>
+                            </label>
+                        </div>
+                    </div>
+                    <Divider/>
                     <div className={classes.control}>
                         <div className={classes.controlCheckBox}>
                             <FormControlLabel
@@ -402,7 +470,7 @@ const AdminNewsCreateEdit = () => {
                                         color="secondary"
                                     />
                                 }
-                                label="Закрепить новость"
+                                label="закрепить новость"
                             />
                             <FormControlLabel
                                 control={
@@ -413,7 +481,18 @@ const AdminNewsCreateEdit = () => {
                                         color="secondary"
                                     />
                                 }
-                                label="Важная новость"
+                                label="важная новость"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={published}
+                                        onChange={ChangePublishAfterSave}
+                                        name="publishAfterSave"
+                                        color="secondary"
+                                    />
+                                }
+                                label={newsEdit ? 'опубликовать' : 'опубликовать после сохранения'}
                             />
                         </div>
                         <Divider/>
@@ -432,7 +511,7 @@ const AdminNewsCreateEdit = () => {
                                 color={"primary"}
                                 onClick={()=>{CreateArr()}}
                             >
-                                Сохранить новость
+                                {newsEdit ? 'Обновить новость' : 'Сохранить новость'}
                             </Button>
                         </div>
                     </div>

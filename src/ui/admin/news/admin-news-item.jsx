@@ -5,6 +5,8 @@ import * as dateFns from "date-fns";
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Store from '../../../bll/store';
 import {RM} from "../../../routes/routes";
 
@@ -37,6 +39,7 @@ const AdminNewsItem = ({news}) => {
     return (
         <tr onClick={()=>{newsEdit(news._id)}} id={news._id}>
             {Store.width > 750 && <td className={Store.width > 750 && classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>}
+            <td>{news.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
             <td>{news.headerFirst}</td>
             {Store.width > 750 &&
                 <>
