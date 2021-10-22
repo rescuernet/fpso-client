@@ -262,20 +262,23 @@ const AdminNewsCreateEdit = () => {
     //создание массива для обновления
     const UpdateArr = async () => {
         const Arr = {
+            id,
             avatarNew: AdminStore.news_tmp_avatar_new,
-            avatarOld: AdminStore.news_tmp_avatar_old,
-            avatar: AdminStore.news_tmp_avatar_new ? AdminStore.news_tmp_avatar_new : AdminStore.news_tmp_avatar_old,
-            dateStart,
-            dateEnd,
-            headerFirst,
-            headerSecond,
-            textMain,
-            fixedNews,
-            importantNews,
-            published,
+            avatarOld: newsEdit.avatar,
             imagesNew: toJS(AdminStore.news_tmp_images_new),
             imagesOld: toJS(AdminStore.news_tmp_images_old),
-            images: toJS(AdminStore.news_tmp_images_new).concat(toJS(AdminStore.news_tmp_images_old))
+            model: {
+                avatar: AdminStore.news_tmp_avatar_new ? AdminStore.news_tmp_avatar_new : AdminStore.news_tmp_avatar_old,
+                dateStart,
+                dateEnd,
+                headerFirst,
+                headerSecond,
+                textMain,
+                fixedNews,
+                importantNews,
+                published,
+                images: toJS(AdminStore.news_tmp_images_new).concat(toJS(AdminStore.news_tmp_images_old))
+            }
         }
         const result = await AdminStore.newsUpdate(Arr)
         if(result === 200){
