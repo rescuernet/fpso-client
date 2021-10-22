@@ -264,6 +264,7 @@ const AdminNewsCreateEdit = () => {
         const Arr = {
             avatarNew: AdminStore.news_tmp_avatar_new,
             avatarOld: AdminStore.news_tmp_avatar_old,
+            avatar: AdminStore.news_tmp_avatar_new ? AdminStore.news_tmp_avatar_new : AdminStore.news_tmp_avatar_old,
             dateStart,
             dateEnd,
             headerFirst,
@@ -273,13 +274,13 @@ const AdminNewsCreateEdit = () => {
             importantNews,
             published,
             imagesNew: toJS(AdminStore.news_tmp_images_new),
-            imagesOld: toJS(AdminStore.news_tmp_images_old)
+            imagesOld: toJS(AdminStore.news_tmp_images_old),
+            images: toJS(AdminStore.news_tmp_images_new).concat(toJS(AdminStore.news_tmp_images_old))
         }
-        console.log(Arr)
-        /*const result = await AdminStore.newsCreate(Arr)
+        const result = await AdminStore.newsUpdate(Arr)
         if(result === 200){
             history.push(RM.Admin__News.path)
-        }*/
+        }
     };
 
     return (
@@ -509,7 +510,7 @@ const AdminNewsCreateEdit = () => {
                                 className={classes.Button}
                                 variant="contained"
                                 color={"primary"}
-                                onClick={()=>{CreateArr()}}
+                                onClick={()=>{newsEdit ? UpdateArr() : CreateArr()}}
                             >
                                 {newsEdit ? 'Обновить новость' : 'Сохранить новость'}
                             </Button>

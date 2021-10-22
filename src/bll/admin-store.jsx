@@ -75,6 +75,29 @@ class AdminStore {
         }
     }
 
+    newsUpdate = async (Arr) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminService.newsUpdate(Arr);
+            if(response.data?.error){
+                runInAction(() => {this.news_tmp_errors =
+                    <div>{response.data.error}</div>})
+            }else{
+                runInAction(() => {this.news_tmp_avatar_new = null})
+                runInAction(() => {this.news_tmp_avatar_old = null})
+                runInAction(() => {this.news_tmp_errors = null})
+                runInAction(() => {this.news_tmp_images_new = []})
+                runInAction(() => {this.news_tmp_images_old = []})
+                return 200
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
     getNews = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
