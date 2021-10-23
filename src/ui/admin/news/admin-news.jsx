@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         minHeight: '100%',
-        '@media (max-width: 750px)' : {
+        '@media (max-width: 1050px)' : {
             justifyContent: 'center'
         },
         position: "relative"
@@ -34,8 +34,11 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         maxWidth: 1200,
-        padding: 20,
+        padding: '20px 10px',
         '@media (max-width: 1050px)' : {
+            marginTop: 55,
+        },
+        '@media (max-width: 600px)' : {
             marginTop: 45,
         },
     },
@@ -67,8 +70,12 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     min: {
-        width: 120,
-        textAlign: "center"
+        width: 100,
+        textAlign: "center",
+        padding: '0 5px',
+        '@media (max-width: 1050px)' : {
+            width: 50,
+        },
     },
 
 }));
@@ -110,7 +117,10 @@ const AdminNews = (props) => {
                         <table className={classes.table}>
                             {Store.width > 750 &&
                                 <>
-                                    <th className={classes.min}>Создана</th>
+                                    {Store.width > 1000 &&
+                                        <th className={classes.min}>Создана</th>
+                                    }
+
                                     <th></th>
                                     <th>Заголовок</th>
                                     <th className={classes.min}>старт</th>

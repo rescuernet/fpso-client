@@ -21,8 +21,11 @@ const useStyles = makeStyles((theme) => ({
         position: "relative"
     },
     min: {
-        width: 120,
-        textAlign: "center"
+        width: 100,
+        textAlign: "center",
+        '@media (max-width: 1050px)' : {
+            width: 50,
+        },
     },
 }));
 
@@ -38,8 +41,8 @@ const AdminNewsItem = ({news}) => {
 
     return (
         <tr onClick={()=>{newsEdit(news._id)}} id={news._id}>
-            {Store.width > 750 && <td className={Store.width > 750 && classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>}
-            <td>{news.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
+            {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>}
+            <td className={classes.min}>{news.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
             <td>{news.headerFirst}</td>
             {Store.width > 750 &&
                 <>

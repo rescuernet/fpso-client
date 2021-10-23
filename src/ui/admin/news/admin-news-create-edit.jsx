@@ -12,20 +12,22 @@ import {useHistory, useParams} from "react-router-dom";
 import {RM} from "../../../routes/routes";
 import Store from "../../../bll/store";
 import * as dateFns from "date-fns";
-import {IMG_TMP_URL, NEWS_URL, SRV_URL} from "../../../const/const";
+import {IMG_TMP_URL, NEWS_URL} from "../../../const/const";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         minHeight: '100%',
-        '@media (max-width: 750px)' : {
-            justifyContent: 'center'
-        },
         position: "relative"
     },
     wrapper: {
         flexGrow: 1,
+        [theme.breakpoints.between('sm', 'md')]: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+        },
     },
     header: {
         display: "flex",
@@ -36,9 +38,13 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         maxWidth: 600,
-        padding: 20,
+        margin: '20px 40px',
         '@media (max-width: 1050px)' : {
             marginTop: 45,
+            margin: '20px 10px',
+        },
+        [theme.breakpoints.between('sm', 'md')]: {
+            width: 600
         },
     },
     avatar: {
