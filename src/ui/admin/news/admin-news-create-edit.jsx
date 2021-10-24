@@ -12,8 +12,13 @@ import {useHistory, useParams} from "react-router-dom";
 import {RM} from "../../../routes/routes";
 import Store from "../../../bll/store";
 import * as dateFns from "date-fns";
-import {IMG_TMP_URL, NEWS_URL} from "../../../const/const";
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import {NEWS_URL, TMP_URL} from "../../../const/const";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import docIcon from '../../../common/assets/image/icons/doc.png'
+import docxIcon from '../../../common/assets/image/icons/docx.png'
+import xlsIcon from '../../../common/assets/image/icons/xls.png'
+import xlsxIcon from '../../../common/assets/image/icons/xlsx.png'
+import pdfIcon from '../../../common/assets/image/icons/pdf.png'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -120,11 +125,27 @@ const useStyles = makeStyles((theme) => ({
     },
     docsItem: {
         display: "flex",
-        justifyContent: "space-evenly",
-        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 20,
+        '& svg': {
+            margin: '0 20px'
+        },
         '& img': {
-            margin: '5px 5px 20px 5px'
-        }
+            marginLeft: 20
+        },
+        '& .MuiTextField-root': {
+            flexGrow: 1
+        },
+        [theme.breakpoints.down('xs')]: {
+            '& svg': {
+                margin: '0 10px'
+            },
+            '& img': {
+                marginLeft: 10,
+                width: 30
+            },
+        },
     },
     docsAdd: {
         display: "flex",
@@ -320,6 +341,9 @@ const AdminNewsCreateEdit = () => {
         }
     };
 
+
+    console.log(toJS(AdminStore.news_tmp_docs_new))
+
     return (
         <div className={classes.root}>
             {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
@@ -343,7 +367,7 @@ const AdminNewsCreateEdit = () => {
                             }
                             {AdminStore.news_tmp_avatar_new &&
                                 <>
-                                    <img src={`${IMG_TMP_URL}/${AdminStore.news_tmp_avatar_new}`} alt=""/>
+                                    <img src={`${TMP_URL}/${AdminStore.news_tmp_avatar_new}`} alt=""/>
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
@@ -447,7 +471,7 @@ const AdminNewsCreateEdit = () => {
                             }
                             {AdminStore.news_tmp_images_new.length > 0 &&
                                 AdminStore.news_tmp_images_new.map((i,index)=>(
-                                    <img id={index} src={`${IMG_TMP_URL}/crop_${i}`} onClick={()=> {DeleteOneImageNew(index)}} alt=""/>
+                                    <img id={index} src={`${TMP_URL}/crop_${i}`} onClick={()=> {DeleteOneImageNew(index)}} alt=""/>
                                 ))
                             }
                         </div>
@@ -473,23 +497,42 @@ const AdminNewsCreateEdit = () => {
                     </div>
                     <Divider/>
                     <div className={classes.docs}>
-                        <div className={classes.docsItem}>
-                            {/*{AdminStore.news_tmp_docs_new.length > 0 &&
-                            AdminStore.news_tmp_docs_new.map((i,index)=>(
-                                <>
-                                    <TextField
-                                        id="headerFirst"
-                                        required={true}
-                                        className={classes.fieldHeader}
-                                        label="название документа"
-                                        value={AdminStore.news_tmp_docs_new[i].title}
-                                        variant="outlined"
-                                    />
-                                    <AttachFileIcon color={"primary"}/>
-                                </>
-                            ))
-                            }*/}
-                        </div>
+                        {AdminStore.news_tmp_docs_new.length > 0 &&
+                        AdminStore.news_tmp_docs_new.map((i,index)=>(
+                            <div className={classes.docsItem}>
+                                <TextField
+                                    id="headerFirst"
+                                    required={true}
+                                    className={classes.fieldHeader}
+                                    label="название документа"
+                                    value={AdminStore.news_tmp_docs_new[index].title}
+                                    onChange={(e)=>{
+                                        runInAction(() => {AdminStore.news_tmp_docs_new[index].title = (e.target.value)})
+                                    }}
+                                    variant="outlined"
+                                />
+                                <a href={TMP_URL + '/' + AdminStore.news_tmp_docs_new[index].doc} target={'_blank'}>
+                                    {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'pdf' &&
+                                        <img src={pdfIcon} alt="" width={40}/>
+                                    }
+                                    {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'doc' &&
+                                    <img src={docIcon} alt="" width={40}/>
+                                    }
+                                    {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'docx' &&
+                                    <img src={docxIcon} alt="" width={40}/>
+                                    }
+                                    {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'xls' &&
+                                    <img src={xlsIcon} alt="" width={40}/>
+                                    }
+                                    {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'xlsx' &&
+                                    <img src={xlsxIcon} alt="" width={40}/>
+                                    }
+                                </a>
+                                <HighlightOffIcon color={'error'}/>
+                            </div>
+                        ))
+                        }
+
                         <div className={classes.docsAdd}>
                             <label htmlFor="docs">
                                 <input

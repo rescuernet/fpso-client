@@ -60,7 +60,7 @@ class AdminStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminService.newsDocsCreate(doc);
-            runInAction(() => {this.news_tmp_docs_new.push({title:'',doc:response.data.name})})
+            runInAction(() => {this.news_tmp_docs_new.push({title:'',doc:response.data.doc})})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
