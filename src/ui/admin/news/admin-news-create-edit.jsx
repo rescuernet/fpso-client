@@ -13,6 +13,7 @@ import {RM} from "../../../routes/routes";
 import Store from "../../../bll/store";
 import * as dateFns from "date-fns";
 import {IMG_TMP_URL, NEWS_URL} from "../../../const/const";
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -146,10 +147,14 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-evenly",
         flexWrap: "wrap",
-        padding: 20
+        padding: 20,
+        '@media (max-width: 750px)' : {
+            flexDirection: 'column',
+            alignItems: "center",
+        },
     },
     Button: {
-        width: 190,
+        width: 120,
         '@media (max-width: 430px)' : {
             marginBottom: 20,
         },
@@ -168,6 +173,7 @@ const AdminNewsCreateEdit = () => {
         newsEdit && runInAction(() => {
             AdminStore.news_tmp_avatar_old = newsEdit.avatar
             AdminStore.news_tmp_images_old = newsEdit.images
+            AdminStore.news_tmp_docs_old = newsEdit.docs
         })
         return ()=> {
             runInAction(() => {
@@ -175,6 +181,8 @@ const AdminNewsCreateEdit = () => {
                 AdminStore.news_tmp_avatar_old = null
                 AdminStore.news_tmp_images_new = []
                 AdminStore.news_tmp_images_old = []
+                AdminStore.news_tmp_docs_new = []
+                AdminStore.news_tmp_docs_old = []
             })
         }
     },[])
@@ -192,7 +200,7 @@ const AdminNewsCreateEdit = () => {
 
 
     // загрузка аватар
-    const UploadAvatarHeader = (event) => {
+    const UploadAvatar = (event) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
@@ -202,7 +210,7 @@ const AdminNewsCreateEdit = () => {
 
     };
     //удаление аватара
-    const DeleteAvatarHeader = () => {
+    const DeleteAvatar = () => {
         runInAction(() => {
             AdminStore.news_tmp_avatar_new = null
             AdminStore.news_tmp_avatar_old = null
@@ -218,13 +226,29 @@ const AdminNewsCreateEdit = () => {
             await runInAction(()=>{AdminStore.newsImageCreate(data)})
         })
     };
-
     //удаление одной фоографии
     const DeleteOneImageNew = (id) => {
         runInAction(() => {AdminStore.news_tmp_images_new.splice(id,1)})
     };
     const DeleteOneImageOld = (id) => {
         runInAction(() => {AdminStore.news_tmp_images_old.splice(id,1)})
+    };
+
+    //загрузка документов
+    const UploadDocs = (event) => {
+        event.preventDefault();
+        const data = new FormData()
+        data.append('files',event.target.files[0]);
+        runInAction( async () => {
+            await runInAction(()=>{AdminStore.newsDocsCreate(data)})
+        })
+    };
+    //удаление одной фоографии
+    const DeleteOneDocsNew = (id) => {
+        runInAction(() => {AdminStore.news_tmp_docs_new.splice(id,1)})
+    };
+    const DeleteOneDocsOld = (id) => {
+        runInAction(() => {AdminStore.news_tmp_docs_old.splice(id,1)})
     };
 
     //смена закрепления новости
@@ -258,6 +282,7 @@ const AdminNewsCreateEdit = () => {
             importantNews,
             published,
             images: toJS(AdminStore.news_tmp_images_new),
+            docs: toJS(AdminStore.news_tmp_docs_new)
         }
         const result = await AdminStore.newsCreate(Arr)
         if(result === 200){
@@ -273,6 +298,8 @@ const AdminNewsCreateEdit = () => {
             avatarOld: newsEdit.avatar,
             imagesNew: toJS(AdminStore.news_tmp_images_new),
             imagesOld: toJS(AdminStore.news_tmp_images_old),
+            docsNew: toJS(AdminStore.news_tmp_docs_new),
+            docsOld: toJS(AdminStore.news_tmp_docs_old),
             model: {
                 avatar: AdminStore.news_tmp_avatar_new ? AdminStore.news_tmp_avatar_new : AdminStore.news_tmp_avatar_old,
                 dateStart,
@@ -283,7 +310,8 @@ const AdminNewsCreateEdit = () => {
                 fixedNews,
                 importantNews,
                 published,
-                images: toJS(AdminStore.news_tmp_images_new).concat(toJS(AdminStore.news_tmp_images_old))
+                images: toJS(AdminStore.news_tmp_images_new).concat(toJS(AdminStore.news_tmp_images_old)),
+                docs: toJS(AdminStore.news_tmp_docs_new).concat(toJS(AdminStore.news_tmp_docs_old))
             }
         }
         const result = await AdminStore.newsUpdate(Arr)
@@ -307,7 +335,7 @@ const AdminNewsCreateEdit = () => {
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
-                                        onClick={()=> {DeleteAvatarHeader()}}
+                                        onClick={()=> {DeleteAvatar()}}
                                     >
                                         удалить аватар
                                     </Button>
@@ -319,7 +347,7 @@ const AdminNewsCreateEdit = () => {
                                     <Button
                                         variant={"outlined"}
                                         color={"primary"}
-                                        onClick={()=> {DeleteAvatarHeader()}}
+                                        onClick={()=> {DeleteAvatar()}}
                                     >
                                         удалить аватар
                                     </Button>
@@ -334,7 +362,7 @@ const AdminNewsCreateEdit = () => {
                                         id="avatarImage"
                                         name="avatarImage"
                                         type="file"
-                                        onChange={UploadAvatarHeader}
+                                        onChange={UploadAvatar}
                                     />
                                     <Button
                                         color="primary"
@@ -446,7 +474,21 @@ const AdminNewsCreateEdit = () => {
                     <Divider/>
                     <div className={classes.docs}>
                         <div className={classes.docsItem}>
-
+                            {/*{AdminStore.news_tmp_docs_new.length > 0 &&
+                            AdminStore.news_tmp_docs_new.map((i,index)=>(
+                                <>
+                                    <TextField
+                                        id="headerFirst"
+                                        required={true}
+                                        className={classes.fieldHeader}
+                                        label="название документа"
+                                        value={AdminStore.news_tmp_docs_new[i].title}
+                                        variant="outlined"
+                                    />
+                                    <AttachFileIcon color={"primary"}/>
+                                </>
+                            ))
+                            }*/}
                         </div>
                         <div className={classes.docsAdd}>
                             <label htmlFor="docs">
@@ -455,7 +497,7 @@ const AdminNewsCreateEdit = () => {
                                     id="docs"
                                     name="docs"
                                     type="file"
-                                    /*onChange={UploadDocs}*/
+                                    onChange={UploadDocs}
                                 />
                                 <Button
                                     color="primary"
@@ -521,8 +563,19 @@ const AdminNewsCreateEdit = () => {
                                 color={"primary"}
                                 onClick={()=>{newsEdit ? UpdateArr() : CreateArr()}}
                             >
-                                {newsEdit ? 'Обновить новость' : 'Сохранить новость'}
+                                {newsEdit ? 'Обновить' : 'Сохранить'}
                             </Button>
+                            {newsEdit &&
+                                <Button
+                                    className={classes.Button}
+                                    variant="contained"
+                                    color={"secondary"}
+                                    /*onClick={()=>{newsEdit ? UpdateArr() : CreateArr()}}*/
+                                >
+                                    удалить
+                                </Button>
+                            }
+
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,10 @@ export default class AdminService {
         return $api.post(RM.Admin__News__Image__Create.path,image)
     }
 
+    static async newsDocsCreate(doc) {
+        return $api.post(RM.Admin__News__Docs__Create.path,doc)
+    }
+
     static async newsCreate(Arr) {
         return $api.post(RM.Admin__News__Create.path,Arr)
     }

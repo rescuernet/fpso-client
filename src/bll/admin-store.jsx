@@ -8,8 +8,12 @@ class AdminStore {
 
     news_tmp_avatar_old = null
     news_tmp_avatar_new = null
+
     news_tmp_images_old = []
     news_tmp_images_new = []
+
+    news_tmp_docs_old = []
+    news_tmp_docs_new = []
     news_tmp_errors = null
     news = []
 
@@ -36,15 +40,31 @@ class AdminStore {
 
     newsImageCreate = async (image) => {
         runInAction(() => {Store.isLoading = true})
-        const imageArr = this.news_tmp_images_new
         try {
             const response = await AdminService.newsImageCreate(image);
-            imageArr.push(response.data.name)
-            runInAction(() => {this.news_tmp_images_new = imageArr})
+            runInAction(() => {this.news_tmp_images_new.push(response.data.name)})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
                     <div>Изображение не загрузилось!</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    newsDocsCreate = async (doc) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminService.newsDocsCreate(doc);
+            runInAction(() => {this.news_tmp_docs_new.push({title:'',doc:response.data.name})})
+        } catch (e) {
+            runInAction(() => {this.news_tmp_errors =
+                <div>
+                    <div>Документ не загрузился!</div>
                     <div>Максимальный размер 4 мб</div>
                     <div>Тип файла JPEG/JPG</div>
                 </div>})
