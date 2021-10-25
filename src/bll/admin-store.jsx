@@ -126,9 +126,14 @@ class AdminStore {
     newsDelete = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            await AdminService.newsDelete(id);
-            runInAction(() => {this.clearData()})
-            return 200
+            const response = await AdminService.newsDelete(id);
+            if(response.data?.error){
+                runInAction(() => {this.news_tmp_errors =
+                    <div>{response.data.error}</div>})
+            }else{
+                runInAction(() => {this.clearData()})
+                return 200
+            }
         } catch (e) {
             console.log(e)
         } finally {

@@ -21,8 +21,14 @@ export const AlertDialog = (props) => {
     const [open, setOpen] = useState(props.open);
 
     const handleClose = () => {
-        AdminStore.news_tmp_errors = null
-        setOpen(false);
+        if(props.alertType === 'confirm'){
+            setOpen(false)
+            setTimeout(props.close,500)
+        }else{
+            AdminStore.news_tmp_errors = null
+            setOpen(false);
+        }
+
     };
 
     return (
@@ -43,6 +49,11 @@ export const AlertDialog = (props) => {
                 <Button onClick={handleClose} color="primary" autoFocus>
                     Закрыть
                 </Button>
+                {props.alertType === 'confirm' &&
+                    <Button onClick={props.delete} color="secondary">
+                        Удалить
+                    </Button>
+                }
             </DialogActions>
         </Dialog>
     );

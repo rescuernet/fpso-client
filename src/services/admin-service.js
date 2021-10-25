@@ -24,7 +24,7 @@ export default class AdminService {
     }
 
     static async newsDelete(id) {
-        return $api.post(RM.Admin__News__Delete.path,id)
+        return $api.post(RM.Admin__News__Delete.path,{id})
     }
 
     static async getNews() {

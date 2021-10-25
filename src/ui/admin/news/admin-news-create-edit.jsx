@@ -210,6 +210,7 @@ const AdminNewsCreateEdit = () => {
     const [fixedNews, setFixedNews] = useState(newsEdit ? newsEdit.fixedNews : false);
     const [importantNews, setImportantNews] = useState(newsEdit ? newsEdit.importantNews : false);
     const [published, setPublishAfterSave] = useState(newsEdit ? newsEdit.published : false);
+    const [deleteNews, setDeleteNews] = useState(false);
 
 
 
@@ -221,7 +222,7 @@ const AdminNewsCreateEdit = () => {
         runInAction(async () => {
             await AdminStore.newsAvatarCreate(data)
         })
-
+        event.target.value = ''
     };
     //удаление аватара
     const DeleteAvatar = () => {
@@ -239,6 +240,7 @@ const AdminNewsCreateEdit = () => {
         runInAction( async () => {
             await runInAction(()=>{AdminStore.newsImageCreate(data)})
         })
+        event.target.value = ''
     };
     //удаление одной фоографии
     const DeleteOneImageNew = (id) => {
@@ -335,7 +337,12 @@ const AdminNewsCreateEdit = () => {
         }
     };
 
-    const newsDelete = async (id) => {
+    const newsDelete = () => {
+        setDeleteNews(true)
+    }
+
+    const newsDeleteConfirm = async (id) => {
+        setDeleteNews(false)
         const result = await AdminStore.newsDelete(id)
         if(result === 200){
             history.push(RM.Admin__News.path)
@@ -656,10 +663,20 @@ const AdminNewsCreateEdit = () => {
                                     className={classes.Button}
                                     variant="contained"
                                     color={"secondary"}
-                                    onClick={()=>{newsDelete(id)}}
+                                    onClick={()=>{newsDelete()}}
                                 >
                                     удалить
                                 </Button>
+                            }
+                            {deleteNews &&
+                                <AlertDialog
+                                    alertType={'confirm'}
+                                    open={true}
+                                    header={'Внимание!'}
+                                    text={'Подтвердите удаление новости'}
+                                    delete={()=>{newsDeleteConfirm(id)}}
+                                    close={()=>{setDeleteNews(false)}}
+                                />
                             }
 
                         </div>
