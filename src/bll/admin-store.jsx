@@ -14,11 +14,22 @@ class AdminStore {
 
     news_tmp_docs_old = []
     news_tmp_docs_new = []
+
     news_tmp_errors = null
     news = []
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    clearData() {
+        runInAction(() => {this.news_tmp_avatar_new = null})
+        runInAction(() => {this.news_tmp_avatar_old = null})
+        runInAction(() => {this.news_tmp_errors = null})
+        runInAction(() => {this.news_tmp_images_new = []})
+        runInAction(() => {this.news_tmp_images_old = []})
+        runInAction(() => {this.news_tmp_docs_new = []})
+        runInAction(() => {this.news_tmp_docs_old = []})
     }
 
     newsAvatarCreate = async (avatar) => {
@@ -56,17 +67,17 @@ class AdminStore {
         }
     }
 
-    newsDocsCreate = async (doc) => {
+    newsDocsCreate = async (doc,originName) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminService.newsDocsCreate(doc);
-            runInAction(() => {this.news_tmp_docs_new.push({title:'',doc:response.data.doc})})
+            runInAction(() => {this.news_tmp_docs_new.push({title:originName,doc:response.data.doc})})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
                     <div>Документ не загрузился!</div>
-                    <div>Максимальный размер 4 мб</div>
-                    <div>Тип файла JPEG/JPG</div>
+                    <div>Максимальный размер 10 мб</div>
+                    <div>Типы файлов .doc, .docx, .pdf, .xls, .xlsx</div>
                 </div>})
         } finally {
             runInAction(() => {Store.isInit = true})
@@ -82,9 +93,7 @@ class AdminStore {
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
             }else{
-                runInAction(() => {this.news_tmp_avatar_new = null})
-                runInAction(() => {this.news_tmp_errors = null})
-                runInAction(() => {this.news_tmp_images_new = []})
+                runInAction(() => {this.clearData()})
                 return 200
             }
         } catch (e) {
@@ -103,11 +112,7 @@ class AdminStore {
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
             }else{
-                runInAction(() => {this.news_tmp_avatar_new = null})
-                runInAction(() => {this.news_tmp_avatar_old = null})
-                runInAction(() => {this.news_tmp_errors = null})
-                runInAction(() => {this.news_tmp_images_new = []})
-                runInAction(() => {this.news_tmp_images_old = []})
+                runInAction(() => {this.clearData()})
                 return 200
             }
         } catch (e) {
