@@ -123,6 +123,20 @@ class AdminStore {
         }
     }
 
+    newsDelete = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            await AdminService.newsDelete(id);
+            runInAction(() => {this.clearData()})
+            return 200
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
     getNews = async () => {
         runInAction(() => {Store.isLoading = true})
         try {

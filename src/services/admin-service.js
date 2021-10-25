@@ -23,6 +23,10 @@ export default class AdminService {
         return $api.post(RM.Admin__News__Update.path,Arr)
     }
 
+    static async newsDelete(id) {
+        return $api.post(RM.Admin__News__Delete.path,id)
+    }
+
     static async getNews() {
         return $api.get(RM.Admin__News.path)
     }

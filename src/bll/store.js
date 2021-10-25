@@ -1,5 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
-import AdminService from "../services/admin-service";
+import {makeAutoObservable} from "mobx";
 
 
 

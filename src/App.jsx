@@ -15,7 +15,8 @@ const Routes = []
 for (let key in RM) {Routes.push(RM[key])}
 
 window.addEventListener("resize", (event) => {
-    Store.width = window.outerWidth
+    runInAction(() => {Store.width = window.outerWidth})
+
 })
 
 const App = () => {

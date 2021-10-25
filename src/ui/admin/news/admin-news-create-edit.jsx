@@ -335,6 +335,13 @@ const AdminNewsCreateEdit = () => {
         }
     };
 
+    const newsDelete = async (id) => {
+        const result = await AdminStore.newsDelete(id)
+        if(result === 200){
+            history.push(RM.Admin__News.path)
+        }
+    }
+
     return (
         <div className={classes.root}>
             {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
@@ -649,7 +656,7 @@ const AdminNewsCreateEdit = () => {
                                     className={classes.Button}
                                     variant="contained"
                                     color={"secondary"}
-                                    /*onClick={()=>{newsEdit ? UpdateArr() : CreateArr()}}*/
+                                    onClick={()=>{newsDelete(id)}}
                                 >
                                     удалить
                                 </Button>
