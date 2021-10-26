@@ -13,13 +13,17 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'row',
         alignItems: "center",
-        position: "static",
+        position: "fixed",
+        borderBottom: '2px solid #ff6200'
         /*backgroundColor: '#585858'*/
     },
     container: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end",
+        [useGridPoint.breakpoints.down('xs')]: {
+            paddingLeft: 0
+        }
     },
     toolBar: {
         display: "flex",
@@ -92,10 +96,16 @@ const useStyles = makeStyles((theme) => ({
             }
         }
     },
-    underHeader: {
-        height: 3,
-        backgroundColor: '#ff6200',
-        marginBottom: 10,
+    fpso: {
+        textTransform: "uppercase",
+        fontSize: 20,
+        fontFamily: 'Roboto',
+        letterSpacing: 10,
+        textShadow: '1px 1px 3px #000',
+        [useGridPoint.breakpoints.down('xs')]: {
+            textAlign: 'right',
+            fontSize: 13
+        }
     }
 }))
 
@@ -112,7 +122,8 @@ const Header = (props) => {
                 <Container className={classes.container} fixed>
                     <Toolbar className={classes.toolBar}>
                         <Typography variant={'button'}>{props.title}</Typography>
-                        <div className={classes.contact}>
+                        <div className={classes.fpso}>samara swimming</div>
+                        {/*<div className={classes.contact}>
                             <div className={classes.phone}>
                                 <PhoneIcon />
                                 <div>8 (846) 375-92-45</div>
@@ -121,11 +132,11 @@ const Header = (props) => {
                                 <MailOutlineIcon />
                                 <div>swimclub@mail.ru</div>
                             </div>
-                        </div>
+                        </div>*/}
                     </Toolbar>
                 </Container>
             </AppBar>
-            <div className={classes.underHeader}/>
+
         </>
 
     );
