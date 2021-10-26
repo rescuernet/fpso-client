@@ -439,7 +439,9 @@ const AdminNewsCreateEdit = () => {
                             variant="outlined"
                             multiline
                             rows={1}
-                            rowsMax={4}
+                            rowsMax={2}
+                            error={headerFirst.length > 100}
+                            helperText={headerFirst.length > 100 && 'максимум 100 символов'}
                         />
                         <TextField
                             id="headerSecond"
@@ -450,7 +452,9 @@ const AdminNewsCreateEdit = () => {
                             variant="outlined"
                             multiline
                             rows={1}
-                            rowsMax={4}
+                            rowsMax={2}
+                            error={headerSecond.length > 100}
+                            helperText={headerSecond.length > 100 && 'максимум 100 символов'}
                         />
                         <TextField
                             id="textMain"
@@ -461,7 +465,7 @@ const AdminNewsCreateEdit = () => {
                             onChange={(e)=>{setTextMain(e.target.value)}}
                             variant="outlined"
                             multiline
-                            rows={10}
+                            rows={3}
                             rowsMax={10}
                         />
                     </div>

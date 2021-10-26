@@ -12,10 +12,10 @@ class UiStore {
         makeAutoObservable(this);
     }
 
-    getNews = async () => {
+    getNews = async (page) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await uiService.getNews();
+            const response = await uiService.getNews(page);
             runInAction(() => {this.news = response.data})
         } catch (e) {
             console.log(e)
