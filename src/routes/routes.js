@@ -25,14 +25,20 @@ const RouterManager = {
         Component: Main,
         getUrl() {return `/`},
         auth: false,
-        header: true
+        header: {
+            view: true,
+            title: 'Главная'
+        }
     },
     Competitions: {
         path:'/competitions',
         Component: Competitions,
         getUrl() {return `/competitions`},
         auth: false,
-        header: true,
+        header: {
+            view: true,
+            title: 'Соревнования'
+        },
         menu: {
             type: MenuTypes.main,
             title: 'Соревнования'
@@ -43,7 +49,10 @@ const RouterManager = {
         Component: News,
         getUrl() {return `/news`},
         auth: false,
-        header: true,
+        header: {
+            view: true,
+            title: 'Новости'
+        },
         menu: {
             type: MenuTypes.main,
             title: 'Новости'
@@ -54,14 +63,19 @@ const RouterManager = {
         Component: LoginForm,
         getUrl() {return PrefixPath.login},
         auth: false,
-        header: true
+        header: {
+            view: true,
+            title: 'Авторизация'
+        }
     },
     Admin: {
         path: PrefixPath.admin,
         Component: Admin,
         getUrl() {return PrefixPath.admin},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
         menu: {
             type: MenuTypes.main,
             title: 'Панель управления'
@@ -72,7 +86,9 @@ const RouterManager = {
         Component: AdminNews,
         getUrl() {return `${PrefixPath.admin}/news`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
         menu: {
             type: MenuTypes.admin,
             title: 'Новости'
@@ -83,21 +99,27 @@ const RouterManager = {
         Component: AdminNewsCreate,
         getUrl() {return `${PrefixPath.admin}/news/create`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
     },
     Admin__News__Edit: {
         path: `${PrefixPath.admin}/news/edit/:id`,
         Component: AdminNewsCreate,
         getUrl(id) {return `${PrefixPath.admin}/news/edit/${id}`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
     },
     Admin__News__Update: {
         path: `${PrefixPath.admin}/news/update`,
         Component: AdminNewsCreate,
         getUrl() {return `${PrefixPath.admin}/news/update`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
     },
     Admin__News__Avatar__Create: {
         path: `${PrefixPath.admin}/news/avatar-create`,
@@ -116,14 +138,18 @@ const RouterManager = {
         Component: AdminNewsCreate,
         getUrl() {return `${PrefixPath.admin}/news/delete`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
     },
     Admin__Competitions: {
         path:`${PrefixPath.admin}/competitions`,
         Component: AdminCompetitions,
         getUrl() {return `${PrefixPath.admin}/competitions`},
         auth: true,
-        header: false,
+        header: {
+            view: false
+        },
         menu: {
             type: MenuTypes.admin,
             title: 'Соревнования'

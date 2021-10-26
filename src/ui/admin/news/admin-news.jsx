@@ -7,7 +7,7 @@ import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import AdminStore from '../../../bll/admin-store';
 import Store from '../../../bll/store';
-import {toJS} from "mobx";
+import {runInAction, toJS} from "mobx";
 import AdminHeader from "../header/admin-header";
 import AdminNewsItem from "./admin-news-item";
 
@@ -86,7 +86,7 @@ const AdminNews = (props) => {
     const history = useHistory();
 
     useEffect(()=>{
-        AdminStore.getNews()
+        runInAction(()=>{AdminStore.getNews()})
     },[])
 
     const news = toJS(AdminStore.news)
@@ -115,7 +115,7 @@ const AdminNews = (props) => {
                     </div>
                     <div className={classes.newsList}>
                         <table className={classes.table}>
-                            {Store.width > 750 &&
+                            {Store.width > 750 && AdminStore.news.length > 0 &&
                                 <>
                                     {Store.width > 1000 &&
                                         <th className={classes.min}>Создана</th>

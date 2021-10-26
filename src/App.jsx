@@ -40,7 +40,7 @@ const App = () => {
         <ThemeProvider theme={useGridPoint}>
             <div className="App">
                 <div className={`isLoading ${isLoading ? 'isLoadingView' : ""}`}/>
-                {Routes.map(({path, header}) => (path === location && header) && <Header/>)}
+                {Routes.map(({path, header}) => (path === location && header.view) && <Header title={header.title}/>)}
                 {isInit &&
                 <Switch>
                     {Routes.map(({path,Component,auth}) => (auth === isAuth || !auth) && <Route key={path} exact path={path} component={Component}/>)}

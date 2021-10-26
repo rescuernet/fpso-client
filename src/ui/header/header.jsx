@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Container, Toolbar} from "@material-ui/core";
+import {AppBar, Container, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";
@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         alignItems: "center",
         position: "static",
-        [useGridPoint.breakpoints.down('xs')]: {
-            marginBottom: 5,
-        },
         /*backgroundColor: '#585858'*/
     },
     container: {
@@ -28,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "row",
         flexGrow: 1,
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         minHeight:0,
         padding:0
     },
@@ -114,6 +111,7 @@ const Header = (props) => {
                 <Menu isAuth={isAuth} logout={AuthStore.logout}/>
                 <Container className={classes.container} fixed>
                     <Toolbar className={classes.toolBar}>
+                        <Typography variant={'button'}>{props.title}</Typography>
                         <div className={classes.contact}>
                             <div className={classes.phone}>
                                 <PhoneIcon />

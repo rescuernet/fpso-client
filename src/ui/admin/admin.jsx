@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         minHeight: '100%',
-        '@media (max-width: 750px)' : {
+        '@media (max-width: 1050px)' : {
             justifyContent: 'center'
         },
         position: "relative"
@@ -26,9 +26,12 @@ const useStyles = makeStyles((theme) => ({
     content: {
         display: "flex",
         flexDirection: "column",
-        maxWidth: 600,
-        padding: 20,
-        '@media (max-width: 750px)' : {
+        maxWidth: 1200,
+        padding: '20px 10px',
+        '@media (max-width: 1050px)' : {
+            marginTop: 55,
+        },
+        '@media (max-width: 600px)' : {
             marginTop: 45,
         },
     },
@@ -40,9 +43,9 @@ const Admin = () => {
 
     return (
         <div className={classes.root}>
-            {Store.width > 750 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Главная панель'}/>}
+            {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Главная панель'}/>}
             <div className={classes.wrapper}>
-                {Store.width > 750 && <div className={classes.header}><Typography variant={'h5'}>Главная панель</Typography></div>}
+                {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Главная панель</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
                     Главная панель

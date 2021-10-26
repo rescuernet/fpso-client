@@ -46,7 +46,7 @@ const AdminNewsItem = ({news}) => {
             <td>{news.headerFirst}</td>
             {Store.width > 750 &&
                 <>
-                    <td className={classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>
+                    <td className={classes.min}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</td>
                     <td className={classes.min}>{news.dateEnd ? dateFns.format(new Date(news.dateEnd), 'dd.MM.yyyy') : <MoreHorizOutlinedIcon color={"primary"}/>}</td>
                     <td className={classes.min}>{news.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
                     <td className={classes.min}>{news.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, FormControlLabel, Switch, TextField, Typography} from "@material-ui/core";
-import {dateToString} from "../../../utils/dateToString";
 import AdminStore from "../../../bll/admin-store";
 import {runInAction, toJS} from "mobx";
 import AdminHeader from "../header/admin-header";
@@ -202,7 +201,7 @@ const AdminNewsCreateEdit = () => {
     },[])
 
     const classes = useStyles();
-    const [dateStart,setDateStart] = useState(newsEdit ? dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd') : dateToString(new Date(Date.parse(Date()))));
+    const [dateStart,setDateStart] = useState(newsEdit ? dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd') : dateFns.format(new Date(), 'yyyy-MM-dd'));
     const [dateEnd,setDateEnd] = useState(newsEdit && newsEdit.dateEnd ? dateFns.format(new Date(newsEdit.dateEnd), 'yyyy-MM-dd') : null);
     const [headerFirst,setHeaderFirst] = useState(newsEdit ? newsEdit.headerFirst : '');
     const [headerSecond,setHeaderSecond] = useState(newsEdit ? newsEdit.headerSecond : '');
@@ -519,7 +518,7 @@ const AdminNewsCreateEdit = () => {
                                     rows={1}
                                     rowsMax={10}
                                 />
-                                <a href={`${NEWS_URL}/${id}/docs/${AdminStore.news_tmp_docs_old[index].doc}`} target={'_blank'}>
+                                <a href={`${NEWS_URL}/${id}/docs/${AdminStore.news_tmp_docs_old[index].doc}`} target={'_blank'} rel="noreferrer">
                                     {AdminStore.news_tmp_docs_old[index].doc.slice(AdminStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'pdf' &&
                                     <img src={pdfIcon} alt="" width={40}/>
                                     }
@@ -559,7 +558,7 @@ const AdminNewsCreateEdit = () => {
                                     rows={1}
                                     rowsMax={10}
                                 />
-                                <a href={TMP_URL + '/' + AdminStore.news_tmp_docs_new[index].doc} target={'_blank'}>
+                                <a href={TMP_URL + '/' + AdminStore.news_tmp_docs_new[index].doc} target={'_blank'} rel="noreferrer">
                                     {AdminStore.news_tmp_docs_new[index].doc.slice(AdminStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'pdf' &&
                                         <img src={pdfIcon} alt="" width={40}/>
                                     }
@@ -662,7 +661,7 @@ const AdminNewsCreateEdit = () => {
                                 <Button
                                     className={classes.Button}
                                     variant="contained"
-                                    color={"secondary"}
+                                        color={"secondary"}
                                     onClick={()=>{newsDelete()}}
                                 >
                                     удалить

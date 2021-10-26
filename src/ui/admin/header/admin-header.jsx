@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         [useGridPoint.breakpoints.down('xs')]: {
             marginBottom: 5,
         },
-        /*backgroundColor: '#585858'*/
     }
 }))
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
-import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
 import LockIcon from '@material-ui/icons/Lock';

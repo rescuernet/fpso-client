@@ -10,5 +10,17 @@ export const useGridPoint = createTheme({
             lg: 1280,
             xl: 1920
         }
-    }
+    },
+    palette: {
+        primary: {
+            /*main: '#365587'*/
+            /*main: '#013d66'*/
+            main: '#005580'
+        },
+        secondary: {
+            main: '#d60000'
+        }
+    },
 });
+
+
