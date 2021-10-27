@@ -62,7 +62,7 @@ export const NewsCard = ({news})=> {
                 <Button
                     size="small"
                     color="primary"
-
+                    onClick={}
                 >
                     Подробнее..
                 </Button>
