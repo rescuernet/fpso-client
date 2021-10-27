@@ -1,13 +1,23 @@
 import * as React from 'react';
-import {Box, Divider, Drawer, IconButton, List, ListItem, ListItemText} from "@material-ui/core";
+import {Box, Drawer, IconButton, List, ListItem} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../routes/routes";
-import LockIcon from '@material-ui/icons/Lock';
 import MenuIcon from '@material-ui/icons/Menu';
 import {useEffect} from "react";
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiButtonBase-root': {
+            padding: 10,
+        },
+    },
+    drawerPaper: {
+        marginTop: 50,
+        '& .MuiList-padding': {
+            padding: 10
+        }
+    },
     menuItem: {
         fontSize: 16,
         fontFamily: "Roboto",
@@ -23,33 +33,11 @@ const useStyles = makeStyles((theme) => ({
         color: "#ff6200"
     },
     menuIcon: {
-        fontSize: 35,
-        [theme.breakpoints.down('md')]: {
-            fontSize: 30
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 25
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: 20
-        }
-    },
-    logoutButton: {
-        marginBottom: 10
-    },
-    logoutButtonItem: {
-        display: "flex",
-        flexDirection: "row",
-        textTransform: "uppercase",
-        fontSize: 15
-    },
-    logoutButtonIcon: {
-        marginRight: 10,
-        fontSize: 18
+        fontSize: 25
     },
     divider: {
         backgroundColor: "#ff6200"
-    }
+    },
 }))
 
 const menuItems = []
@@ -91,18 +79,6 @@ const Menu = (props) => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {props.isAuth &&
-                    <div className={classes.logoutButton}>
-                        <ListItem
-                            button key={1}
-                            className={classes.logoutButtonItem}
-                            onClick={props.logout}>
-                            <LockIcon className={classes.logoutButtonIcon}/>
-                            <span>выход</span>
-                        </ListItem>
-                        <Divider className={classes.divider} />
-                    </div>
-                }
                 <ListItem
                     button key={1}
                     className={location === '/' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
@@ -125,20 +101,12 @@ const Menu = (props) => {
                             </ListItem>)
                 )}
             </List>
-            <Divider className={classes.divider} />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
         </Box>
     );
 
 
     return (
-        <div>
+        <div className={classes.root}>
             <IconButton
                 color={"inherit"}
                 onClick={toggleDrawer(anchor, true)}

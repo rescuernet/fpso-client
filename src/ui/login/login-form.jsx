@@ -8,16 +8,22 @@ import {RM} from "../../routes/routes";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        flexGrow: 1
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 340,
-        margin: '50px auto 0 auto'
+        maxWidth: 340,
+        margin: '0 auto',
+
     },
     textField: {
-        width: 340,
         marginBottom: 20
     },
     authError: {
@@ -50,7 +56,7 @@ const LoginForm = () => {
 
 
     return (
-        <Container>
+        <Container className={classes.root}>
             <Box className={classes.container}>
                 <Box
                     component="form"
@@ -64,6 +70,7 @@ const LoginForm = () => {
                         variant="outlined"
                         autoComplete='off'
                         value={email}
+                        fullWidth={true}
                         onChange={(e)=>setEmail(e.target.value)}
                         error={!!authError}
                         onFocus={()=>{clearAuthError()}}
@@ -76,6 +83,7 @@ const LoginForm = () => {
                         type="password"
                         autoComplete='new-password'
                         value={password}
+                        fullWidth={true}
                         onChange={(e)=>setPassword(e.target.value)}
                         error={!!authError}
                         onFocus={()=>{clearAuthError()}}

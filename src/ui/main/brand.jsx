@@ -1,28 +1,52 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import BrandFull from '../../common/assets/image/brand_full.jpg'
-import BrandMob from '../../common/assets/image/brand_mob.jpg'
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import BrandFullImg from '../../common/assets/image/brand_full_img.jpg'
+import BrandFullText from '../../common/assets/image/brand_full_text.png'
+import BrandMobImg from '../../common/assets/image/brand_mob_img.jpg'
+import {useGridPoint} from "../../utils/breakpoints";
 
-const useStyles = makeStyles((Theme) => ({
+const useStyles = makeStyles((theme) => ({
     brand: {
+        display: "flex",
+        justifyContent: "center",
         position: "relative",
         marginBottom: 30,
+        [useGridPoint.breakpoints.down('md')]: {
+            marginBottom: 10,
+        },
         borderRadius: 0,
         "& img": {
-            width: "100%"
-        }
+            [useGridPoint.breakpoints.down('sm')]: {
+                width: 270,
+                margin: '15px 0',
+            },
+            [useGridPoint.breakpoints.between('sm','md')]: {
+                width: 435,
+                margin: '20px 0',
+            },
+            [useGridPoint.breakpoints.up('md')]: {
+                width: 550,
+                margin: '30px 0',
+            },
+            [useGridPoint.breakpoints.up('lg')]: {
+                width: 700,
+                margin: '50px 0',
+            },
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            background: `url(${BrandMobImg}) 50% 50%/cover no-repeat`,
+        },
+        background: `url(${BrandFullImg}) 50% 50%/cover no-repeat`,
     },
 }))
 
 const Brand = () => {
-    const matches = useMediaQuery('(max-width:500px)');
 
     const classes = useStyles();
 
     return (
         <div className={classes.brand}>
-            <img src={matches ? BrandMob : BrandFull} alt=""/>
+            <img src={BrandFullText} alt=""/>
         </div>
     );
 };

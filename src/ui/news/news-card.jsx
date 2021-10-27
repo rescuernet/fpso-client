@@ -59,7 +59,13 @@ export const NewsCard = ({news})=> {
                 </div>
             </div>
             <div className={classes.control}>
-                <Button size="small" color="primary">Подробнее..</Button>
+                <Button
+                    size="small"
+                    color="primary"
+
+                >
+                    Подробнее..
+                </Button>
                 <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>
             </div>
         </div>

@@ -10,16 +10,9 @@ import {Pagination} from "@material-ui/lab";
 import {useGridPoint} from "../../utils/breakpoints";
 
 
-
-
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: 60,
-        paddingTop: '1px',
-        paddingBottom: '1px',
-        [useGridPoint.breakpoints.down('xs')]: {
-            marginTop: 45,
-        }
+        paddingTop: 50,
     },
     newsListItem: {
         display: "flex",
@@ -57,9 +50,6 @@ const News = () => {
         }
     },[])
 
-
-
-
     const ChangePage = (e, page) => {
         window.scrollTo(0,0)
         setPageNum(page)
@@ -67,8 +57,9 @@ const News = () => {
     };
 
     return (
-        <Container className={classes.root} fixed>
-            {newsItem &&
+        <Box className={classes.root}>
+            <Container fixed>
+                {newsItem &&
                 <>
                     <div className={classes.paginationTop}>
                         <Pagination
@@ -81,8 +72,8 @@ const News = () => {
                     </div>
 
                     <Box className={classes.newsListItem}>
-                        {newsItem.map((i)=>(
-                            <NewsCard news={i} />
+                        {newsItem.map((i,index)=>(
+                            <NewsCard key={index} news={i} />
                         ))}
                     </Box>
 
@@ -96,8 +87,10 @@ const News = () => {
                         />
                     </div>
                 </>
-            }
-        </Container>
+                }
+            </Container>
+        </Box>
+
     );
 };
 

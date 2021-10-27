@@ -5,10 +5,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {useHistory, useLocation} from "react-router-dom";
 import {RM} from "../../routes/routes";
-import {Box, Divider, IconButton} from "@material-ui/core";
+import {Box, Button, Divider, IconButton} from "@material-ui/core";
 import AuthStore from '../../bll/auth-store'
 import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
 import MenuIcon from "@material-ui/icons/Menu";
+import LockIcon from "@material-ui/icons/Lock";
+import {runInAction} from "mobx";
+import Store from "../../bll/store";
 
 
 
@@ -56,9 +59,13 @@ const useStyles = makeStyles((theme) => ({
     userEmail: {
         color: '#ccc',
         fontSize: 16,
-        padding: {
-
-        }
+        marginBottom: 10
+    },
+    logout: {
+        justifyContent: "center"
+    },
+    goToSite: {
+        justifyContent: "center"
     },
     menuItem: {
         fontSize: 16,
@@ -83,20 +90,8 @@ const useStyles = makeStyles((theme) => ({
 const AdminMenu = (props) => {
     const location = useLocation().pathname;
     const history = useHistory();
-    /*const width = window.outerWidth > 750 ? true : false*/
     const [menuOpen,setMenuOpen] = React.useState(props.open)
-    /*const [menuVariant,setMenuVariant] = useState()*/
     const [link, setLink] = useState(null);
-
-    /*useEffect(()=>{
-        if(width){
-            setMenuOpen(true)
-            setMenuVariant('permanent')
-        }else{
-            setMenuOpen(false)
-            setMenuVariant(null)
-        }
-    },[width])*/
 
     const toggleDrawer = (menuOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -147,8 +142,14 @@ const AdminMenu = (props) => {
                         <div className={classes.userEmail}>{AuthStore.user.email}</div>
                         <ListItem
                             button key={1}
-                            className={classes.menuItem}
-                            style={{justifyContent: 'center'}}
+                            className={`${classes.menuItem} ${classes.logout}`}
+                            onClick={()=>{runInAction(() => {AuthStore.logout()})}}
+                        >
+                            ВЫХОД
+                        </ListItem>
+                        <ListItem
+                            button key={1}
+                            className={`${classes.menuItem} ${classes.goToSite}`}
                             onClick={()=> setLink('/')}
                         >
                             Перейти на сайт
