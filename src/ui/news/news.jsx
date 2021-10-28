@@ -2,17 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {runInAction, toJS} from "mobx";
 import UiStore from '../../bll/ui-store'
 import {observer} from "mobx-react-lite";
-import {NewsCard} from "./news-card";
 import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Store from "../../bll/store";
 import {Pagination} from "@material-ui/lab";
 import {useGridPoint} from "../../utils/breakpoints";
+import {NewsCardMobile} from "./news-card/news-card-mobile";
+import {NewsItemViewModal} from "./news-item-view-modal";
+import NewsCardDesktop from "./news-card/news-card-desktop";
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: 50,
+        backgroundColor: '#f2f2f2'
     },
     newsListItem: {
         display: "flex",
@@ -35,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const News = () => {
+
+    const width = Store.width
 
     const news = toJS(UiStore.news)
     const newsItem = toJS(UiStore.news.docs)
@@ -72,9 +77,17 @@ const News = () => {
                     </div>
 
                     <Box className={classes.newsListItem}>
-                        {newsItem.map((i,index)=>(
-                            <NewsCard key={index} news={i} />
-                        ))}
+                        {Store.width < 750 &&
+                            newsItem.map((i,index)=>(
+                                <NewsCardMobile key={index} index={index} news={i} />
+                            ))
+                        }
+
+                        {Store.width >= 750 &&
+                        newsItem.map((i,index)=>(
+                            <NewsCardDesktop key={index} index={index} news={i} />
+                        ))
+                        }
                     </Box>
 
                     <div className={classes.paginationBottom}>
@@ -87,6 +100,11 @@ const News = () => {
                         />
                     </div>
                 </>
+                }
+                {UiStore.newsViewModal_open &&
+                    <NewsItemViewModal
+                        open={UiStore.newsViewModal_open}
+                    />
                 }
             </Container>
         </Box>

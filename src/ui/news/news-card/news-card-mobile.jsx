@@ -1,26 +1,32 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import s from './news.module.css'
+import s from '../news.module.css'
 import * as dateFns from "date-fns";
+import {runInAction} from "mobx";
+import UiStore from "../../../bll/ui-store";
+import {NEWS_URL} from "../../../const/const";
+import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 
 const useStyles = makeStyles({
     root: {
         display: "flex",
         flexDirection: "column",
-        width: 370,
+        width: 320,
         marginBottom: 30,
         backgroundColor: '#fff',
         border: 'solid 1px #e6e6e6',
-        borderRadius: 5,
+        borderRadius: 10,
         overflow: 'hidden'
     },
     image: {
+        display: "flex",
+        justifyContent: "center",
         flex: '0 0 auto',
         fontSize: 0,
-        marginBottom: 20,
+        padding: 20,
         '& img': {
-            width: '100%',
+            borderRadius: 100
         }
     },
     header: {
@@ -45,28 +51,34 @@ const useStyles = makeStyles({
     }
 });
 
-export const NewsCard = ({news})=> {
-
+export const NewsCardMobile = (props)=> {
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <div className={classes.image}>
-                <img src={`http://localhost:5000/news/${news._id}/avatar/${news.avatar}`} alt=""/>
+                <img src={
+                    props.news.avatar
+                        ? `${NEWS_URL}/${props.news._id}/avatar/${props.news.avatar}`
+                        : noNewsAvatar
+                } alt=""/>
             </div>
             <div className={classes.header}>
                 <div className={s.headerText}>
-                    {news.headerFirst}
+                    {props.news.headerFirst}
                 </div>
             </div>
             <div className={classes.control}>
                 <Button
                     size="small"
                     color="primary"
-                    onClick={}
+                    onClick={()=>{runInAction(()=>{
+                        UiStore.newsViewModal_open = true;
+                        UiStore.newsViewModal_index = props.index
+                    })}}
                 >
                     Подробнее..
                 </Button>
-                <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>
+                <div className={classes.date}>{dateFns.format(new Date(props.news.dateStart), 'dd.MM.yyyy')}</div>
             </div>
         </div>
     );

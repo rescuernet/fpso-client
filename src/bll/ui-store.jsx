@@ -7,6 +7,8 @@ import uiService from "../services/ui-service";
 class UiStore {
 
     news = []
+    newsViewModal_open = false
+    newsViewModal_index = null
 
     constructor() {
         makeAutoObservable(this);
