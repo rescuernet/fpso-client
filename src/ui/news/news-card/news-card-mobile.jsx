@@ -14,9 +14,9 @@ const useStyles = makeStyles({
         flexDirection: "column",
         width: 320,
         marginBottom: 30,
-        backgroundColor: '#fff',
+        backgroundColor: '#fafafa',
         border: 'solid 1px #e6e6e6',
-        borderRadius: 10,
+        borderRadius: 5,
         overflow: 'hidden'
     },
     image: {

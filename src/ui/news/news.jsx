@@ -15,7 +15,6 @@ import NewsCardDesktop from "./news-card/news-card-desktop";
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: 50,
-        backgroundColor: '#f2f2f2'
     },
     newsListItem: {
         display: "flex",
