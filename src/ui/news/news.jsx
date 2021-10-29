@@ -8,7 +8,7 @@ import Store from "../../bll/store";
 import {Pagination} from "@material-ui/lab";
 import {useGridPoint} from "../../utils/breakpoints";
 import {NewsCardMobile} from "./news-card/news-card-mobile";
-import {NewsItemViewModal} from "./news-item-view-modal";
+import {NewsItemViewModal} from "./news-view/news-item-view-modal";
 import NewsCardDesktop from "./news-card/news-card-desktop";
 
 

@@ -147,8 +147,9 @@ const useStyles = makeStyles((theme) => ({
     control: {
         display: "flex",
         flexDirection: "column",
+        marginBottom: 20,
         '@media (max-width: 430px)' : {
-            margin: '20px 0 0 0',
+            marginTop: 20,
         },
     },
     controlCheckBox: {
