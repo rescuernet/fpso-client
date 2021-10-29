@@ -11,7 +11,7 @@ import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg"
 const useStyles = makeStyles({
     root: {
         display: "flex",
-        width: 575,
+        width: 600,
         marginBottom: 30,
         backgroundColor: '#fafafa',
         border: 'solid 1px #e6e6e6',

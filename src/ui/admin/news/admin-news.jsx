@@ -5,7 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {RM} from "../../../routes/routes";
 import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import AdminStore from '../../../bll/admin-store';
+import AdminStore from '../../../bll/admin-news-store';
 import Store from '../../../bll/store';
 import {runInAction, toJS} from "mobx";
 import AdminHeader from "../header/admin-header";

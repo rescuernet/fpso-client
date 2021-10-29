@@ -1,10 +1,10 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import Store from "./store"
-import AdminService from "../services/admin-service";
+import AdminNewsService from "../services/admin-news-service";
 
 
 
-class AdminStore {
+class AdminNewsStore {
 
     news_tmp_avatar_old = null
     news_tmp_avatar_new = null
@@ -35,7 +35,7 @@ class AdminStore {
     newsAvatarCreate = async (avatar) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsAvatarCreate(avatar);
+            const response = await AdminNewsService.newsAvatarCreate(avatar);
             runInAction(() => {this.news_tmp_avatar_new = response.data.name})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
@@ -52,7 +52,7 @@ class AdminStore {
     newsImageCreate = async (image) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsImageCreate(image);
+            const response = await AdminNewsService.newsImageCreate(image);
             runInAction(() => {this.news_tmp_images_new.push(response.data.name)})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
@@ -70,7 +70,7 @@ class AdminStore {
     newsDocsCreate = async (doc,originName) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsDocsCreate(doc);
+            const response = await AdminNewsService.newsDocsCreate(doc);
             runInAction(() => {this.news_tmp_docs_new.push({title:originName,doc:response.data.doc})})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
@@ -88,7 +88,7 @@ class AdminStore {
     newsCreate = async (Arr) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsCreate(Arr);
+            const response = await AdminNewsService.newsCreate(Arr);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
@@ -107,7 +107,7 @@ class AdminStore {
     newsUpdate = async (Arr) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsUpdate(Arr);
+            const response = await AdminNewsService.newsUpdate(Arr);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
@@ -126,7 +126,7 @@ class AdminStore {
     newsDelete = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.newsDelete(id);
+            const response = await AdminNewsService.newsDelete(id);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
@@ -145,7 +145,7 @@ class AdminStore {
     getNews = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminService.getNews();
+            const response = await AdminNewsService.getNews();
             runInAction(() => {this.news = response.data})
         } catch (e) {
             console.log(e)
@@ -157,4 +157,4 @@ class AdminStore {
 
 }
 
-export default new AdminStore();
+export default new AdminNewsStore();

@@ -7,22 +7,24 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {useEffect} from "react";
 
 const useStyles = makeStyles((theme) => ({
+    wrapper: {
+    },
     root: {
-        '& .MuiButtonBase-root': {
-            padding: 10,
+        '& .MuiBackdrop-root': {
+            backgroundColor: 'rgba(0, 0, 0, 0)'
         },
     },
     drawerPaper: {
         marginTop: 50,
         '& .MuiList-padding': {
-            padding: 10
+            padding: '30px 10px 10px 10px'
         }
     },
     menuItem: {
         fontSize: 16,
         fontFamily: "Roboto",
         fontWeight: 400,
-        color: "#29353d",
+        color: "#004466",
         '& span': {
             fontSize: 0,
             padding: 0,
@@ -30,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     activeLink: {
-        color: "#ff6200"
+        color: "#ff6200!important",
+        fontWeight: '700'
     },
     menuIcon: {
         fontSize: 25
@@ -106,7 +109,7 @@ const Menu = (props) => {
 
 
     return (
-        <div className={classes.root}>
+        <div className={classes.wrapper}>
             <IconButton
                 color={"inherit"}
                 onClick={toggleDrawer(anchor, true)}
@@ -118,6 +121,7 @@ const Menu = (props) => {
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
                 classes={{
+                    root: classes.root,
                     paper: classes.drawerPaper
                 }}
             >

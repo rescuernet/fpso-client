@@ -18,8 +18,11 @@ const useStyles = makeStyles((theme) => ({
     },
     newsListItem: {
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         flexWrap: "wrap",
+        [useGridPoint.breakpoints.down('md')]: {
+            justifyContent: "space-evenly",
+        }
     },
     paginationTop: {
         display: "flex",
@@ -37,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const News = () => {
-
-    const width = Store.width
 
     const news = toJS(UiStore.news)
     const newsItem = toJS(UiStore.news.docs)
