@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, FormControlLabel, Switch, TextField, Typography} from "@material-ui/core";
+import {Button, Divider, Fab, FormControlLabel, Switch, TextField, Typography} from "@material-ui/core";
 import AdminStore from "../../../bll/admin-store";
 import {runInAction, toJS} from "mobx";
 import AdminHeader from "../header/admin-header";
@@ -18,6 +18,7 @@ import docxIcon from '../../../common/assets/image/icons/docx.png'
 import xlsIcon from '../../../common/assets/image/icons/xls.png'
 import xlsxIcon from '../../../common/assets/image/icons/xlsx.png'
 import pdfIcon from '../../../common/assets/image/icons/pdf.png'
+import Close from "@material-ui/icons/Close";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -107,12 +108,25 @@ const useStyles = makeStyles((theme) => ({
     images: {
         padding: '20px 0'
     },
-    imagesItem: {
+    imagesItemWrap: {
         display: "flex",
         justifyContent: "space-evenly",
         flexWrap: "wrap",
-        '& img': {
-            margin: '5px 5px 20px 5px'
+    },
+    imagesItem: {
+        position: "relative",
+        display: "flex",
+        marginBottom: 20,
+        '& svg': {
+            position: 'absolute',
+            top: '-12px',
+            right: '-12px',
+            backgroundColor: '#fff',
+            borderRadius: 16,
+            fontSize: '200%'
+        },
+        '& svg:hover': {
+            cursor: 'pointer'
         }
     },
     imageAdd: {
@@ -128,7 +142,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         marginBottom: 20,
         '& svg': {
-            margin: '0 10px'
+            margin: '0 10px',
+            fontSize: '200%'
         },
         '& a': {
             margin: '0 10px'
@@ -472,15 +487,21 @@ const AdminNewsCreateEdit = () => {
                     </div>
                     <Divider/>
                     <div className={classes.images}>
-                        <div className={classes.imagesItem}>
+                        <div className={classes.imagesItemWrap}>
                             {AdminStore.news_tmp_images_old.length > 0 &&
                                 AdminStore.news_tmp_images_old.map((i,index)=>(
-                                    <img key={index} src={`${NEWS_URL}/${id}/images/crop_${i}`} onClick={()=> {DeleteOneImageOld(index)}} alt=""/>
+                                    <div className={classes.imagesItem}>
+                                        <HighlightOffIcon id={index} onClick={()=> {DeleteOneImageOld(index)}} color={'error'}/>
+                                        <img key={index} src={`${NEWS_URL}/${id}/images/crop_${i}`} alt=""/>
+                                    </div>
                                 ))
                             }
                             {AdminStore.news_tmp_images_new.length > 0 &&
                                 AdminStore.news_tmp_images_new.map((i,index)=>(
-                                    <img id={index} src={`${TMP_URL}/crop_${i}`} onClick={()=> {DeleteOneImageNew(index)}} alt=""/>
+                                    <div className={classes.imagesItem}>
+                                        <HighlightOffIcon onClick={()=> {DeleteOneImageNew(index)}} color={'error'}/>
+                                        <img id={index} src={`${TMP_URL}/crop_${i}`} alt=""/>
+                                    </div>
                                 ))
                             }
                         </div>

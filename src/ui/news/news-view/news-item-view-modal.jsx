@@ -8,7 +8,6 @@ import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Divider, Fab} from "@material-ui/core";
 import Close from '@material-ui/icons/Close';
 import {useGridPoint} from "../../../utils/breakpoints";
-import AdminStore from "../../../bll/admin-store";
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
 import docIcon from "../../../common/assets/image/icons/doc.png";
 import docxIcon from "../../../common/assets/image/icons/docx.png";
@@ -17,10 +16,13 @@ import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
 
 const useStyles = makeStyles({
     Paper: {
-        maxWidth: 650,
+        width: 650,
+        [useGridPoint.breakpoints.down('xs')]: {
+            width: 320,
+        },
         margin: 20,
         position: "relative",
-        maxHeight: 'calc(100% - 40px)'
+        height: 'calc(100% - 40px)'
     },
     header: {
         position: "fixed",
@@ -40,7 +42,6 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        flex: '1 0',
         padding: 40,
         fontSize: '120%',
         fontWeight: 700,
@@ -50,17 +51,13 @@ const useStyles = makeStyles({
         }
     },
     textMain: {
+        flex: '1 0',
         padding: 30,
         fontFamily: 'Roboto',
         lineHeight: 1.5,
         [useGridPoint.breakpoints.down('xs')]: {
             padding: 20,
         }
-    },
-    imagesHeader: {
-        textAlign: "center",
-        textTransform: "uppercase",
-        fontFamily: 'Roboto'
     },
     images: {
         margin: '10px 0',
@@ -95,7 +92,7 @@ const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         '& img': {
-            height: 20,
+            height: 30,
             width: 'auto',
             marginRight: 10
         },
@@ -192,7 +189,6 @@ export const NewsItemViewModal = (props)=> {
 
             {news.images.length > 0 &&
                 <div className={classes.images}>
-                    <div className={classes.imagesHeader}>фотографии</div>
                     {news.images.map((i) => (
                         <img src={`${NEWS_URL}/${news._id}/images/${i}`} alt=""/>
                     ))}
