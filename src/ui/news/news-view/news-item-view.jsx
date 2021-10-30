@@ -41,11 +41,11 @@ const useStyles = makeStyles({
     },
     headerFirst: {
         padding: 40,
-        fontSize: '120%',
+        fontSize: '130%',
         fontWeight: 700,
         fontFamily: 'Roboto',
         [useGridPoint.breakpoints.down('xs')]: {
-            padding: 30,
+            padding: '20px 0',
         }
     },
     textMain: {
@@ -54,7 +54,11 @@ const useStyles = makeStyles({
         fontFamily: 'Roboto',
         lineHeight: 1.8,
         fontSize: '120%',
-        textAlign: "justify"
+        textAlign: "justify",
+        [useGridPoint.breakpoints.down('xs')]: {
+            lineHeight: 1.5,
+            textAlign: "left",
+        }
     },
     images: {
         margin: '10px 0',
@@ -80,14 +84,18 @@ const useStyles = makeStyles({
         padding: '20px 0',
         display: "flex",
         flexDirection: "column",
-        '& a': {
-            margin: '3px 0',
-            padding: '3px 0'
-        }
     },
     docsItem: {
         display: "flex",
         alignItems: "center",
+        margin: '5px 0',
+        '& a': {
+            margin: '3px 0',
+            padding: '3px 0'
+        },
+        '& a:hover': {
+            color: '#ff6200!important'
+        },
         '& img': {
             height: 30,
             width: 'auto',
@@ -116,7 +124,7 @@ const NewsItemView = () => {
 
     return (
         <>
-            <Header/>
+            <Header title={'Новости'}/>
             {news.length > 0 &&
                 <Box className={classes.root}>
                     <Container className={classes.container} fixed>

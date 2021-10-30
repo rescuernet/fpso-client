@@ -20,9 +20,6 @@ import {Alert} from "@material-ui/lab";
 const useStyles = makeStyles({
     Paper: {
         width: 650,
-        [useGridPoint.breakpoints.down('xs')]: {
-            width: 320,
-        },
         margin: 20,
         position: "relative",
         height: 'calc(100% - 40px)',
@@ -30,7 +27,12 @@ const useStyles = makeStyles({
             display: 'block',
             position: 'absolute',
             top: 55,
-        }
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            height: '100%',
+            margin: 0,
+            maxHeight: '100%'
+        },
     },
     header: {
         position: "fixed",
@@ -71,6 +73,9 @@ const useStyles = makeStyles({
         textAlign: "justify",
         [useGridPoint.breakpoints.down('xs')]: {
             padding: 20,
+            lineHeight: 1.8,
+            textAlign: "left",
+            fontSize: '120%',
         }
     },
     images: {
@@ -97,14 +102,18 @@ const useStyles = makeStyles({
         padding: 20,
         display: "flex",
         flexDirection: "column",
-        '& a': {
-            margin: '3px 0',
-            padding: '3px 0'
-        }
     },
     docsItem: {
         display: "flex",
         alignItems: "center",
+        margin: '5px 0',
+        '& a': {
+            margin: '3px 0',
+            padding: '3px 0'
+        },
+        '& a:hover': {
+            color: '#ff6200!important'
+        },
         '& img': {
             height: 30,
             width: 'auto',
