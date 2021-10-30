@@ -7,12 +7,15 @@ import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Divider, Fab} from "@material-ui/core";
 import Close from '@material-ui/icons/Close';
+import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import {useGridPoint} from "../../../utils/breakpoints";
+import Snackbar from '@material-ui/core/Snackbar';
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
 import docIcon from "../../../common/assets/image/icons/doc.png";
 import docxIcon from "../../../common/assets/image/icons/docx.png";
 import xlsIcon from "../../../common/assets/image/icons/xls.png";
 import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles({
     Paper: {
@@ -22,11 +25,21 @@ const useStyles = makeStyles({
         },
         margin: 20,
         position: "relative",
-        height: 'calc(100% - 40px)'
+        height: 'calc(100% - 40px)',
+        '& .MuiSnackbar-root': {
+            display: 'block',
+            position: 'absolute',
+            top: 55,
+        }
     },
     header: {
         position: "fixed",
+        display: "flex",
+        flexDirection: "column",
         margin: 10,
+        '& button': {
+            marginBottom: 10
+        },
     },
     avatar: {
         display: "flex",
@@ -55,6 +68,7 @@ const useStyles = makeStyles({
         padding: 30,
         fontFamily: 'Roboto',
         lineHeight: 1.5,
+        textAlign: "justify",
         [useGridPoint.breakpoints.down('xs')]: {
             padding: 20,
         }
@@ -103,6 +117,8 @@ export const NewsItemViewModal = (props)=> {
 
     const classes = useStyles();
 
+    const location = document.location.href
+
     const [open, setOpen] = React.useState(props.open);
     const [close, setClose] = React.useState(null);
 
@@ -120,7 +136,23 @@ export const NewsItemViewModal = (props)=> {
         setTimeout(()=>{setClose(true)},500)
     };
 
+    const [openCopyLink, setOpenCopyLink] = React.useState(false);
+
+    const copyLink = () => {
+        setOpenCopyLink(true);
+        const el = document.getElementById('copyButton').getAttribute('data-link')
+        navigator.clipboard.writeText(el)
+    };
+
+    const closeCopyLink = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenCopyLink(false);
+    };
+
     const news = toJS(UiStore.news.docs[UiStore.newsViewModal_index])
+    const shareLink = location + '/' + news._id
 
 
     return (
@@ -134,8 +166,25 @@ export const NewsItemViewModal = (props)=> {
 
             <div className={classes.header}>
 
-                <Fab size="small" color="secondary" onClick={handleClose}>
+                <Fab
+                    id={'closeButton'}
+                    size="small"
+                    color="secondary"
+                    onClick={handleClose}
+                    data-name={'Закрыть'}
+                >
                     <Close />
+                </Fab>
+
+                <Fab
+                    id={'copyButton'}
+                    size="small"
+                    color="primary"
+                    onClick={copyLink}
+                    data-name={'копировать ссылку на новость'}
+                    data-link={shareLink}
+                >
+                    <ShareOutlinedIcon />
                 </Fab>
 
             </div>
@@ -179,11 +228,21 @@ export const NewsItemViewModal = (props)=> {
                             {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
                             <img src={xlsxIcon} alt="" width={40}/>
                             }
-                            <a href={`${NEWS_URL}/${news._id}/docs/${i.doc}`} target={'_blank'}>{i.title}</a>
+                            <a href={`${NEWS_URL}/${news._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
                         </div>
                     ))}
                 </div>
             }
+            <Snackbar
+                anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
+                open={openCopyLink}
+                autoHideDuration={8000}
+                onClose={closeCopyLink}
+            >
+                <Alert onClose={closeCopyLink} variant="filled" severity="success">
+                    Ссылка на новость скопирована в буфер
+                </Alert>
+            </Snackbar>
 
             <Divider/>
 

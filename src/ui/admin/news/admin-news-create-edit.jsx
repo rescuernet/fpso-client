@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, Fab, FormControlLabel, Switch, TextField, Typography} from "@material-ui/core";
+import {Button, Divider, FormControlLabel, Switch, TextField, Typography} from "@material-ui/core";
 import AdminStore from "../../../bll/admin-news-store";
 import {runInAction, toJS} from "mobx";
 import AdminHeader from "../header/admin-header";
@@ -18,7 +18,6 @@ import docxIcon from '../../../common/assets/image/icons/docx.png'
 import xlsIcon from '../../../common/assets/image/icons/xls.png'
 import xlsxIcon from '../../../common/assets/image/icons/xlsx.png'
 import pdfIcon from '../../../common/assets/image/icons/pdf.png'
-import Close from "@material-ui/icons/Close";
 
 
 const useStyles = makeStyles((theme) => ({

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         display: "flex",
         width: 600,
         marginBottom: 30,
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fff',
         border: 'solid 1px #e6e6e6',
         borderRadius: 5,
         overflow: 'hidden'

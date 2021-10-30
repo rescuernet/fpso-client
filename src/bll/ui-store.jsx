@@ -27,6 +27,19 @@ class UiStore {
         }
     }
 
+    getNewsId = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await uiService.getNewsId(id);
+            runInAction(() => {this.news.push(response.data)})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
 }
 
 export default new UiStore();

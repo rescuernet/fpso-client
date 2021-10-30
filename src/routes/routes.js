@@ -6,6 +6,7 @@ import AdminNews from "../ui/admin/news/admin-news";
 import AdminCompetitions from "../ui/admin/competitions/admin-competitions";
 import AdminNewsCreate from "../ui/admin/news/admin-news-create-edit";
 import News from "../ui/news/news";
+import NewsItemView from "../ui/news/news-view/news-item-view";
 
 
 export const MenuTypes = {
@@ -55,6 +56,16 @@ const RouterManager = {
         },
         menu: {
             type: MenuTypes.main,
+            title: 'Новости'
+        }
+    },
+    NewsViewId: {
+        path:'/news/:id',
+        Component: NewsItemView,
+        getUrl(id) {return `/news/${id}`},
+        auth: false,
+        header: {
+            view: true,
             title: 'Новости'
         }
     },
