@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import Header from "./ui/header/header";
-import {Redirect, Route, Switch, useLocation, useParams} from "react-router-dom";
+import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import Store from "./bll/store";

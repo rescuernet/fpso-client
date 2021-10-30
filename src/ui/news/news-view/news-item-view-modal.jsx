@@ -245,7 +245,7 @@ export const NewsItemViewModal = (props)=> {
             <Snackbar
                 anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
                 open={openCopyLink}
-                autoHideDuration={8000}
+                autoHideDuration={6000}
                 onClose={closeCopyLink}
             >
                 <Alert onClose={closeCopyLink} variant="filled" severity="success">
