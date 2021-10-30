@@ -27,6 +27,7 @@ const App = () => {
     useEffect(() => {
         if(localStorage.getItem('token')){
             AuthStore.authMe();
+            console.log('auth')
         }else{
             runInAction(() => {Store.isInit = true})
         }

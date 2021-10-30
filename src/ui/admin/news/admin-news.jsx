@@ -118,11 +118,11 @@ const AdminNews = (props) => {
                             {Store.width > 750 && AdminStore.news.length > 0 &&
                                 <>
                                     {Store.width > 1000 &&
-                                        <th className={classes.min}>Создана</th>
+                                        <th className={classes.min}>создана</th>
                                     }
 
                                     <th></th>
-                                    <th>Заголовок</th>
+                                    <th>заголовок</th>
                                     <th className={classes.min}>старт</th>
                                     <th className={classes.min}>финиш</th>
                                     <th className={classes.min}>закреплена</th>

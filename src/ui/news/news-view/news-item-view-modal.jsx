@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import {runInAction, toJS} from "mobx";
-import UiStore from "../../../bll/ui-store";
+import UiStore from "../../../bll/ui-news-store";
 import {makeStyles} from "@material-ui/core/styles";
 import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";

@@ -17,6 +17,7 @@ class AuthStore {
 
     login = async (email,password) => {
         runInAction(() => {this.authError = {}})
+        runInAction(() => {Store.isInit = false})
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AuthService.login(email,password);
@@ -59,6 +60,7 @@ class AuthStore {
             console.log(e.response?.data?.message);
         }finally {
             runInAction(() => {Store.isLoading = false})
+            runInAction(() => {Store.isInit = false})
         }
     }
 

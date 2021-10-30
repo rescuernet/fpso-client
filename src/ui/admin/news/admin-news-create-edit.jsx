@@ -196,17 +196,15 @@ const AdminNewsCreateEdit = () => {
     const newsEdit = id && toJS(AdminStore.news).find(item => item._id === id)
     id && !newsEdit && history.push(RM.Admin__News.path)
 
-    // установка OLD
-    if(newsEdit){
-        runInAction(() => {
-            AdminStore.news_tmp_avatar_old = newsEdit.avatar
-            AdminStore.news_tmp_images_old = newsEdit.images
-            AdminStore.news_tmp_docs_old = newsEdit.docs
-        })
-    }
-
-    //очистка Store перед размонтированием
+    //установка OLD и очистка Store перед размонтированием
     useEffect(()=>{
+        if(newsEdit){
+            runInAction(() => {
+                AdminStore.news_tmp_avatar_old = newsEdit.avatar
+                AdminStore.news_tmp_images_old = newsEdit.images
+                AdminStore.news_tmp_docs_old = newsEdit.docs
+            })
+        }
         return ()=> {
             runInAction(() => {
                 AdminStore.news_tmp_avatar_new = null

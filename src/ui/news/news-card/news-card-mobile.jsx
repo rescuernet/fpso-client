@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
 import {runInAction} from "mobx";
-import UiStore from "../../../bll/ui-store";
+import UiNewsStore from "../../../bll/ui-news-store";
 import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 
@@ -72,8 +72,8 @@ export const NewsCardMobile = (props)=> {
                     size="small"
                     color="primary"
                     onClick={()=>{runInAction(()=>{
-                        UiStore.newsViewModal_open = true;
-                        UiStore.newsViewModal_index = props.index
+                        UiNewsStore.newsViewModal_open = true;
+                        UiNewsStore.newsViewModal_index = props.index
                     })}}
                 >
                     Подробнее..

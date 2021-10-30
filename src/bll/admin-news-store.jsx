@@ -45,6 +45,7 @@ class AdminNewsStore {
                     <div>Тип файла JPEG/JPG</div>
                 </div>})
         } finally {
+            runInAction(() => {Store.isInit = true})
             runInAction(() => {Store.isLoading = false})
         }
     }

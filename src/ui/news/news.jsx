@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {runInAction, toJS} from "mobx";
-import UiStore from '../../bll/ui-store'
+import UiNewsStore from '../../bll/ui-news-store'
 import {observer} from "mobx-react-lite";
 import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -43,24 +43,24 @@ const useStyles = makeStyles((theme) => ({
 
 const News = () => {
 
-    const news = toJS(UiStore.news)
-    const newsItem = toJS(UiStore.news.docs)
+    const news = toJS(UiNewsStore.news)
+    const newsItem = toJS(UiNewsStore.news.docs)
 
     const [pageNum,setPageNum] = useState(1)
 
     const classes = useStyles();
 
     useEffect(()=>{
-        runInAction(()=>{UiStore.getNews()})
+        runInAction(()=>{UiNewsStore.getNews()})
         return ()=> {
-            runInAction(()=>{UiStore.news = []})
+            runInAction(()=>{UiNewsStore.news = []})
         }
     },[])
 
     const ChangePage = (e, page) => {
         window.scrollTo(0,0)
         setPageNum(page)
-        runInAction(()=>{UiStore.getNews(page)})
+        runInAction(()=>{UiNewsStore.getNews(page)})
     };
 
     return (
@@ -103,9 +103,9 @@ const News = () => {
                     </div>
                 </>
                 }
-                {UiStore.newsViewModal_open &&
+                {UiNewsStore.newsViewModal_open &&
                     <NewsItemViewModal
-                        open={UiStore.newsViewModal_open}
+                        open={UiNewsStore.newsViewModal_open}
                     />
                 }
             </Container>
