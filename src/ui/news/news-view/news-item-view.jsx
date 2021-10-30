@@ -114,13 +114,14 @@ const NewsItemView = () => {
     useEffect(()=>{
         runInAction(()=>{
             UiStore.getNewsId(id)
+            console.log('use')
         })
         return ()=> {
             runInAction(()=>{
                 UiStore.news = []
             })
         }
-    },[])
+    },[id])
 
     return (
         <>

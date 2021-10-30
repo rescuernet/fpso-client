@@ -196,13 +196,17 @@ const AdminNewsCreateEdit = () => {
     const newsEdit = id && toJS(AdminStore.news).find(item => item._id === id)
     id && !newsEdit && history.push(RM.Admin__News.path)
 
-    //очистка Store перед размонтированием
-    useEffect(()=>{
-        newsEdit && runInAction(() => {
+    // установка OLD
+    if(newsEdit){
+        runInAction(() => {
             AdminStore.news_tmp_avatar_old = newsEdit.avatar
             AdminStore.news_tmp_images_old = newsEdit.images
             AdminStore.news_tmp_docs_old = newsEdit.docs
         })
+    }
+
+    //очистка Store перед размонтированием
+    useEffect(()=>{
         return ()=> {
             runInAction(() => {
                 AdminStore.news_tmp_avatar_new = null
@@ -214,6 +218,8 @@ const AdminNewsCreateEdit = () => {
             })
         }
     },[])
+
+
 
     const classes = useStyles();
     const [dateStart,setDateStart] = useState(newsEdit ? dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd') : dateFns.format(new Date(), 'yyyy-MM-dd'));
