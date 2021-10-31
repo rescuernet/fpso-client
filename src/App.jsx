@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     backdropLinear: {
         width: '100%',
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
+        marginTop: 48,
         '& .MuiLinearProgress-colorPrimary': {
             backgroundColor: '#005580'
         },
