@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./ui/header/header";
 import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
@@ -8,7 +8,28 @@ import {runInAction} from "mobx";
 import {RM} from "./routes/routes"
 import {useGridPoint} from "./utils/breakpoints";
 import {ThemeProvider } from "@material-ui/core/styles";
+import {Backdrop, LinearProgress } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+        alignItems: 'flex-start'
+    },
+    backdropLinear: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+        '& .MuiLinearProgress-colorPrimary': {
+            backgroundColor: '#005580'
+        },
+        '& .MuiLinearProgress-barColorPrimary': {
+            backgroundColor: '#ff6200'
+        },
+    },
+}))
 
 
 const Routes = []
@@ -21,27 +42,44 @@ window.addEventListener("resize", (event) => {
 
 const App = () => {
 
+    const classes = useStyles();
     const location = useLocation().pathname;
-
 
     useEffect(() => {
         if(localStorage.getItem('token')){
-            AuthStore.authMe();
-            console.log('auth')
+            runInAction(()=>{AuthStore.authMe()})
         }else{
             runInAction(() => {Store.isInit = true})
         }
     }, []);
 
+
+    const [backdrop,setBackdrop] = useState(false);
+
+
     const isLoading = Store.isLoading
     const isInit = Store.isInit
     const isAuth = AuthStore.isAuth
 
+    useEffect(() => {
+        if(isLoading){
+            setBackdrop(true)
+        }else{
+            const backdropTimeOut = setTimeout(() => {
+                setBackdrop(false)
+            }, 500);
+            return () => clearTimeout(backdropTimeOut);
+        }
+    }, [isLoading]);
 
     return (
         <ThemeProvider theme={useGridPoint}>
             <div className="App">
-                <div className={`isLoading ${isLoading ? 'isLoadingView' : ""}`}/>
+                <Backdrop className={classes.backdrop} open={backdrop}>
+                    <div className={classes.backdropLinear}>
+                        <LinearProgress color="primary" />
+                    </div>
+                </Backdrop>
                 {Routes.map(({path, header}) => (path === location && header.view) && <Header title={header.title}/>)}
                 {isInit &&
                 <Switch>

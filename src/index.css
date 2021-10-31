@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 html, body, #root,.App {
-  width: 100%;
+  background-color: #f7f7f7;
   height: 100%;
 }
 body {

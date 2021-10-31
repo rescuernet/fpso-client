@@ -18,7 +18,6 @@ import Header from "../../header/header";
 const useStyles = makeStyles({
     root: {
         paddingTop: 50,
-        backgroundColor: '#f7f7f7',
     },
     container: {
         display: "flex",

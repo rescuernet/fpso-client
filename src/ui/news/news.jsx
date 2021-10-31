@@ -14,8 +14,6 @@ import NewsCardDesktop from "./news-card/news-card-desktop";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '100%',
-        backgroundColor: '#f7f7f7',
         paddingTop: 50,
     },
     newsListItem: {
@@ -86,9 +84,9 @@ const News = () => {
                         }
 
                         {Store.width >= 750 &&
-                        newsItem.map((i,index)=>(
-                            <NewsCardDesktop key={index} index={index} news={i} />
-                        ))
+                            newsItem.map((i,index)=>(
+                                <NewsCardDesktop key={index} index={index} news={i} />
+                            ))
                         }
                     </Box>
 

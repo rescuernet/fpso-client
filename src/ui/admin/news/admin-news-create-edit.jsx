@@ -218,7 +218,6 @@ const AdminNewsCreateEdit = () => {
     },[])
 
 
-
     const classes = useStyles();
     const [dateStart,setDateStart] = useState(newsEdit ? dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd') : dateFns.format(new Date(), 'yyyy-MM-dd'));
     const [dateEnd,setDateEnd] = useState(newsEdit && newsEdit.dateEnd ? dateFns.format(new Date(newsEdit.dateEnd), 'yyyy-MM-dd') : null);

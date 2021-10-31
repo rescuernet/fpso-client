@@ -7,6 +7,7 @@ import {runInAction} from "mobx";
 import UiNewsStore from "../../../bll/ui-news-store";
 import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
+import {Divider} from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
@@ -14,9 +15,9 @@ const useStyles = makeStyles({
         flexDirection: "column",
         width: 320,
         marginBottom: 30,
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fff',
         border: 'solid 1px #e6e6e6',
-        borderRadius: 5,
+        borderRadius: 10,
         overflow: 'hidden'
     },
     image: {
@@ -34,51 +35,59 @@ const useStyles = makeStyles({
         flexDirection: "column",
         justifyContent: "center",
         flex: '1 0',
-        margin: '0 15px',
+        margin: '0 15px 15px 15px',
     },
     control: {
         display: "flex",
         justifyContent: "space-between",
         flex: '0 0 auto',
-        margin: '10px',
+        padding: '10px',
+        backgroundColor: '#005580',
+        '& button': {
+            color: '#fff'
+        }
     },
     date: {
         display: "flex",
         alignItems: "center",
         fontSize: 12,
         fontFamily: 'Roboto',
-        color: '#005580'
+        color: '#fff'
     }
 });
 
-export const NewsCardMobile = (props)=> {
+export const NewsCardMobile = ({news, index})=> {
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <div className={classes.image}>
                 <img src={
-                    props.news.avatar
-                        ? `${NEWS_URL}/${props.news._id}/avatar/${props.news.avatar}`
+                    news.avatar
+                        ? `${NEWS_URL}/${news._id}/avatar/${news.avatar}`
                         : noNewsAvatar
                 } alt=""/>
             </div>
             <div className={classes.header}>
                 <div className={s.headerText}>
-                    {props.news.headerFirst}
+                    {news.headerFirst}
                 </div>
             </div>
+            <Divider/>
             <div className={classes.control}>
-                <Button
-                    size="small"
-                    color="primary"
-                    onClick={()=>{runInAction(()=>{
-                        UiNewsStore.newsViewModal_open = true;
-                        UiNewsStore.newsViewModal_index = props.index
-                    })}}
-                >
-                    Подробнее..
-                </Button>
-                <div className={classes.date}>{dateFns.format(new Date(props.news.dateStart), 'dd.MM.yyyy')}</div>
+                {index >= 0 &&
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={()=>{runInAction(()=>{
+                            UiNewsStore.newsViewModal_open = true;
+                            UiNewsStore.newsViewModal_index = index
+                        })}}
+                    >
+                        Подробнее..
+                    </Button>
+                }
+
+                <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>
             </div>
         </div>
     );

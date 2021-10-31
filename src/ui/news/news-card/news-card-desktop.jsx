@@ -22,8 +22,8 @@ const useStyles = makeStyles({
         flex: '0 0 auto',
         fontSize: 0,
         '& img': {
-            width: '200px',
-        }
+            width: 150,
+        },
     },
     data: {
         flexGrow: 1,
@@ -51,35 +51,39 @@ const useStyles = makeStyles({
     },
 });
 
-const NewsCardDesktop = (props) => {
+const NewsCardDesktop = ({news,index}) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
             <div className={classes.image}>
                 <img src={
-                    props.news.avatar
-                        ? `${NEWS_URL}/${props.news._id}/avatar/${props.news.avatar}`
+                    news.avatar
+                        ? `${NEWS_URL}/${news._id}/avatar/${news.avatar}`
                         : noNewsAvatar
                 } alt=""/>
             </div>
             <div className={classes.data}>
-                <div className={classes.date}>{dateFns.format(new Date(props.news.dateStart), 'dd.MM.yyyy')}</div>
+                <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>
                 <div className={classes.header}>
                     <div className={s.headerText}>
-                        {props.news.headerFirst}
+                        {news.headerFirst}
                     </div>
                 </div>
                 <div className={classes.control}>
-                    <Button
-                        size="small"
-                        color="primary"
-                        onClick={()=>{runInAction(()=>{
-                            UiNewsStore.newsViewModal_open = true;
-                            UiNewsStore.newsViewModal_index = props.index
-                        })}}
-                    >
-                        Подробнее..
-                    </Button>
+                    {index >= 0
+                        ? <Button
+                                size="small"
+                                color="primary"
+                                onClick={()=>{runInAction(()=>{
+                                    UiNewsStore.newsViewModal_open = true;
+                                    UiNewsStore.newsViewModal_index = index
+                                })}}
+                            >
+                                Подробнее..
+                            </Button>
+                        : null
+                    }
+
                 </div>
             </div>
         </div>
