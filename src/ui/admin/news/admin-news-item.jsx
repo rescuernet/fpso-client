@@ -9,7 +9,7 @@ import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Store from '../../../bll/store';
 import {RM} from "../../../routes/routes";
-import AdminStore from "../../../bll/admin-news-store";
+import AdminNewsStore from "../../../bll/admin-news-store";
 import {runInAction, toJS} from "mobx";
 
 
@@ -59,10 +59,10 @@ const AdminNewsItem = () => {
     const history = useHistory();
 
     useEffect(()=>{
-        runInAction(()=>{AdminStore.getNews()})
+        runInAction(()=>{AdminNewsStore.getNews()})
     },[])
 
-    const news = toJS(AdminStore.news)
+    const news = toJS(AdminNewsStore.news)
 
     const newsEdit = (id) => {
         history.push(RM.Admin__News__Edit.getUrl(id))
@@ -71,7 +71,7 @@ const AdminNewsItem = () => {
 
     return (
         <table className={classes.table}>
-            {Store.width > 750 && AdminStore.news.length > 0 &&
+            {Store.width > 750 && AdminNewsStore.news.length > 0 &&
             <>
                 {Store.width > 1000 &&
                 <th className={classes.min}>создана</th>

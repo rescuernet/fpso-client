@@ -5,7 +5,6 @@ import {API_URL} from "../const/const";
 import Store from "./store"
 
 
-
 class AuthStore {
     user = {}
     isAuth = false
@@ -63,7 +62,6 @@ class AuthStore {
             runInAction(() => {Store.isInit = false})
         }
     }
-
 
     authMe = async () => {
         runInAction(() => {Store.isInit = false})
