@@ -27,7 +27,7 @@ const useStyles = makeStyles({
         fontSize: 0,
         padding: 20,
         '& img': {
-            borderRadius: 100
+            borderRadius: 10
         }
     },
     header: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import * as dateFns from "date-fns";
@@ -9,6 +9,8 @@ import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Store from '../../../bll/store';
 import {RM} from "../../../routes/routes";
+import AdminStore from "../../../bll/admin-news-store";
+import {runInAction, toJS} from "mobx";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,19 +22,47 @@ const useStyles = makeStyles((theme) => ({
         },
         position: "relative"
     },
+    table: {
+        width: '100%',
+        borderCollapse: "collapse",
+        fontFamily: 'Roboto',
+        color: '#545454',
+        '& tr': {
+            borderTop: '1px solid #ccc',
+            borderBottom: '1px solid #ccc'
+        },
+        '& tr:hover': {
+            transition: '0.3s',
+            backgroundColor: '#f2f2f2',
+            cursor: 'pointer'
+        },
+        '& td': {
+            padding: '20px 10px',
+            [theme.breakpoints.down('xs')]: {
+                padding: '10px 5px',
+            }
+        }
+    },
     min: {
         width: 100,
         textAlign: "center",
+        padding: '0 5px',
         '@media (max-width: 1050px)' : {
             width: 50,
         },
     },
 }));
 
-const AdminNewsItem = ({news}) => {
+const AdminNewsItem = () => {
 
     const classes = useStyles();
     const history = useHistory();
+
+    useEffect(()=>{
+        runInAction(()=>{AdminStore.getNews()})
+    },[])
+
+    const news = toJS(AdminStore.news)
 
     const newsEdit = (id) => {
         history.push(RM.Admin__News__Edit.getUrl(id))
@@ -40,19 +70,37 @@ const AdminNewsItem = ({news}) => {
 
 
     return (
-        <tr onClick={()=>{newsEdit(news._id)}} id={news._id}>
-            {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(news.dateCreated), 'dd.MM.yyyy')}</td>}
-            <td className={classes.min}>{news.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
-            <td>{news.headerFirst}</td>
-            {Store.width > 750 &&
-                <>
-                    <td className={classes.min}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</td>
-                    <td className={classes.min}>{news.dateEnd ? dateFns.format(new Date(news.dateEnd), 'dd.MM.yyyy') : <MoreHorizOutlinedIcon color={"primary"}/>}</td>
-                    <td className={classes.min}>{news.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
-                    <td className={classes.min}>{news.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
-                </>
+        <table className={classes.table}>
+            {Store.width > 750 && AdminStore.news.length > 0 &&
+            <>
+                {Store.width > 1000 &&
+                <th className={classes.min}>создана</th>
+                }
+
+                <th></th>
+                <th>заголовок</th>
+                <th className={classes.min}>старт</th>
+                <th className={classes.min}>финиш</th>
+                <th className={classes.min}>закреплена</th>
+                <th className={classes.min}>важная</th>
+            </>
             }
-        </tr>
+            {news.length > 0 && news.map((i) => (
+                <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
+                    {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.dateCreated), 'dd.MM.yyyy')}</td>}
+                    <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
+                    <td>{i.headerFirst}</td>
+                    {Store.width > 750 &&
+                    <>
+                        <td className={classes.min}>{dateFns.format(new Date(i.dateStart), 'dd.MM.yyyy')}</td>
+                        <td className={classes.min}>{i.dateEnd ? dateFns.format(new Date(i.dateEnd), 'dd.MM.yyyy') : <MoreHorizOutlinedIcon color={"primary"}/>}</td>
+                        <td className={classes.min}>{i.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
+                        <td className={classes.min}>{i.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
+                    </>
+                    }
+                </tr>
+            ))}
+        </table>
     );
 };
 

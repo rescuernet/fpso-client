@@ -53,6 +53,7 @@ const useStyles = makeStyles({
 
 const NewsCardDesktop = ({news,index}) => {
     const classes = useStyles();
+
     return (
         <div className={classes.root}>
             <div className={classes.image}>

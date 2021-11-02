@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 const News = () => {
 
-    const news = toJS(UiNewsStore.news)
+    const pagesCount = toJS(UiNewsStore.news.pages)
     const newsItem = toJS(UiNewsStore.news.docs)
 
     const [pageNum,setPageNum] = useState(1)
@@ -68,7 +68,7 @@ const News = () => {
                 <>
                     <div className={classes.paginationTop}>
                         <Pagination
-                            count={news.pages}
+                            count={pagesCount}
                             page={pageNum}
                             color={"primary"}
                             size={Store.width < 750 ? 'small' : 'medium'}
@@ -92,7 +92,7 @@ const News = () => {
 
                     <div className={classes.paginationBottom}>
                         <Pagination
-                            count={news.pages}
+                            count={pagesCount}
                             page={pageNum}
                             color={"primary"}
                             size={Store.width < 750 ? 'small' : 'medium'}
