@@ -2,11 +2,12 @@ import Admin from "../ui/admin/admin";
 import Competitions from "../ui/competitions/competitions";
 import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
-import AdminNews from "../ui/admin/news/admin-news";
+import AdminNews from "../ui/admin/news/news";
 import AdminCompetitions from "../ui/admin/competitions/admin-competitions";
-import AdminNewsCreate from "../ui/admin/news/admin-news-create-edit";
+import AdminNewsCreate from "../ui/admin/news/create-edit/create-edit";
 import News from "../ui/news/news";
 import NewsItemView from "../ui/news/news-view/news-item-view";
+import AdminCompetitionsCreateEdit from "../ui/admin/competitions/admin-competitions-create-edit";
 
 
 export const MenuTypes = {
@@ -165,6 +166,15 @@ const RouterManager = {
             type: MenuTypes.admin,
             title: 'Соревнования'
         }
+    },
+    Admin__Competitions__Create: {
+        path: `${PrefixPath.admin}/competitions/create`,
+        Component: AdminCompetitionsCreateEdit,
+        getUrl() {return `${PrefixPath.admin}/competitions/create`},
+        auth: true,
+        header: {
+            view: false
+        },
     },
 }
 

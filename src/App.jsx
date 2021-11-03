@@ -8,25 +8,14 @@ import {runInAction} from "mobx";
 import {RM} from "./routes/routes"
 import {useGridPoint} from "./utils/breakpoints";
 import {ThemeProvider } from "@material-ui/core/styles";
-import {Backdrop, LinearProgress } from "@material-ui/core";
+import {Backdrop, CircularProgress } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
-        alignItems: 'flex-start'
-    },
-    backdropLinear: {
-        width: '100%',
-        marginTop: 48,
-        '& .MuiLinearProgress-colorPrimary': {
-            backgroundColor: '#005580'
-        },
-        '& .MuiLinearProgress-barColorPrimary': {
-            backgroundColor: '#ff6200'
-        },
-    },
+        color: '#ff6200',
+    }
 }))
 
 
@@ -74,9 +63,7 @@ const App = () => {
         <ThemeProvider theme={useGridPoint}>
             <div className="App">
                 <Backdrop className={classes.backdrop} open={backdrop}>
-                    <div className={classes.backdropLinear}>
-                        <LinearProgress color="primary" />
-                    </div>
+                    <CircularProgress color="inherit" />
                 </Backdrop>
                 {Routes.map(({path, header}) => (path === location && header.view) && <Header title={header.title}/>)}
                 {isInit &&

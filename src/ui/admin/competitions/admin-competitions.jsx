@@ -2,15 +2,19 @@ import React from 'react';
 import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import Store from "../../../bll/store";
+import {RM} from "../../../routes/routes";
+import {Button, Divider, Typography} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+import Store from '../../../bll/store';
 import AdminHeader from "../header/admin-header";
-import {Divider, Typography} from "@material-ui/core";
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         minHeight: '100%',
-        '@media (max-width: 750px)' : {
+        '@media (max-width: 1050px)' : {
             justifyContent: 'center'
         },
         position: "relative"
@@ -26,26 +30,54 @@ const useStyles = makeStyles((theme) => ({
     content: {
         display: "flex",
         flexDirection: "column",
-        maxWidth: 600,
-        padding: 20,
-        '@media (max-width: 750px)' : {
+        maxWidth: 1200,
+        padding: '20px 10px',
+        '@media (max-width: 1050px)' : {
+            marginTop: 55,
+        },
+        '@media (max-width: 600px)' : {
             marginTop: 45,
         },
     },
+    control: {
+        marginBottom: 20,
+    },
+    competitionsList: {
+        margin: '20px 0'
+    },
 }));
 
-
-const AdminCompetitions = () => {
+const AdminCompetitions = (props) => {
+    window.scrollTo(0,0)
     const classes = useStyles();
+    const history = useHistory();
+
+    const createCompetitions = () => {
+        history.push(RM.Admin__Competitions__Create.path);
+    }
+
 
     return (
         <div className={classes.root}>
-            {Store.width > 750 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Соревнования'}/>}
+            {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Соревнования'}/>}
             <div className={classes.wrapper}>
-                {Store.width > 750 && <div className={classes.header}><Typography variant={'h5'}>Соревнования</Typography></div>}
+                {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Соревнования</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
-                    Соревнования
+                    <div className={classes.control}>
+                        <Button
+                            variant={"contained"}
+                            color={"primary"}
+                            onClick={() => {createCompetitions()}}
+                        >
+                            Создать соревнование
+                        </Button>
+                    </div>
+                    <div className={classes.competitionsList}>
+
+                        {/*<NewsItem />*/}
+
+                    </div>
                 </div>
             </div>
         </div>

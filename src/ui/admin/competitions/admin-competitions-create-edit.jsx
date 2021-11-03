@@ -1,3 +1,4 @@
+/*
 import React, {useEffect, useState} from 'react';
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
@@ -190,7 +191,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AdminNewsCreateEdit = () => {
+const AdminCompetitionsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
     const newsEdit = id && toJS(AdminStore.news).find(item => item._id === id)
@@ -721,4 +722,4 @@ const AdminNewsCreateEdit = () => {
     );
 };
 
-export default observer(AdminNewsCreateEdit);
+export default observer(AdminCompetitionsCreateEdit);*/

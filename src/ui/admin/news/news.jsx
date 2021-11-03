@@ -7,7 +7,7 @@ import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Store from '../../../bll/store';
 import AdminHeader from "../header/admin-header";
-import AdminNewsItem from "./admin-news-item";
+import NewsItem from "./news-item";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminNews = (props) => {
+const News = (props) => {
     window.scrollTo(0,0)
     const classes = useStyles();
     const history = useHistory();
@@ -55,7 +55,6 @@ const AdminNews = (props) => {
     const createNews = () => {
         history.push(RM.Admin__News__Create.path);
     }
-
 
     return (
         <div className={classes.root}>
@@ -75,7 +74,7 @@ const AdminNews = (props) => {
                     </div>
                     <div className={classes.newsList}>
 
-                        <AdminNewsItem />
+                        <NewsItem />
 
                     </div>
                 </div>
@@ -84,4 +83,4 @@ const AdminNews = (props) => {
     );
 };
 
-export default observer(AdminNews);
+export default observer(News);

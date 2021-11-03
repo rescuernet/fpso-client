@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminNewsItem = () => {
+const NewsItem = () => {
 
     const classes = useStyles();
     const history = useHistory();
@@ -104,4 +104,4 @@ const AdminNewsItem = () => {
     );
 };
 
-export default AdminNewsItem;
+export default NewsItem;

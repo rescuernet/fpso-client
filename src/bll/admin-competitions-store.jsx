@@ -15,7 +15,7 @@ class AdminCompetitionsStore {
     news_tmp_docs_new = []
 
     news_tmp_errors = null
-    news = []
+    competitions = []
 
     constructor() {
         makeAutoObservable(this);
