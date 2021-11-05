@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AdminCompetitions = (props) => {
+const Competitions = (props) => {
     window.scrollTo(0,0)
     const classes = useStyles();
     const history = useHistory();
@@ -84,4 +84,4 @@ const AdminCompetitions = (props) => {
     );
 };
 
-export default observer(AdminCompetitions);
+export default observer(Competitions);

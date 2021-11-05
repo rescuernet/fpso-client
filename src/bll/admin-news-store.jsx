@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction, toJS} from "mobx";
 import Store from "./store"
 import AdminNewsService from "../services/admin-news-service";
 import * as dateFns from "date-fns";
@@ -43,7 +43,16 @@ class AdminNewsStore {
         runInAction(() => {this.news_tmp_docs_new = []})
         runInAction(() => {this.news_tmp_docs_old = []})
         runInAction(() => {this.news = []})
-        runInAction(() => {this.news_tmp = {}})
+        runInAction(() => {
+            this.news_tmp.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
+            this.news_tmp.dateEnd = null
+            this.news_tmp.headerFirst = null
+            this.news_tmp.headerSecond = null
+            this.news_tmp.textMain = null
+            this.news_tmp.fixedNews = false
+            this.news_tmp.importantNews = false
+            this.news_tmp.published = false
+        })
     }
 
     newsAvatarCreate = async (avatar) => {
@@ -100,10 +109,23 @@ class AdminNewsStore {
         }
     }
 
-    newsCreate = async (Arr) => {
+    newsCreate = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminNewsService.newsCreate(Arr);
+            const arr = {
+                avatar: this.news_tmp_avatar_new,
+                dateStart: this.news_tmp.dateStart,
+                dateEnd: this.news_tmp.dateEnd,
+                headerFirst: this.news_tmp.headerFirst,
+                headerSecond: this.news_tmp.headerSecond,
+                textMain: this.news_tmp.textMain,
+                fixedNews: this.news_tmp.fixedNews,
+                importantNews: this.news_tmp.importantNews,
+                published: this.news_tmp.published,
+                images: toJS(this.news_tmp_images_new),
+                docs: toJS(this.news_tmp_docs_new)
+            }
+            const response = await AdminNewsService.newsCreate(arr);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
@@ -119,10 +141,32 @@ class AdminNewsStore {
         }
     }
 
-    newsUpdate = async (Arr) => {
+    newsUpdate = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminNewsService.newsUpdate(Arr);
+            const arr = {
+                id,
+                avatarNew: this.news_tmp_avatar_new,
+                avatarOld: this.news_tmp_avatar_old,
+                imagesNew: toJS(this.news_tmp_images_new),
+                imagesOld: toJS(this.news_tmp_images_old),
+                docsNew: toJS(this.news_tmp_docs_new),
+                docsOld: toJS(this.news_tmp_docs_old),
+                model: {
+                    avatar: this.news_tmp_avatar_new ? this.news_tmp_avatar_new : this.news_tmp_avatar_old,
+                    dateStart: this.news_tmp.dateStart,
+                    dateEnd: this.news_tmp.dateEnd,
+                    headerFirst: this.news_tmp.headerFirst,
+                    headerSecond: this.news_tmp.headerSecond,
+                    textMain: this.news_tmp.textMain,
+                    fixedNews: this.news_tmp.fixedNews,
+                    importantNews: this.news_tmp.importantNews,
+                    published: this.news_tmp.published,
+                    images: toJS(this.news_tmp_images_new).concat(toJS(this.news_tmp_images_old)),
+                    docs: toJS(this.news_tmp_docs_new).concat(toJS(this.news_tmp_docs_old))
+                }
+            }
+            const response = await AdminNewsService.newsUpdate(arr);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})

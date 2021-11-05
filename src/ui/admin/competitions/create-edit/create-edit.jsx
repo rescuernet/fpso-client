@@ -159,25 +159,25 @@ const CreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
 
-                            <Avatar id={id}/>
+                    <Avatar id={id}/>
 
                     <Divider/>
 
-                            <Fields/>
+                    <Fields/>
 
                     <Divider/>
 
-                            <Images id={id}/>
+                    <Images id={id}/>
 
                     <Divider/>
 
-                            <Docs id={id}/>
+                    <Docs id={id}/>
 
                     <Divider/>
 
                     <div className={classes.control}>
 
-                            <Checkbox edit={!!newsEdit}/>
+                        <Checkbox edit={!!newsEdit}/>
 
                         <Divider/>
                         <div className={classes.controlButton}>
@@ -198,24 +198,24 @@ const CreateEdit = () => {
                                 {newsEdit ? 'Обновить' : 'Сохранить'}
                             </Button>
                             {newsEdit &&
-                                <Button
-                                    className={classes.Button}
-                                    variant="contained"
-                                        color={"secondary"}
-                                    onClick={()=>{newsDelete()}}
-                                >
-                                    удалить
-                                </Button>
+                            <Button
+                                className={classes.Button}
+                                variant="contained"
+                                color={"secondary"}
+                                onClick={()=>{newsDelete()}}
+                            >
+                                удалить
+                            </Button>
                             }
                             {deleteNews &&
-                                <AlertDialog
-                                    alertType={'confirm'}
-                                    open={true}
-                                    header={'Внимание!'}
-                                    text={'Подтвердите удаление новости'}
-                                    delete={()=>{newsDeleteConfirm(id)}}
-                                    close={()=>{setDeleteNews(false)}}
-                                />
+                            <AlertDialog
+                                alertType={'confirm'}
+                                open={true}
+                                header={'Внимание!'}
+                                text={'Подтвердите удаление новости'}
+                                delete={()=>{newsDeleteConfirm(id)}}
+                                close={()=>{setDeleteNews(false)}}
+                            />
                             }
 
                         </div>
@@ -223,11 +223,11 @@ const CreateEdit = () => {
                 </div>
             </div>
             {AdminNewsStore.news_tmp_errors &&
-                <AlertDialog
-                    open={true}
-                    header={'Ошибка!'}
-                    text={AdminNewsStore.news_tmp_errors}
-                />
+            <AlertDialog
+                open={true}
+                header={'Ошибка!'}
+                text={AdminNewsStore.news_tmp_errors}
+            />
             }
         </div>
     );
