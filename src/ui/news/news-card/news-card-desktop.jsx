@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
 import {runInAction} from "mobx";
-import UiNewsStore from "../../../bll/ui-news-store";
+import UiNewsStore from "../../../bll/ui/ui-news-store";
 import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg"
 

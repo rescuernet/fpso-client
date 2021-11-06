@@ -2,20 +2,20 @@ import React, {useEffect, useState} from 'react';
 import AdminMenu from "../../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction, toJS} from "mobx";
 import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
-import {AlertDialog} from "./alert";
+import {AlertDialog} from "./news-alert";
 import {useHistory, useParams} from "react-router-dom";
 import {RM} from "../../../../routes/routes";
 import Store from "../../../../bll/store";
 import * as dateFns from "date-fns";
-import Avatar from "./avatar";
-import Images from "./images";
-import Docs from "./docs";
-import Fields from "./fields";
-import Checkbox from "./checkbox";
+import NewsAvatar from "./news-avatar";
+import NewsImages from "./news-images";
+import NewsDocs from "./news-docs";
+import NewsFields from "./news-fields";
+import NewsCheckbox from "./news-checkbox";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CreateEdit = () => {
+const NewsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
     const newsEdit = id && toJS(AdminNewsStore.news).find(item => item._id === id)
@@ -114,9 +114,6 @@ const CreateEdit = () => {
     const classes = useStyles();
 
     const [deleteNews, setDeleteNews] = useState(false);
-
-
-
 
     //отмена
     const Cancel = () => {
@@ -159,25 +156,25 @@ const CreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
 
-                    <Avatar id={id}/>
+                            <NewsAvatar id={id}/>
 
                     <Divider/>
 
-                    <Fields/>
+                            <NewsFields/>
 
                     <Divider/>
 
-                    <Images id={id}/>
+                            <NewsImages id={id}/>
 
                     <Divider/>
 
-                    <Docs id={id}/>
+                            <NewsDocs id={id}/>
 
                     <Divider/>
 
                     <div className={classes.control}>
 
-                        <Checkbox edit={!!newsEdit}/>
+                            <NewsCheckbox edit={!!newsEdit}/>
 
                         <Divider/>
                         <div className={classes.controlButton}>
@@ -198,24 +195,24 @@ const CreateEdit = () => {
                                 {newsEdit ? 'Обновить' : 'Сохранить'}
                             </Button>
                             {newsEdit &&
-                            <Button
-                                className={classes.Button}
-                                variant="contained"
-                                color={"secondary"}
-                                onClick={()=>{newsDelete()}}
-                            >
-                                удалить
-                            </Button>
+                                <Button
+                                    className={classes.Button}
+                                    variant="contained"
+                                        color={"secondary"}
+                                    onClick={()=>{newsDelete()}}
+                                >
+                                    удалить
+                                </Button>
                             }
                             {deleteNews &&
-                            <AlertDialog
-                                alertType={'confirm'}
-                                open={true}
-                                header={'Внимание!'}
-                                text={'Подтвердите удаление новости'}
-                                delete={()=>{newsDeleteConfirm(id)}}
-                                close={()=>{setDeleteNews(false)}}
-                            />
+                                <AlertDialog
+                                    alertType={'confirm'}
+                                    open={true}
+                                    header={'Внимание!'}
+                                    text={'Подтвердите удаление новости'}
+                                    delete={()=>{newsDeleteConfirm(id)}}
+                                    close={()=>{setDeleteNews(false)}}
+                                />
                             }
 
                         </div>
@@ -223,14 +220,14 @@ const CreateEdit = () => {
                 </div>
             </div>
             {AdminNewsStore.news_tmp_errors &&
-            <AlertDialog
-                open={true}
-                header={'Ошибка!'}
-                text={AdminNewsStore.news_tmp_errors}
-            />
+                <AlertDialog
+                    open={true}
+                    header={'Ошибка!'}
+                    text={AdminNewsStore.news_tmp_errors}
+                />
             }
         </div>
     );
 };
 
-export default observer(CreateEdit);
+export default observer(NewsCreateEdit);

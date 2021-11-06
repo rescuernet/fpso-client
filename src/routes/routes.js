@@ -4,10 +4,10 @@ import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
 import AdminNews from "../ui/admin/news/news";
 import AdminCompetitions from "../ui/admin/competitions/competitions";
-import AdminNewsCreate from "../ui/admin/news/create-edit/create-edit";
+import AdminNewsCreate from "../ui/admin/news/news-create-edit/news-create-edit";
 import News from "../ui/news/news";
 import NewsItemView from "../ui/news/news-view/news-item-view";
-import AdminCompetitionsCreateEdit from "../ui/admin/competitions/create-edit/create-edit";
+import AdminCompetitionsCreateEdit from "../ui/admin/competitions/competitions-create-edit/competitions-create-edit";
 
 
 export const MenuTypes = {
@@ -175,6 +175,10 @@ const RouterManager = {
         header: {
             view: false
         },
+    },
+    Admin__Competitions__Avatar__Create: {
+        path: `${PrefixPath.admin}/competitions/avatar-create`,
+        getUrl() {return `${PrefixPath.admin}/competitions/avatar-create`},
     },
 }
 

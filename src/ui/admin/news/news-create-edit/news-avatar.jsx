@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {lightGreen} from "@material-ui/core/colors";
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Avatar = ({id}) => {
+const NewsAvatar = ({id}) => {
     const classes = useStyles();
 
     // загрузка аватар
@@ -115,4 +115,4 @@ const Avatar = ({id}) => {
     );
 };
 
-export default observer(Avatar);
+export default observer(NewsAvatar);

@@ -1,6 +1,6 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
-import Store from "./store"
-import AdminNewsService from "../services/admin-news-service";
+import Store from "../store"
+import AdminNewsService from "../../services/admin/admin-news-service";
 import * as dateFns from "date-fns";
 
 

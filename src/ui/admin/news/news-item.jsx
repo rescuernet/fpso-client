@@ -9,7 +9,7 @@ import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Store from '../../../bll/store';
 import {RM} from "../../../routes/routes";
-import AdminNewsStore from "../../../bll/admin-news-store";
+import AdminNewsStore from "../../../bll/admin/admin-news-store";
 import {runInAction, toJS} from "mobx";
 
 

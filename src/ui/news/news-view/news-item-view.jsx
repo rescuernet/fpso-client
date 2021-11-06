@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
-import UiStore from "../../../bll/ui-news-store";
+import UiStore from "../../../bll/ui/ui-news-store";
 import {NEWS_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Box, Container, Divider} from "@material-ui/core";

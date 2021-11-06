@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, TextField} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Docs = ({id}) => {
+const CompetitionsDocs = ({id}) => {
     const classes = useStyles();
 
     //загрузка документов
@@ -62,7 +62,6 @@ const Docs = ({id}) => {
         runInAction(() => {AdminNewsStore.news_tmp_docs_old.splice(id,1)})
     };
 
-    console.log(AdminNewsStore.news_tmp_docs_old)
 
     return (
         <div className={classes.docs}>
@@ -170,4 +169,4 @@ const Docs = ({id}) => {
     );
 };
 
-export default observer(Docs);
+export default observer(CompetitionsDocs);

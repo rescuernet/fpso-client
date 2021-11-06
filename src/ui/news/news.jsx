@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {runInAction, toJS} from "mobx";
-import UiNewsStore from '../../bll/ui-news-store'
+import UiNewsStore from '../../bll/ui/ui-news-store'
 import {observer} from "mobx-react-lite";
 import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";

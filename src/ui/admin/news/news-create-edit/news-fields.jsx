@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {TextField} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Fields = (props) => {
+const NewsFields = (props) => {
     const classes = useStyles();
 
     return (
@@ -119,4 +119,4 @@ const Fields = (props) => {
     );
 };
 
-export default observer(Fields);
+export default observer(NewsFields);

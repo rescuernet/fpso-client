@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Images = ({id}) => {
+const CompetitionsImages = ({id}) => {
     const classes = useStyles();
 
     //загрузка фотографий
@@ -102,4 +102,4 @@ const Images = ({id}) => {
     );
 };
 
-export default observer(Images);
+export default observer(CompetitionsImages);

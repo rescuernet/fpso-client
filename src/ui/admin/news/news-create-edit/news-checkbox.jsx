@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, FormControlLabel, Switch} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import {FormControlLabel, Switch} from "@material-ui/core";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Checkbox = ({edit}) => {
+const NewsCheckbox = ({edit}) => {
     const classes = useStyles();
 
     //смена закрепления новости
@@ -76,4 +76,4 @@ const Checkbox = ({edit}) => {
     );
 };
 
-export default observer(Checkbox);
+export default observer(NewsCheckbox);

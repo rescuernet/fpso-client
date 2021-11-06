@@ -1,10 +1,9 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin-news-store";
+import AdminCompetitionsStore from "../../../../bll/admin/admin-competitions-store";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
-import {lightGreen} from "@material-ui/core/colors";
 import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Avatar = ({id}) => {
+const CompetitionsAvatar = ({id}) => {
     const classes = useStyles();
 
     // загрузка аватар
@@ -50,24 +49,24 @@ const Avatar = ({id}) => {
         const data = new FormData()
         data.append('files',event.target.files[0]);
         runInAction(async () => {
-            await AdminNewsStore.newsAvatarCreate(data)
+            await AdminCompetitionsStore.compAvatarCreate(data)
         })
         event.target.value = ''
     };
     //удаление аватара
     const DeleteAvatar = () => {
         runInAction(() => {
-            AdminNewsStore.news_tmp_avatar_new = null
-            AdminNewsStore.news_tmp_avatar_old = null
+            AdminCompetitionsStore.competitions_tmp_avatar_new = null
+            AdminCompetitionsStore.competitions_tmp_avatar_old = null
         })
     };
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
-                {!AdminNewsStore.news_tmp_avatar_new && AdminNewsStore.news_tmp_avatar_old &&
+                {!AdminCompetitionsStore.competitions_tmp_avatar_new && AdminCompetitionsStore.competitions_tmp_avatar_old &&
                 <>
-                    <img src={`${NEWS_URL}/${id}/avatar/${AdminNewsStore.news_tmp_avatar_old}`} alt=""/>
+                    <img src={`${NEWS_URL}/${id}/avatar/${AdminCompetitionsStore.competitions_tmp_avatar_old}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}
@@ -77,9 +76,9 @@ const Avatar = ({id}) => {
                     </Button>
                 </>
                 }
-                {AdminNewsStore.news_tmp_avatar_new &&
+                {AdminCompetitionsStore.competitions_tmp_avatar_new &&
                 <>
-                    <img src={`${TMP_URL}/${AdminNewsStore.news_tmp_avatar_new}`} alt=""/>
+                    <img src={`${TMP_URL}/${AdminCompetitionsStore.competitions_tmp_avatar_new}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}
@@ -90,7 +89,7 @@ const Avatar = ({id}) => {
                 </>
                 }
             </div>
-            {!AdminNewsStore.news_tmp_avatar_new && !AdminNewsStore.news_tmp_avatar_old &&
+            {!AdminCompetitionsStore.competitions_tmp_avatar_new && !AdminCompetitionsStore.competitions_tmp_avatar_old &&
             <div className={classes.avatarAdd}>
                 <label htmlFor="avatarImage">
                     <input
@@ -106,7 +105,7 @@ const Avatar = ({id}) => {
                         variant={"outlined"}
                         component={'span'}
                     >
-                        выбрать аватар новости
+                        выбрать аватар соревнования
                     </Button>
                 </label>
             </div>
@@ -115,4 +114,4 @@ const Avatar = ({id}) => {
     );
 };
 
-export default observer(Avatar);
+export default observer(CompetitionsAvatar);

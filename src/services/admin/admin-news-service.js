@@ -1,5 +1,5 @@
-import $api from "../http/api";
-import {RM} from "../routes/routes";
+import $api from "../../http/api";
+import {RM} from "../../routes/routes";
 
 export default class AdminNewsService {
 

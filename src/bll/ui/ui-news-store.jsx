@@ -1,6 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
-import Store from "./store"
-import uiNewsService from "../services/ui-news-service";
+import Store from "../store"
+import uiNewsService from "../../services/ui/ui-news-service";
 
 
 
