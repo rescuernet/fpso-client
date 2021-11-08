@@ -7,11 +7,11 @@ export default class AdminCompetitionsService {
         return $api.post(RM.Admin__Competitions__Avatar__Create.path,avatar)
     }
 
-/*    static async newsImageCreate(image) {
-        return $api.post(RM.Admin__News__Image__Create.path,image)
+    static async compImageCreate(image) {
+        return $api.post(RM.Admin__Competitions__Image__Create.path,image)
     }
 
-    static async newsDocsCreate(doc) {
+/*    static async newsDocsCreate(doc) {
         return $api.post(RM.Admin__News__Docs__Create.path,doc)
     }
 

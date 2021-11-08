@@ -10,6 +10,7 @@ import Store from "../../bll/store";
 import {NewsCardMobile} from "../news/news-card/news-card-mobile";
 import {useGridPoint} from "../../utils/breakpoints";
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: 50,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, FormControlLabel, Switch} from "@material-ui/core";
+import {FormControlLabel, Switch} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";

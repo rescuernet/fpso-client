@@ -4,7 +4,6 @@ import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
-import {lightGreen} from "@material-ui/core/colors";
 import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({

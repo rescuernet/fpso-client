@@ -13,6 +13,14 @@ const useStyles = makeStyles((theme) => ({
 const Competitions = (props) => {
     const classes = useStyles();
 
+    const a = Date.now()
+
+    const b = Date.parse('2021-11-01')
+
+    console.log('a',a)
+    console.log('b',b)
+
+
 
     return (
         <Box className={classes.root}>

@@ -180,6 +180,10 @@ const RouterManager = {
         path: `${PrefixPath.admin}/competitions/avatar-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/avatar-create`},
     },
+    Admin__Competitions__Image__Create: {
+        path: `${PrefixPath.admin}/competitions/image-create`,
+        getUrl() {return `${PrefixPath.admin}/competitions/image-create`},
+    },
 }
 
 export const RM = RouterManager;

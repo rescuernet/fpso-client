@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import Store from "../store"
-import * as dateFns from "date-fns";
 import AdminCompetitionsService from "../../services/admin/admin-competitions-service";
+
 
 
 
@@ -17,9 +17,9 @@ class AdminCompetitionsStore {
     competitions_tmp_docs_new = []
 
     competitions_tmp_errors = null
-    competitions = []
+
     competitions_tmp = {
-        dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
+        dateStart: null,
         dateEnd: null,
         headerFirst: null,
         headerSecond: null,
@@ -29,6 +29,8 @@ class AdminCompetitionsStore {
         published: false,
         deleteNews: false
     }
+    competitions = []
+
 
     constructor() {
         makeAutoObservable(this);
@@ -44,7 +46,7 @@ class AdminCompetitionsStore {
         runInAction(() => {this.competitions_tmp_docs_new = []})
         runInAction(() => {this.news = []})
         runInAction(() => {
-            this.competitions_tmp.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
+            this.competitions_tmp.dateStart = null
             this.competitions_tmp.dateEnd = null
             this.competitions_tmp.headerFirst = null
             this.competitions_tmp.headerSecond = null
@@ -60,6 +62,24 @@ class AdminCompetitionsStore {
         try {
             const response = await AdminCompetitionsService.compAvatarCreate(avatar);
             runInAction(() => {this.competitions_tmp_avatar_new = response.data.name})
+        } catch (e) {
+            runInAction(() => {this.competitions_tmp_errors =
+                <div>
+                    <div>Изображение не загрузилось!</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    compImageCreate = async (image) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminCompetitionsService.compImageCreate(image);
+            runInAction(() => {this.competitions_tmp_images_new.push(response.data.name)})
         } catch (e) {
             runInAction(() => {this.competitions_tmp_errors =
                 <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
-import AdminNewsStore from "../../../../bll/admin/admin-news-store";
+import AdminCompetitionsStore from "../../../../bll/admin/admin-competitions-store";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {NEWS_URL, TMP_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
@@ -47,31 +47,31 @@ const CompetitionsImages = ({id}) => {
         const data = new FormData()
         data.append('files',event.target.files[0]);
         runInAction( async () => {
-            await runInAction(()=>{AdminNewsStore.newsImageCreate(data)})
+            await runInAction(()=>{AdminCompetitionsStore.compImageCreate(data)})
         })
         event.target.value = ''
     };
     //удаление одной фоографии
     const DeleteOneImageNew = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_images_new.splice(id,1)})
+        runInAction(() => {AdminCompetitionsStore.competitions_tmp_images_new.splice(id,1)})
     };
     const DeleteOneImageOld = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_images_old.splice(id,1)})
+        runInAction(() => {AdminCompetitionsStore.competitions_tmp_images_old.splice(id,1)})
     };
 
     return (
         <div className={classes.images}>
             <div className={classes.imagesItemWrap}>
-                {AdminNewsStore.news_tmp_images_old.length > 0 &&
-                AdminNewsStore.news_tmp_images_old.map((i,index)=>(
+                {AdminCompetitionsStore.competitions_tmp_images_old.length > 0 &&
+                AdminCompetitionsStore.competitions_tmp_images_old.map((i,index)=>(
                     <div className={classes.imagesItem}>
                         <HighlightOffIcon id={index} onClick={()=> {DeleteOneImageOld(index)}} color={'error'}/>
                         <img key={index} src={`${NEWS_URL}/${id}/images/crop_${i}`} alt=""/>
                     </div>
                 ))
                 }
-                {AdminNewsStore.news_tmp_images_new.length > 0 &&
-                AdminNewsStore.news_tmp_images_new.map((i,index)=>(
+                {AdminCompetitionsStore.competitions_tmp_images_new.length > 0 &&
+                AdminCompetitionsStore.competitions_tmp_images_new.map((i,index)=>(
                     <div className={classes.imagesItem}>
                         <HighlightOffIcon onClick={()=> {DeleteOneImageNew(index)}} color={'error'}/>
                         <img id={index} src={`${TMP_URL}/crop_${i}`} alt=""/>

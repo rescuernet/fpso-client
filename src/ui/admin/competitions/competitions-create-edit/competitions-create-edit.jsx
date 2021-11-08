@@ -157,26 +157,24 @@ const CompetitionsCreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
 
-                    <CompetitionsAvatar id={id}/>
-
-                    <Divider/>
-
                     <Fields/>
 
-                    <Divider/>
+                    {AdminCompetitionsStore.competitions_tmp.dateEnd &&
+                        <>
+                            <CompetitionsAvatar id={id}/>
+                            <Divider/>
+                            <Images id={id}/>
+                            <Divider/>
+                            <Docs id={id}/>
+                            <Divider/>
+                        </>
 
-                    <Images id={id}/>
-
-                    <Divider/>
-
-                    <Docs id={id}/>
-
-                    <Divider/>
+                    }
 
                     <div className={classes.control}>
-
-                        <Checkbox edit={!!compEdit}/>
-
+                        {AdminCompetitionsStore.competitions_tmp.dateEnd &&
+                            <Checkbox edit={!!compEdit}/>
+                        }
                         <Divider/>
                         <div className={classes.controlButton}>
                             <Button
