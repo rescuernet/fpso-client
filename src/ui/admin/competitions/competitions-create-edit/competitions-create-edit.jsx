@@ -109,7 +109,7 @@ const CompetitionsCreateEdit = () => {
         return ()=> {
             runInAction(() => {AdminCompetitionsStore.clearData()})
         }
-    },[])
+    },[compEdit])
 
     const classes = useStyles();
 

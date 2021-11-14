@@ -49,13 +49,17 @@ const useStyles = makeStyles({
         textAlign: "right",
         padding: '0 15px',
     },
+    importantNews: {
+        borderColor: '#ff0000',
+        backgroundColor: '#fff5f5'
+    }
 });
 
 const NewsCardDesktop = ({news,index}) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div className={`${classes.root} ${news.importantNews && classes.importantNews}`}>
             <div className={classes.image}>
                 <img src={
                     news.avatar

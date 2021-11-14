@@ -109,7 +109,8 @@ const NewsCreateEdit = () => {
         return ()=> {
             runInAction(() => {AdminNewsStore.clearData()})
         }
-    },[])
+    },[newsEdit])
+
 
     const classes = useStyles();
 
