@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import {NEWS_URL, TMP_URL} from "../../../../const/const";
+import {API_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NewsImages = ({id}) => {
     const classes = useStyles();
-
     //загрузка фотографий
     const UploadImage = (event) => {
         event.preventDefault();
@@ -66,7 +65,7 @@ const NewsImages = ({id}) => {
                 AdminNewsStore.news_tmp_images_old.map((i,index)=>(
                     <div className={classes.imagesItem}>
                         <HighlightOffIcon id={index} onClick={()=> {DeleteOneImageOld(index)}} color={'error'}/>
-                        <img key={index} src={`${NEWS_URL}/${id}/images/crop_${i}`} alt=""/>
+                        <img key={index} src={`${API_URL}/news/${id}/images/crop_${i}`} alt=""/>
                     </div>
                 ))
                 }
@@ -74,7 +73,7 @@ const NewsImages = ({id}) => {
                 AdminNewsStore.news_tmp_images_new.map((i,index)=>(
                     <div className={classes.imagesItem}>
                         <HighlightOffIcon onClick={()=> {DeleteOneImageNew(index)}} color={'error'}/>
-                        <img id={index} src={`${TMP_URL}/crop_${i}`} alt=""/>
+                        <img id={index} src={`${API_URL}/tmp/crop_${i}`} alt=""/>
                     </div>
                 ))
                 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {NEWS_URL, TMP_URL} from "../../../../const/const";
+import {API_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -66,7 +66,7 @@ const NewsAvatar = ({id}) => {
             <div className={classes.avatarControl}>
                 {!AdminNewsStore.news_tmp_avatar_new && AdminNewsStore.news_tmp_avatar_old &&
                 <>
-                    <img src={`${NEWS_URL}/${id}/avatar/${AdminNewsStore.news_tmp_avatar_old}`} alt=""/>
+                    <img src={`${API_URL}/news/${id}/avatar/${AdminNewsStore.news_tmp_avatar_old}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}
@@ -78,7 +78,7 @@ const NewsAvatar = ({id}) => {
                 }
                 {AdminNewsStore.news_tmp_avatar_new &&
                 <>
-                    <img src={`${TMP_URL}/${AdminNewsStore.news_tmp_avatar_new}`} alt=""/>
+                    <img src={`${API_URL}/tmp/${AdminNewsStore.news_tmp_avatar_new}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

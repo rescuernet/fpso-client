@@ -91,9 +91,10 @@ const NewsCreateEdit = () => {
 
     //установка OLD и очистка Store перед размонтированием
     useEffect(()=>{
-        if(newsEdit){
+        if(id){
             runInAction(() => {
-                AdminNewsStore.news_tmp.dateStart = dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd')
+                AdminNewsStore.getNewsId(id)
+                /*AdminNewsStore.news_tmp.dateStart = dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd')
                 AdminNewsStore.news_tmp.dateEnd = newsEdit.dateEnd && dateFns.format(new Date(newsEdit.dateEnd), 'yyyy-MM-dd')
                 AdminNewsStore.news_tmp.headerFirst = newsEdit.headerFirst
                 AdminNewsStore.news_tmp.headerSecond = newsEdit.headerSecond
@@ -103,13 +104,13 @@ const NewsCreateEdit = () => {
                 AdminNewsStore.news_tmp.published = newsEdit.published
                 AdminNewsStore.news_tmp_avatar_old = newsEdit.avatar
                 AdminNewsStore.news_tmp_images_old = newsEdit.images
-                AdminNewsStore.news_tmp_docs_old = newsEdit.docs
+                AdminNewsStore.news_tmp_docs_old = newsEdit.docs*/
             })
         }
         return ()=> {
             runInAction(() => {AdminNewsStore.clearData()})
         }
-    },[newsEdit])
+    },[id])
 
 
     const classes = useStyles();

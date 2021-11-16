@@ -5,7 +5,7 @@ import s from '../news.module.css'
 import * as dateFns from "date-fns";
 import {runInAction} from "mobx";
 import UiNewsStore from "../../../bll/ui/ui-news-store";
-import {NEWS_URL} from "../../../const/const";
+import {API_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Divider} from "@material-ui/core";
 
@@ -63,7 +63,7 @@ export const NewsCardMobile = ({news, index})=> {
             <div className={classes.image}>
                 <img src={
                     news.avatar
-                        ? `${NEWS_URL}/${news._id}/avatar/${news.avatar}`
+                        ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
                         : noNewsAvatar
                 } alt=""/>
             </div>

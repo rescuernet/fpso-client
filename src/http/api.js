@@ -5,7 +5,7 @@ import {API_URL} from "../const/const";
 
 const $api = axios.create({
     withCredentials:true,
-    baseURL: API_URL
+    baseURL: API_URL + '/api'
 });
 
 $api.interceptors.request.use((config) => {

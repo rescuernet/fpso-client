@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, TextField} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
-import {NEWS_URL, TMP_URL} from "../../../../const/const";
+import {API_URL} from "../../../../const/const";
 import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
 import docIcon from "../../../../common/assets/image/icons/doc.png";
 import docxIcon from "../../../../common/assets/image/icons/docx.png";
@@ -81,7 +81,7 @@ const NewsDocs = ({id}) => {
                         rows={1}
                         rowsMax={10}
                     />
-                    <a href={`${NEWS_URL}/${id}/docs/${AdminNewsStore.news_tmp_docs_old[index].doc}`} target={'_blank'} rel="noreferrer">
+                    <a href={`${API_URL}/news/${id}/docs/${AdminNewsStore.news_tmp_docs_old[index].doc}`} target={'_blank'} rel="noreferrer">
                         {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'pdf' &&
                         <img src={pdfIcon} alt="" width={40}/>
                         }
@@ -121,7 +121,7 @@ const NewsDocs = ({id}) => {
                         rows={1}
                         rowsMax={10}
                     />
-                    <a href={TMP_URL + '/' + AdminNewsStore.news_tmp_docs_new[index].doc} target={'_blank'} rel="noreferrer">
+                    <a href={`${API_URL}/tmp/${AdminNewsStore.news_tmp_docs_new[index].doc}`} target={'_blank'} rel="noreferrer">
                         {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'pdf' &&
                         <img src={pdfIcon} alt="" width={40}/>
                         }

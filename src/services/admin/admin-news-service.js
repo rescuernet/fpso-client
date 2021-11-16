@@ -30,4 +30,8 @@ export default class AdminNewsService {
     static async getNews() {
         return $api.get(RM.Admin__News.path)
     }
+
+    static async getNewsId(id) {
+        return $api.get(`${RM.Admin__News.path}/${id}`)
+    }
 }

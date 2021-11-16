@@ -214,6 +214,20 @@ class AdminNewsStore {
         }
     }
 
+    getNewsId = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminNewsService.getNewsId(id);
+            /*runInAction(() => {this.news = response.data})*/
+            console.log(response)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
 }
 
 export default new AdminNewsStore();

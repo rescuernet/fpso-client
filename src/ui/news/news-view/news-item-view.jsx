@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
 import UiStore from "../../../bll/ui/ui-news-store";
-import {NEWS_URL} from "../../../const/const";
+import {API_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Box, Container, Divider} from "@material-ui/core";
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
@@ -113,7 +113,6 @@ const NewsItemView = () => {
     useEffect(()=>{
         runInAction(()=>{
             UiStore.getNewsId(id)
-            console.log('use')
         })
         return ()=> {
             runInAction(()=>{
@@ -132,7 +131,7 @@ const NewsItemView = () => {
                             <div className={classes.avatar}>
                                 <img src={
                                     news[0].avatar
-                                        ? `${NEWS_URL}/${news[0]._id}/avatar/${news[0].avatar}`
+                                        ? `${API_URL}/news/${news[0]._id}/avatar/${news[0].avatar}`
                                         : noNewsAvatar
                                 } alt=""/>
                             </div>
@@ -168,7 +167,7 @@ const NewsItemView = () => {
                                         {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
                                         <img src={xlsxIcon} alt="" width={40}/>
                                         }
-                                        <a href={`${NEWS_URL}/${news[0]._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
+                                        <a href={`${API_URL}/news/${news[0]._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
                                     </div>
                                 ))}
                             </div>
@@ -179,7 +178,7 @@ const NewsItemView = () => {
                             {news[0].images.length > 0 &&
                             <div className={classes.images}>
                                 {news[0].images.map((i) => (
-                                    <img src={`${NEWS_URL}/${news[0]._id}/images/${i}`} alt=""/>
+                                    <img src={`${API_URL}/news/${news[0]._id}/images/${i}`} alt=""/>
                                 ))}
                             </div>
                             }

@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import {runInAction, toJS} from "mobx";
 import UiStore from "../../../bll/ui/ui-news-store";
 import {makeStyles} from "@material-ui/core/styles";
-import {NEWS_URL} from "../../../const/const";
+import {API_URL} from "../../../const/const";
 import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Divider, Fab} from "@material-ui/core";
 import Close from '@material-ui/icons/Close';
@@ -201,7 +201,7 @@ export const NewsItemViewModal = (props)=> {
             <div className={classes.avatar}>
                 <img src={
                     news.avatar
-                        ? `${NEWS_URL}/${news._id}/avatar/${news.avatar}`
+                        ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
                         : noNewsAvatar
                 } alt=""/>
             </div>
@@ -237,7 +237,7 @@ export const NewsItemViewModal = (props)=> {
                             {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
                             <img src={xlsxIcon} alt="" width={40}/>
                             }
-                            <a href={`${NEWS_URL}/${news._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
+                            <a href={`${API_URL}/news/${news._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
                         </div>
                     ))}
                 </div>
@@ -258,11 +258,10 @@ export const NewsItemViewModal = (props)=> {
             {news.images.length > 0 &&
                 <div className={classes.images}>
                     {news.images.map((i) => (
-                        <img src={`${NEWS_URL}/${news._id}/images/${i}`} alt=""/>
+                        <img src={`${API_URL}/news/${news._id}/images/${i}`} alt=""/>
                     ))}
                 </div>
             }
-
 
         </Dialog>
     );
