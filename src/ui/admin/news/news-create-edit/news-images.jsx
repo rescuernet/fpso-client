@@ -2,10 +2,9 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import {API_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
+import NewsImagesItem from "./news-images-item";
 
 const useStyles = makeStyles((theme) => ({
     images: {
@@ -15,22 +14,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-evenly",
         flexWrap: "wrap",
-    },
-    imagesItem: {
-        position: "relative",
-        display: "flex",
-        marginBottom: 20,
-        '& svg': {
-            position: 'absolute',
-            top: '-12px',
-            right: '-12px',
-            backgroundColor: '#fff',
-            borderRadius: 16,
-            fontSize: '200%'
-        },
-        '& svg:hover': {
-            cursor: 'pointer'
-        }
     },
     imageAdd: {
         display: "flex",
@@ -50,31 +33,18 @@ const NewsImages = ({id}) => {
         })
         event.target.value = ''
     };
+
     //удаление одной фоографии
-    const DeleteOneImageNew = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_images_new.splice(id,1)})
-    };
-    const DeleteOneImageOld = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_images_old.splice(id,1)})
+    const DeleteOneImage = (imgId) => {
+        runInAction(() => {AdminNewsStore.newsOne.images.splice(imgId,1)})
     };
 
     return (
         <div className={classes.images}>
             <div className={classes.imagesItemWrap}>
-                {AdminNewsStore.news_tmp_images_old.length > 0 &&
-                AdminNewsStore.news_tmp_images_old.map((i,index)=>(
-                    <div className={classes.imagesItem}>
-                        <HighlightOffIcon id={index} onClick={()=> {DeleteOneImageOld(index)}} color={'error'}/>
-                        <img key={index} src={`${API_URL}/news/${id}/images/crop_${i}`} alt=""/>
-                    </div>
-                ))
-                }
-                {AdminNewsStore.news_tmp_images_new.length > 0 &&
-                AdminNewsStore.news_tmp_images_new.map((i,index)=>(
-                    <div className={classes.imagesItem}>
-                        <HighlightOffIcon onClick={()=> {DeleteOneImageNew(index)}} color={'error'}/>
-                        <img id={index} src={`${API_URL}/tmp/crop_${i}`} alt=""/>
-                    </div>
+                {AdminNewsStore.newsOne.images &&
+                AdminNewsStore.newsOne.images.map((item,index)=>(
+                    <NewsImagesItem key={'img'+index} item={item} index={index} DeleteOneImage={DeleteOneImage} newsId={id}/>
                 ))
                 }
             </div>

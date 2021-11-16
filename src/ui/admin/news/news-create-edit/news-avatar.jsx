@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {API_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
+import {checkFilesOnServer} from "../../../../utils/checkFilesOnServer";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -56,29 +57,24 @@ const NewsAvatar = ({id}) => {
     //удаление аватара
     const DeleteAvatar = () => {
         runInAction(() => {
-            AdminNewsStore.news_tmp_avatar_new = null
-            AdminNewsStore.news_tmp_avatar_old = null
+            AdminNewsStore.newsOne.avatar = ''
         })
     };
+
+    const avatarNews = `${API_URL}/news/${id}/avatar/${AdminNewsStore.newsOne.avatar}`
+    const avatarTmp = `${API_URL}/tmp/${AdminNewsStore.newsOne.avatar}`
+    const [avatarLink,setLink] = useState()
+
+    checkFilesOnServer(avatarNews, avatarTmp).then(result => setLink(result))
+
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
-                {!AdminNewsStore.news_tmp_avatar_new && AdminNewsStore.news_tmp_avatar_old &&
+                {AdminNewsStore.newsOne.avatar &&
                 <>
-                    <img src={`${API_URL}/news/${id}/avatar/${AdminNewsStore.news_tmp_avatar_old}`} alt=""/>
-                    <Button
-                        variant={"outlined"}
-                        color={"primary"}
-                        onClick={()=> {DeleteAvatar()}}
-                    >
-                        удалить аватар
-                    </Button>
-                </>
-                }
-                {AdminNewsStore.news_tmp_avatar_new &&
-                <>
-                    <img src={`${API_URL}/tmp/${AdminNewsStore.news_tmp_avatar_new}`} alt=""/>
+                    {}
+                    <img src={avatarLink} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}
@@ -89,7 +85,7 @@ const NewsAvatar = ({id}) => {
                 </>
                 }
             </div>
-            {!AdminNewsStore.news_tmp_avatar_new && !AdminNewsStore.news_tmp_avatar_old &&
+            {!AdminNewsStore.newsOne.avatar &&
             <div className={classes.avatarAdd}>
                 <label htmlFor="avatarImage">
                     <input

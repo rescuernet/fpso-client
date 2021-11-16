@@ -6,60 +6,63 @@ import * as dateFns from "date-fns";
 
 
 class AdminNewsStore {
-
-    news_tmp_avatar_old = null
-    news_tmp_avatar_new = null
-
-    news_tmp_images_old = []
-    news_tmp_images_new = []
-
-    news_tmp_docs_old = []
-    news_tmp_docs_new = []
-
-    news_tmp_errors = null
-    news = []
-    news_tmp = {
+    newsModel = {
         dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
-        dateEnd: null,
-        headerFirst: null,
+        dateEnd: '',
+        headerFirst: '',
         headerSecond: null,
         textMain: null,
         fixedNews: false,
         importantNews: false,
         published: false,
-        deleteNews: false
+        avatar: null,
+        images: [],
+        docs: []
     }
+    news_tmp_errors = null
+    news = []
+    newsOne = {
+        dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
+        dateEnd: '',
+        headerFirst: '',
+        headerSecond: '',
+        textMain: '',
+        fixedNews: false,
+        importantNews: false,
+        published: false,
+        avatar: '',
+        images: [],
+        docs: []
+    }
+
 
     constructor() {
         makeAutoObservable(this);
     }
 
     clearData() {
-        runInAction(() => {this.news_tmp_avatar_new = null})
-        runInAction(() => {this.news_tmp_avatar_old = null})
-        runInAction(() => {this.news_tmp_errors = null})
-        runInAction(() => {this.news_tmp_images_new = []})
-        runInAction(() => {this.news_tmp_images_old = []})
-        runInAction(() => {this.news_tmp_docs_new = []})
-        runInAction(() => {this.news_tmp_docs_old = []})
-        runInAction(() => {this.news = []})
         runInAction(() => {
-            this.news_tmp.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
-            this.news_tmp.dateEnd = null
-            this.news_tmp.headerFirst = null
-            this.news_tmp.headerSecond = null
-            this.news_tmp.textMain = null
-            this.news_tmp.fixedNews = false
-            this.news_tmp.importantNews = false
-            this.news_tmp.published = false
+            this.news_tmp_errors = null
+            this.newsOne.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
+            this.newsOne.dateEnd = ''
+            this.newsOne.headerFirst = ''
+            this.newsOne.headerSecond = ''
+            this.newsOne.textMain = ''
+            this.newsOne.fixedNews = false
+            this.newsOne.importantNews = false
+            this.newsOne.published = false
+            this.newsOne.avatar = ''
+            this.newsOne.images = []
+            this.newsOne.docs = []
         })
     }
+
 
     newsAvatarCreate = async (avatar) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.newsAvatarCreate(avatar);
-            runInAction(() => {this.news_tmp_avatar_new = response.data.name})
+            runInAction(() => {this.newsOne.avatar = response.data.name})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -77,7 +80,7 @@ class AdminNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.newsImageCreate(image);
-            runInAction(() => {this.news_tmp_images_new.push(response.data.name)})
+            runInAction(() => {this.newsOne.images.push(response.data.name)})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -203,6 +206,7 @@ class AdminNewsStore {
 
     getNews = async () => {
         runInAction(() => {Store.isLoading = true})
+        runInAction(() => {this.clearData()})
         try {
             const response = await AdminNewsService.getNews();
             runInAction(() => {this.news = response.data})
@@ -218,8 +222,7 @@ class AdminNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.getNewsId(id);
-            /*runInAction(() => {this.news = response.data})*/
-            console.log(response)
+            runInAction(() => {this.newsOne = response.data})
         } catch (e) {
             console.log(e)
         } finally {

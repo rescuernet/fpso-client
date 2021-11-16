@@ -3,17 +3,15 @@ import AdminMenu from "../../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
 import {AlertDialog} from "./news-alert";
 import {useHistory, useParams} from "react-router-dom";
 import {RM} from "../../../../routes/routes";
 import Store from "../../../../bll/store";
-import * as dateFns from "date-fns";
 import NewsAvatar from "./news-avatar";
 import NewsImages from "./news-images";
-import NewsDocs from "./news-docs";
 import NewsFields from "./news-fields";
 import NewsCheckbox from "./news-checkbox";
 
@@ -86,25 +84,14 @@ const useStyles = makeStyles((theme) => ({
 const NewsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
-    const newsEdit = id && toJS(AdminNewsStore.news).find(item => item._id === id)
-    id && !newsEdit && history.push(RM.Admin__News.path)
+
+
 
     //установка OLD и очистка Store перед размонтированием
     useEffect(()=>{
         if(id){
             runInAction(() => {
                 AdminNewsStore.getNewsId(id)
-                /*AdminNewsStore.news_tmp.dateStart = dateFns.format(new Date(newsEdit.dateStart), 'yyyy-MM-dd')
-                AdminNewsStore.news_tmp.dateEnd = newsEdit.dateEnd && dateFns.format(new Date(newsEdit.dateEnd), 'yyyy-MM-dd')
-                AdminNewsStore.news_tmp.headerFirst = newsEdit.headerFirst
-                AdminNewsStore.news_tmp.headerSecond = newsEdit.headerSecond
-                AdminNewsStore.news_tmp.textMain = newsEdit.textMain
-                AdminNewsStore.news_tmp.fixedNews = newsEdit.fixedNews
-                AdminNewsStore.news_tmp.importantNews = newsEdit.importantNews
-                AdminNewsStore.news_tmp.published = newsEdit.published
-                AdminNewsStore.news_tmp_avatar_old = newsEdit.avatar
-                AdminNewsStore.news_tmp_images_old = newsEdit.images
-                AdminNewsStore.news_tmp_docs_old = newsEdit.docs*/
             })
         }
         return ()=> {
@@ -150,6 +137,8 @@ const NewsCreateEdit = () => {
         }
     }
 
+
+
     return (
         <div className={classes.root}>
             {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
@@ -158,25 +147,25 @@ const NewsCreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
 
-                            <NewsAvatar id={id}/>
+                    <NewsAvatar id={id}/>
 
                     <Divider/>
 
-                            <NewsFields/>
+                    <NewsFields/>
 
                     <Divider/>
 
-                            <NewsImages id={id}/>
+                    <NewsImages id={id}/>
 
                     <Divider/>
 
-                            <NewsDocs id={id}/>
+                    {/*<NewsDocs id={id}/>*/}
 
                     <Divider/>
 
                     <div className={classes.control}>
 
-                            <NewsCheckbox edit={!!newsEdit}/>
+                        <NewsCheckbox edit={!!id}/>
 
                         <Divider/>
                         <div className={classes.controlButton}>
@@ -192,29 +181,29 @@ const NewsCreateEdit = () => {
                                 className={classes.Button}
                                 variant="contained"
                                 color={"primary"}
-                                onClick={()=>{newsEdit ? UpdateArr() : CreateArr()}}
+                                onClick={()=>{id ? UpdateArr() : CreateArr()}}
                             >
-                                {newsEdit ? 'Обновить' : 'Сохранить'}
+                                {id ? 'Обновить' : 'Сохранить'}
                             </Button>
-                            {newsEdit &&
-                                <Button
-                                    className={classes.Button}
-                                    variant="contained"
-                                        color={"secondary"}
-                                    onClick={()=>{newsDelete()}}
-                                >
-                                    удалить
-                                </Button>
+                            {id &&
+                            <Button
+                                className={classes.Button}
+                                variant="contained"
+                                color={"secondary"}
+                                onClick={()=>{newsDelete()}}
+                            >
+                                удалить
+                            </Button>
                             }
                             {deleteNews &&
-                                <AlertDialog
-                                    alertType={'confirm'}
-                                    open={true}
-                                    header={'Внимание!'}
-                                    text={'Подтвердите удаление новости'}
-                                    delete={()=>{newsDeleteConfirm(id)}}
-                                    close={()=>{setDeleteNews(false)}}
-                                />
+                            <AlertDialog
+                                alertType={'confirm'}
+                                open={true}
+                                header={'Внимание!'}
+                                text={'Подтвердите удаление новости'}
+                                delete={()=>{newsDeleteConfirm(id)}}
+                                close={()=>{setDeleteNews(false)}}
+                            />
                             }
 
                         </div>

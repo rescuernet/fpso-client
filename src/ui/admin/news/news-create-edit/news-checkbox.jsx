@@ -20,20 +20,20 @@ const NewsCheckbox = ({edit}) => {
     //смена закрепления новости
     const ChangeFixedNews = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news_tmp.fixedNews = event.target.checked
+            AdminNewsStore.news.fixedNews = event.target.checked
         })
     };
 
     //смена важности новости
     const ChangeImportantNews = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news_tmp.importantNews = event.target.checked
+            AdminNewsStore.news.importantNews = event.target.checked
         })
     };
     //опубликовать после сохранения
     const ChangePublishAfterSave = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news_tmp.published = event.target.checked
+            AdminNewsStore.news.published = event.target.checked
         })
     };
 
@@ -42,7 +42,7 @@ const NewsCheckbox = ({edit}) => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news_tmp.fixedNews}
+                        checked={AdminNewsStore.news.fixedNews}
                         onChange={ChangeFixedNews}
                         name="fixedNews"
                         color="secondary"
@@ -53,7 +53,7 @@ const NewsCheckbox = ({edit}) => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news_tmp.importantNews}
+                        checked={AdminNewsStore.news.importantNews}
                         onChange={ChangeImportantNews}
                         name="importantNews"
                         color="secondary"
@@ -64,7 +64,7 @@ const NewsCheckbox = ({edit}) => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news_tmp.published}
+                        checked={AdminNewsStore.news.published}
                         onChange={ChangePublishAfterSave}
                         name="publishAfterSave"
                         color="secondary"

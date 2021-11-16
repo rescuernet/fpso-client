@@ -65,13 +65,14 @@ const NewsItem = () => {
     const news = toJS(AdminNewsStore.news)
 
     const newsEdit = (id) => {
+        runInAction(()=>{AdminNewsStore.clearData()})
         history.push(RM.Admin__News__Edit.getUrl(id))
     }
 
 
     return (
         <table className={classes.table}>
-            {Store.width > 750 && AdminNewsStore.news.length > 0 &&
+            {Store.width > 750 && news &&
             <>
                 {Store.width > 1000 &&
                 <th className={classes.min}>создана</th>
@@ -85,7 +86,7 @@ const NewsItem = () => {
                 <th className={classes.min}>важная</th>
             </>
             }
-            {news.length > 0 && news.map((i) => (
+            {news && news.length > 0 && news.map((i) => (
                 <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
                     {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.dateCreated), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>

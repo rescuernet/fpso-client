@@ -55,34 +55,31 @@ const NewsDocs = ({id}) => {
         })
     };
     //удаление одного документа
-    const DeleteOneDocsNew = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_docs_new.splice(id,1)})
-    };
-    const DeleteOneDocsOld = (id) => {
-        runInAction(() => {AdminNewsStore.news_tmp_docs_old.splice(id,1)})
+    const DeleteOneDocs = (id) => {
+        runInAction(() => {AdminNewsStore.news.docs.splice(id,1)})
     };
 
     return (
         <div className={classes.docs}>
-            {AdminNewsStore.news_tmp_docs_old.length > 0 &&
-            AdminNewsStore.news_tmp_docs_old.map((i,index)=>(
+            {AdminNewsStore.news.docs &&
+            AdminNewsStore.news.docs.map((i,index)=>(
                 <div className={classes.docsItem}>
                     <TextField
                         id="headerFirst"
                         required={true}
                         className={classes.fieldHeader}
                         label="название документа"
-                        value={AdminNewsStore.news_tmp_docs_old[index].title}
+                        value={AdminNewsStore.news.docs[index].title}
                         onChange={(e)=>{
-                            runInAction(() => {AdminNewsStore.news_tmp_docs_old[index].title = (e.target.value)})
+                            runInAction(() => {AdminNewsStore.news.docs[index].title = (e.target.value)})
                         }}
                         variant="outlined"
                         multiline
                         rows={1}
                         rowsMax={10}
                     />
-                    <a href={`${API_URL}/news/${id}/docs/${AdminNewsStore.news_tmp_docs_old[index].doc}`} target={'_blank'} rel="noreferrer">
-                        {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'pdf' &&
+                    <a href={`${API_URL}/news/${id}/docs/${AdminNewsStore.news.docs[index].doc}`} target={'_blank'} rel="noreferrer">
+                        {AdminNewsStore.news.docs[index].doc.slice(AdminNewsStore.news.docs[index].doc.lastIndexOf(".")+1) === 'pdf' &&
                         <img src={pdfIcon} alt="" width={40}/>
                         }
                         {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'doc' &&
@@ -99,7 +96,7 @@ const NewsDocs = ({id}) => {
                         }
                     </a>
                     <Divider orientation={"vertical"} flexItem={true}/>
-                    <HighlightOffIcon onClick={()=>{DeleteOneDocsOld(index)}} color={'error'}/>
+                    <HighlightOffIcon onClick={()=>{DeleteOneDocs(index)}} color={'error'}/>
                 </div>
             ))
             }
@@ -140,7 +137,7 @@ const NewsDocs = ({id}) => {
                     </a>
 
                     <Divider orientation={"vertical"} flexItem={true}/>
-                    <HighlightOffIcon onClick={()=>{DeleteOneDocsNew(index)}} color={'error'}/>
+                    <HighlightOffIcon onClick={()=>{DeleteOneDocs(index)}} color={'error'}/>
                 </div>
             ))
             }
