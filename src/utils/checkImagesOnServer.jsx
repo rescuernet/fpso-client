@@ -1,4 +1,4 @@
-export const checkFilesOnServer = (path, fallback) => {
+export const checkImagesOnServer = (path, fallback) => {
     return new Promise(resolve => {
         const img = new Image();
         img.src = path;

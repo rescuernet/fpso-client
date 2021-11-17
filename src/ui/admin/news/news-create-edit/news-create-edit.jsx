@@ -14,6 +14,7 @@ import NewsAvatar from "./news-avatar";
 import NewsImages from "./news-images";
 import NewsFields from "./news-fields";
 import NewsCheckbox from "./news-checkbox";
+import NewsDocs from "./news-docs";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,15 +86,10 @@ const NewsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
 
-
-
-    //установка OLD и очистка Store перед размонтированием
     useEffect(()=>{
-        if(id){
-            runInAction(() => {
-                AdminNewsStore.getNewsId(id)
-            })
-        }
+        runInAction(() => {
+            AdminNewsStore.getNewsId(id)
+        })
         return ()=> {
             runInAction(() => {AdminNewsStore.clearData()})
         }
@@ -109,13 +105,6 @@ const NewsCreateEdit = () => {
         history.push(RM.Admin__News.path)
     };
 
-    //создание массива для сохранения
-    const CreateArr = async () => {
-        const result = await AdminNewsStore.newsCreate()
-        if(result === 200){
-            history.push(RM.Admin__News.path)
-        }
-    };
 
     //создание массива для обновления
     const UpdateArr = async () => {
@@ -137,8 +126,6 @@ const NewsCreateEdit = () => {
         }
     }
 
-
-
     return (
         <div className={classes.root}>
             {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
@@ -147,7 +134,7 @@ const NewsCreateEdit = () => {
                 <Divider/>
                 <div className={classes.content}>
 
-                    <NewsAvatar id={id}/>
+                    <NewsAvatar newsId={id}/>
 
                     <Divider/>
 
@@ -155,17 +142,17 @@ const NewsCreateEdit = () => {
 
                     <Divider/>
 
-                    <NewsImages id={id}/>
+                    <NewsImages newsId={id}/>
 
                     <Divider/>
 
-                    {/*<NewsDocs id={id}/>*/}
+                    <NewsDocs newsId={id}/>
 
                     <Divider/>
 
                     <div className={classes.control}>
 
-                        <NewsCheckbox edit={!!id}/>
+                        <NewsCheckbox />
 
                         <Divider/>
                         <div className={classes.controlButton}>
@@ -181,11 +168,11 @@ const NewsCreateEdit = () => {
                                 className={classes.Button}
                                 variant="contained"
                                 color={"primary"}
-                                onClick={()=>{id ? UpdateArr() : CreateArr()}}
+                                onClick={()=>{UpdateArr()}}
                             >
-                                {id ? 'Обновить' : 'Сохранить'}
+                                Сохранить
                             </Button>
-                            {id &&
+                            {!AdminNewsStore.newsOne.tmpNews &&
                             <Button
                                 className={classes.Button}
                                 variant="contained"

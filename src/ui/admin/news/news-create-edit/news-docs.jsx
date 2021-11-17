@@ -11,29 +11,11 @@ import xlsIcon from "../../../../common/assets/image/icons/xls.png";
 import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {observer} from "mobx-react-lite";
+import NewsDocsItem from "./news-docs-item";
 
 const useStyles = makeStyles((theme) => ({
     docs: {
         padding: '20px 0'
-    },
-    docsItem: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 20,
-        '& svg': {
-            margin: '0 10px',
-            fontSize: '200%'
-        },
-        '& a': {
-            margin: '0 10px'
-        },
-        '& hr': {
-            backgroundColor: '#ccc'
-        },
-        '& .MuiTextField-root': {
-            flexGrow: 1
-        },
     },
     docsAdd: {
         display: "flex",
@@ -41,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NewsDocs = ({id}) => {
+const NewsDocs = ({newsId}) => {
     const classes = useStyles();
 
     //загрузка документов
@@ -50,98 +32,23 @@ const NewsDocs = ({id}) => {
         const originName = event.target.files[0].name.substr(0,event.target.files[0].name.lastIndexOf("."))
         const data = new FormData()
         data.append('files',event.target.files[0]);
+        data.append('newsId',newsId);
         runInAction( async () => {
             await runInAction(()=>{AdminNewsStore.newsDocsCreate(data,originName)})
         })
     };
     //удаление одного документа
-    const DeleteOneDocs = (id) => {
-        runInAction(() => {AdminNewsStore.news.docs.splice(id,1)})
+    const DeleteOneDocs = (docsId) => {
+        runInAction(() => {AdminNewsStore.newsOne.docs.splice(docsId,1)})
     };
 
     return (
         <div className={classes.docs}>
-            {AdminNewsStore.news.docs &&
-            AdminNewsStore.news.docs.map((i,index)=>(
-                <div className={classes.docsItem}>
-                    <TextField
-                        id="headerFirst"
-                        required={true}
-                        className={classes.fieldHeader}
-                        label="название документа"
-                        value={AdminNewsStore.news.docs[index].title}
-                        onChange={(e)=>{
-                            runInAction(() => {AdminNewsStore.news.docs[index].title = (e.target.value)})
-                        }}
-                        variant="outlined"
-                        multiline
-                        rows={1}
-                        rowsMax={10}
-                    />
-                    <a href={`${API_URL}/news/${id}/docs/${AdminNewsStore.news.docs[index].doc}`} target={'_blank'} rel="noreferrer">
-                        {AdminNewsStore.news.docs[index].doc.slice(AdminNewsStore.news.docs[index].doc.lastIndexOf(".")+1) === 'pdf' &&
-                        <img src={pdfIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'doc' &&
-                        <img src={docIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'docx' &&
-                        <img src={docxIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'xls' &&
-                        <img src={xlsIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_old[index].doc.slice(AdminNewsStore.news_tmp_docs_old[index].doc.lastIndexOf(".")+1) === 'xlsx' &&
-                        <img src={xlsxIcon} alt="" width={40}/>
-                        }
-                    </a>
-                    <Divider orientation={"vertical"} flexItem={true}/>
-                    <HighlightOffIcon onClick={()=>{DeleteOneDocs(index)}} color={'error'}/>
-                </div>
-            ))
+            {
+                AdminNewsStore.newsOne.docs && AdminNewsStore.newsOne.docs.map((item,index)=>(
+                    <NewsDocsItem key={'docs'+index} item={item} index={index} newsId={newsId} DeleteOneDocs={DeleteOneDocs}/>
+                ))
             }
-
-            {AdminNewsStore.news_tmp_docs_new.length > 0 &&
-            AdminNewsStore.news_tmp_docs_new.map((i,index)=>(
-                <div className={classes.docsItem}>
-                    <TextField
-                        id="headerFirst"
-                        required={true}
-                        className={classes.fieldHeader}
-                        label="название документа"
-                        value={AdminNewsStore.news_tmp_docs_new[index].title}
-                        onChange={(e)=>{
-                            runInAction(() => {AdminNewsStore.news_tmp_docs_new[index].title = (e.target.value)})
-                        }}
-                        variant="outlined"
-                        multiline
-                        rows={1}
-                        rowsMax={10}
-                    />
-                    <a href={`${API_URL}/tmp/${AdminNewsStore.news_tmp_docs_new[index].doc}`} target={'_blank'} rel="noreferrer">
-                        {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'pdf' &&
-                        <img src={pdfIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'doc' &&
-                        <img src={docIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'docx' &&
-                        <img src={docxIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'xls' &&
-                        <img src={xlsIcon} alt="" width={40}/>
-                        }
-                        {AdminNewsStore.news_tmp_docs_new[index].doc.slice(AdminNewsStore.news_tmp_docs_new[index].doc.lastIndexOf(".")+1) === 'xlsx' &&
-                        <img src={xlsxIcon} alt="" width={40}/>
-                        }
-                    </a>
-
-                    <Divider orientation={"vertical"} flexItem={true}/>
-                    <HighlightOffIcon onClick={()=>{DeleteOneDocs(index)}} color={'error'}/>
-                </div>
-            ))
-            }
-
             <div className={classes.docsAdd}>
                 <label htmlFor="docs">
                     <input

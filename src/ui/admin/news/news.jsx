@@ -8,6 +8,8 @@ import {useHistory} from "react-router-dom";
 import Store from '../../../bll/store';
 import AdminHeader from "../header/admin-header";
 import NewsItem from "./news-item";
+import {runInAction} from "mobx";
+import AdminNewsStore from "../../../bll/admin/admin-news-store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +55,10 @@ const News = (props) => {
     const history = useHistory();
 
     const createNews = () => {
-        history.push(RM.Admin__News__Create.path);
+        runInAction(async ()=>{
+            await AdminNewsStore.newsCreate()
+            history.push(RM.Admin__News__Edit.getUrl(AdminNewsStore.tmpNewsId))
+        })
     }
 
     return (

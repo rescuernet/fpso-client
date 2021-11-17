@@ -6,21 +6,9 @@ import * as dateFns from "date-fns";
 
 
 class AdminNewsStore {
-    newsModel = {
-        dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
-        dateEnd: '',
-        headerFirst: '',
-        headerSecond: null,
-        textMain: null,
-        fixedNews: false,
-        importantNews: false,
-        published: false,
-        avatar: null,
-        images: [],
-        docs: []
-    }
     news_tmp_errors = null
     news = []
+    tmpNewsId = null
     newsOne = {
         dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
         dateEnd: '',
@@ -32,7 +20,8 @@ class AdminNewsStore {
         published: false,
         avatar: '',
         images: [],
-        docs: []
+        docs: [],
+        tmpNews: false
     }
 
 
@@ -43,6 +32,7 @@ class AdminNewsStore {
     clearData() {
         runInAction(() => {
             this.news_tmp_errors = null
+            this.tmpNewsId = null
             this.newsOne.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
             this.newsOne.dateEnd = ''
             this.newsOne.headerFirst = ''
@@ -54,9 +44,31 @@ class AdminNewsStore {
             this.newsOne.avatar = ''
             this.newsOne.images = []
             this.newsOne.docs = []
+            this.newsOne.tmpNews = false
         })
     }
 
+    newsCreate = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminNewsService.newsCreate();
+            if(response.data?.error){
+                runInAction(() => {this.news_tmp_errors =
+                    <div>{response.data.error}</div>})
+            }else{
+                runInAction(() => {
+                    this.clearData()
+                    this.tmpNewsId = response.data
+                })
+                return response
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
 
     newsAvatarCreate = async (avatar) => {
         runInAction(() => {Store.isLoading = true})
@@ -98,7 +110,7 @@ class AdminNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.newsDocsCreate(doc);
-            runInAction(() => {this.news_tmp_docs_new.push({title:originName,doc:response.data.doc})})
+            runInAction(() => {this.newsOne.docs.push({title:originName,doc:response.data.doc})})
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -106,38 +118,6 @@ class AdminNewsStore {
                     <div>Максимальный размер 10 мб</div>
                     <div>Типы файлов .doc, .docx, .pdf, .xls, .xlsx</div>
                 </div>})
-        } finally {
-            runInAction(() => {Store.isInit = true})
-            runInAction(() => {Store.isLoading = false})
-        }
-    }
-
-    newsCreate = async () => {
-        runInAction(() => {Store.isLoading = true})
-        try {
-            const arr = {
-                avatar: this.news_tmp_avatar_new,
-                dateStart: this.news_tmp.dateStart,
-                dateEnd: this.news_tmp.dateEnd,
-                headerFirst: this.news_tmp.headerFirst,
-                headerSecond: this.news_tmp.headerSecond,
-                textMain: this.news_tmp.textMain,
-                fixedNews: this.news_tmp.fixedNews,
-                importantNews: this.news_tmp.importantNews,
-                published: this.news_tmp.published,
-                images: toJS(this.news_tmp_images_new),
-                docs: toJS(this.news_tmp_docs_new)
-            }
-            const response = await AdminNewsService.newsCreate(arr);
-            if(response.data?.error){
-                runInAction(() => {this.news_tmp_errors =
-                    <div>{response.data.error}</div>})
-            }else{
-                runInAction(() => {this.clearData()})
-                return 200
-            }
-        } catch (e) {
-            console.log(e)
         } finally {
             runInAction(() => {Store.isInit = true})
             runInAction(() => {Store.isLoading = false})

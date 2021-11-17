@@ -21,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NewsImages = ({id}) => {
+const NewsImages = ({newsId}) => {
     const classes = useStyles();
     //загрузка фотографий
     const UploadImage = (event) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
+        data.append('newsId',newsId);
         runInAction( async () => {
             await runInAction(()=>{AdminNewsStore.newsImageCreate(data)})
         })
@@ -44,7 +45,7 @@ const NewsImages = ({id}) => {
             <div className={classes.imagesItemWrap}>
                 {AdminNewsStore.newsOne.images &&
                 AdminNewsStore.newsOne.images.map((item,index)=>(
-                    <NewsImagesItem key={'img'+index} item={item} index={index} DeleteOneImage={DeleteOneImage} newsId={id}/>
+                    <NewsImagesItem key={'img'+index} item={item} index={index} DeleteOneImage={DeleteOneImage} newsId={newsId}/>
                 ))
                 }
             </div>

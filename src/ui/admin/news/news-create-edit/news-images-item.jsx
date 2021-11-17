@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {API_URL} from "../../../../const/const";
-import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {checkFilesOnServer} from "../../../../utils/checkFilesOnServer";
 
 const useStyles = makeStyles((theme) => ({
     imagesItem: {
@@ -27,16 +25,10 @@ const useStyles = makeStyles((theme) => ({
 const NewsImagesItem = (props) => {
     const classes = useStyles();
 
-    const imageNews = `${API_URL}/news/${props.newsId}/images/crop_${props.item}`
-    const imageTmp = `${API_URL}/tmp/crop_${props.item}`
-    const [imageLink,setLink] = useState()
-
-    checkFilesOnServer(imageNews, imageTmp).then(result => setLink(result))
-
     return (
         <div className={classes.imagesItem}>
             <HighlightOffIcon id={props.index} onClick={()=> {props.DeleteOneImage(props.index)}} color={'error'}/>
-            <img src={imageLink} alt=""/>
+            <img src={`${API_URL}/news/${props.newsId}/images/crop_${props.item}`} alt=""/>
         </div>
     );
 };

@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {API_URL} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
-import {checkFilesOnServer} from "../../../../utils/checkFilesOnServer";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NewsAvatar = ({id}) => {
+const NewsAvatar = ({newsId}) => {
     const classes = useStyles();
 
     // загрузка аватар
@@ -49,6 +48,7 @@ const NewsAvatar = ({id}) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
+        data.append('newsId',newsId);
         runInAction(async () => {
             await AdminNewsStore.newsAvatarCreate(data)
         })
@@ -61,20 +61,13 @@ const NewsAvatar = ({id}) => {
         })
     };
 
-    const avatarNews = `${API_URL}/news/${id}/avatar/${AdminNewsStore.newsOne.avatar}`
-    const avatarTmp = `${API_URL}/tmp/${AdminNewsStore.newsOne.avatar}`
-    const [avatarLink,setLink] = useState()
-
-    checkFilesOnServer(avatarNews, avatarTmp).then(result => setLink(result))
-
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
                 {AdminNewsStore.newsOne.avatar &&
                 <>
-                    {}
-                    <img src={avatarLink} alt=""/>
+                    <img src={`${API_URL}/news/${newsId}/avatar/${AdminNewsStore.newsOne.avatar}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

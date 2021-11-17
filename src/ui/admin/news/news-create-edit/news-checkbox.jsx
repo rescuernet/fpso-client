@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NewsCheckbox = ({edit}) => {
+const NewsCheckbox = () => {
     const classes = useStyles();
 
     //смена закрепления новости
@@ -70,7 +70,7 @@ const NewsCheckbox = ({edit}) => {
                         color="secondary"
                     />
                 }
-                label={edit ? 'опубликовать' : 'опубликовать после сохранения'}
+                label={'опубликовать'}
             />
         </div>
     );
