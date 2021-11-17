@@ -20,20 +20,20 @@ const NewsCheckbox = () => {
     //смена закрепления новости
     const ChangeFixedNews = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news.fixedNews = event.target.checked
+            AdminNewsStore.newsOne.fixedNews = event.target.checked
         })
     };
 
     //смена важности новости
     const ChangeImportantNews = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news.importantNews = event.target.checked
+            AdminNewsStore.newsOne.importantNews = event.target.checked
         })
     };
     //опубликовать после сохранения
     const ChangePublishAfterSave = (event) => {
         runInAction(()=>{
-            AdminNewsStore.news.published = event.target.checked
+            AdminNewsStore.newsOne.published = event.target.checked
         })
     };
 
@@ -42,7 +42,7 @@ const NewsCheckbox = () => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news.fixedNews}
+                        checked={AdminNewsStore.newsOne.fixedNews}
                         onChange={ChangeFixedNews}
                         name="fixedNews"
                         color="secondary"
@@ -53,7 +53,7 @@ const NewsCheckbox = () => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news.importantNews}
+                        checked={AdminNewsStore.newsOne.importantNews}
                         onChange={ChangeImportantNews}
                         name="importantNews"
                         color="secondary"
@@ -64,7 +64,7 @@ const NewsCheckbox = () => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={AdminNewsStore.news.published}
+                        checked={AdminNewsStore.newsOne.published}
                         onChange={ChangePublishAfterSave}
                         name="publishAfterSave"
                         color="secondary"

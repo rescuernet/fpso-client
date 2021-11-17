@@ -4,9 +4,9 @@ import {useHistory} from "react-router-dom";
 import * as dateFns from "date-fns";
 import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
-import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import RemoveIcon from '@material-ui/icons/Remove';
 import Store from '../../../bll/store';
 import {RM} from "../../../routes/routes";
 import AdminNewsStore from "../../../bll/admin/admin-news-store";
@@ -94,7 +94,7 @@ const NewsItem = () => {
                     {Store.width > 750 &&
                     <>
                         <td className={classes.min}>{dateFns.format(new Date(i.dateStart), 'dd.MM.yyyy')}</td>
-                        <td className={classes.min}>{i.dateEnd ? dateFns.format(new Date(i.dateEnd), 'dd.MM.yyyy') : <MoreHorizOutlinedIcon color={"primary"}/>}</td>
+                        <td className={classes.min}>{i.dateEnd ? dateFns.format(new Date(i.dateEnd), 'dd.MM.yyyy') : <RemoveIcon color={"primary"}/>}</td>
                         <td className={classes.min}>{i.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
                         <td className={classes.min}>{i.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
                     </>

@@ -1,8 +1,7 @@
-import {makeAutoObservable, runInAction, toJS} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import Store from "../store"
 import AdminNewsService from "../../services/admin/admin-news-service";
 import * as dateFns from "date-fns";
-
 
 
 class AdminNewsStore {
@@ -127,29 +126,7 @@ class AdminNewsStore {
     newsUpdate = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const arr = {
-                id,
-                avatarNew: this.news_tmp_avatar_new,
-                avatarOld: this.news_tmp_avatar_old,
-                imagesNew: toJS(this.news_tmp_images_new),
-                imagesOld: toJS(this.news_tmp_images_old),
-                docsNew: toJS(this.news_tmp_docs_new),
-                docsOld: toJS(this.news_tmp_docs_old),
-                model: {
-                    avatar: this.news_tmp_avatar_new ? this.news_tmp_avatar_new : this.news_tmp_avatar_old,
-                    dateStart: this.news_tmp.dateStart,
-                    dateEnd: this.news_tmp.dateEnd,
-                    headerFirst: this.news_tmp.headerFirst,
-                    headerSecond: this.news_tmp.headerSecond,
-                    textMain: this.news_tmp.textMain,
-                    fixedNews: this.news_tmp.fixedNews,
-                    importantNews: this.news_tmp.importantNews,
-                    published: this.news_tmp.published,
-                    images: toJS(this.news_tmp_images_new).concat(toJS(this.news_tmp_images_old)),
-                    docs: toJS(this.news_tmp_docs_new).concat(toJS(this.news_tmp_docs_old))
-                }
-            }
-            const response = await AdminNewsService.newsUpdate(arr);
+            const response = await AdminNewsService.newsUpdate(this.newsOne);
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})

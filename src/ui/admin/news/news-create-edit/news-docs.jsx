@@ -1,15 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, TextField} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
-import {API_URL} from "../../../../const/const";
-import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {observer} from "mobx-react-lite";
 import NewsDocsItem from "./news-docs-item";
 

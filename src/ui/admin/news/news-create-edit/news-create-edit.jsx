@@ -108,6 +108,9 @@ const NewsCreateEdit = () => {
 
     //создание массива для обновления
     const UpdateArr = async () => {
+        runInAction(()=>{
+            AdminNewsStore.newsOne.tmpNews = false
+        })
         const result = await AdminNewsStore.newsUpdate(id)
         if(result === 200){
             history.push(RM.Admin__News.path)
