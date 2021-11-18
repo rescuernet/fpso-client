@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         [useGridPoint.breakpoints.down('md')]: {
             justifyContent: "space-evenly",
-        }
+        },
+        marginTop: 40
     },
     paginationTop: {
         display: "flex",
@@ -63,9 +64,10 @@ const News = () => {
 
     return (
         <Box className={classes.root}>
-            <Container fixed>
+            <Container fixed className={classes.container}>
                 {newsItem &&
                 <>
+                    {pagesCount > 10 &&
                     <div className={classes.paginationTop}>
                         <Pagination
                             count={pagesCount}
@@ -75,6 +77,8 @@ const News = () => {
                             onChange={ChangePage}
                         />
                     </div>
+                    }
+
 
                     <Box className={classes.newsListItem}>
                         {Store.width < 750 &&
@@ -90,6 +94,7 @@ const News = () => {
                         }
                     </Box>
 
+                    {pagesCount > 10 &&
                     <div className={classes.paginationBottom}>
                         <Pagination
                             count={pagesCount}
@@ -99,6 +104,7 @@ const News = () => {
                             onChange={ChangePage}
                         />
                     </div>
+                    }
                 </>
                 }
                 {UiNewsStore.newsViewModal_open &&
