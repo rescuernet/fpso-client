@@ -3,11 +3,15 @@ import Competitions from "../ui/competitions/competitions";
 import LoginForm from "../ui/login/login-form";
 import Main from "../ui/main/main";
 import AdminNews from "../ui/admin/news/news";
-import AdminCompetitions from "../ui/admin/competitions/competitions";
 import AdminNewsCreate from "../ui/admin/news/news-create-edit/news-create-edit";
+import AdminCompetitions from "../ui/admin/competitions/competitions";
+import AdminCompetitionsCreateEdit from "../ui/admin/competitions/competitions-create-edit/competitions-create-edit";
+import AdminReferenceBooks from "../ui/admin/reference-books/reference-books";
+import AdminReferenceBooksPool from "../ui/admin/reference-books/reference-books-pool";
+
 import News from "../ui/news/news";
 import NewsItemView from "../ui/news/news-view/news-item-view";
-import AdminCompetitionsCreateEdit from "../ui/admin/competitions/competitions-create-edit/competitions-create-edit";
+
 
 
 export const MenuTypes = {
@@ -183,6 +187,37 @@ const RouterManager = {
     Admin__Competitions__Image__Create: {
         path: `${PrefixPath.admin}/competitions/image-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/image-create`},
+    },
+    Admin__Reference__Books: {
+        path:`${PrefixPath.admin}/reference-books`,
+        Component: AdminReferenceBooks,
+        getUrl() {return `${PrefixPath.admin}/reference-books`},
+        auth: true,
+        header: {
+            view: false
+        },
+        menu: {
+            type: MenuTypes.admin,
+            title: 'Справочники'
+        }
+    },
+    Admin__Reference__Books__Pool: {
+        path:`${PrefixPath.admin}/reference-books/pool`,
+        Component: AdminReferenceBooksPool,
+        getUrl() {return `${PrefixPath.admin}/reference-books/pool`},
+        auth: true,
+        header: {
+            view: false
+        }
+    },
+    Admin__Reference__Books__update: {
+        path:`${PrefixPath.admin}/reference-books/update`,
+        Component: AdminReferenceBooks,
+        getUrl() {return `${PrefixPath.admin}/reference-books/update`},
+        auth: true,
+        header: {
+            view: false
+        }
     },
 }
 

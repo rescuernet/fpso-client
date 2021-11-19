@@ -9,7 +9,7 @@ class AdminNewsStore {
     news = []
     tmpNewsId = null
     newsOne = {
-        dateStart: dateFns.format(new Date(), 'yyyy-MM-dd'),
+        dateStart: '',
         dateEnd: '',
         headerFirst: '',
         headerSecond: '',

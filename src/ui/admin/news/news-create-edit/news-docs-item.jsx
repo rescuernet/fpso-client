@@ -4,11 +4,11 @@ import {Divider, TextField} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {runInAction} from "mobx";
 import {API_URL} from "../../../../const/const";
-import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
+import pdf from "../../../../common/assets/image/icons/pdf.png";
+import doc from "../../../../common/assets/image/icons/doc.png";
+import docx from "../../../../common/assets/image/icons/docx.png";
+import xls from "../../../../common/assets/image/icons/xls.png";
+import xlsx from "../../../../common/assets/image/icons/xlsx.png";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {observer} from "mobx-react-lite";
 
@@ -34,9 +34,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+const Icon = {xls, xlsx, doc, docx, pdf}
+
 const NewsDocsItem = (props) => {
     const classes = useStyles();
-
+    const extension = AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".") + 1)
     return (
         <div className={classes.docsItem}>
             <TextField
@@ -45,8 +47,10 @@ const NewsDocsItem = (props) => {
                 className={classes.fieldHeader}
                 label="название документа"
                 value={AdminNewsStore.newsOne.docs[props.index].title}
-                onChange={(e)=>{
-                    runInAction(() => {AdminNewsStore.newsOne.docs[props.index].title = (e.target.value)})
+                onChange={(e) => {
+                    runInAction(() => {
+                        AdminNewsStore.newsOne.docs[props.index].title = (e.target.value)
+                    })
                 }}
                 variant="outlined"
                 multiline
@@ -54,24 +58,12 @@ const NewsDocsItem = (props) => {
                 rowsMax={10}
             />
             <a href={`${API_URL}/news/${props.newsId}/docs/${props.item.doc}`} target={'_blank'} rel="noreferrer">
-                {AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".")+1) === 'pdf' &&
-                <img src={pdfIcon} alt="" width={40}/>
-                }
-                {AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".")+1) === 'doc' &&
-                <img src={docIcon} alt="" width={40}/>
-                }
-                {AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".")+1) === 'docx' &&
-                <img src={docxIcon} alt="" width={40}/>
-                }
-                {AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".")+1) === 'xls' &&
-                <img src={xlsIcon} alt="" width={40}/>
-                }
-                {AdminNewsStore.newsOne.docs[props.index].doc.slice(AdminNewsStore.newsOne.docs[props.index].doc.lastIndexOf(".")+1) === 'xlsx' &&
-                <img src={xlsxIcon} alt="" width={40}/>
-                }
+                <img src={Icon[extension]} alt="" width={40}/>
             </a>
             <Divider orientation={"vertical"} flexItem={true}/>
-            <HighlightOffIcon onClick={()=>{props.DeleteOneDocs(props.index)}} color={'error'}/>
+            <HighlightOffIcon onClick={() => {
+                props.DeleteOneDocs(props.index)
+            }} color={'error'}/>
         </div>
     );
 };
