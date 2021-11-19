@@ -38,7 +38,13 @@ const useStyles = makeStyles((theme) => ({
     },
     pool: {
         margin: 20
-    }
+    },
+    control: {
+        maxWidth: 650,
+        display: "flex",
+        justifyContent: "space-between",
+        margin: '0 20px'
+    },
 }))
 
 const ReferenceBooksPool = (props) => {
@@ -71,9 +77,12 @@ const ReferenceBooksPool = (props) => {
                             <ReferenceBooksPoolItem key={'referenceItem'+index} item={item} index={index}/>
                         ))
                         }
+
                     </div>
-                    <Button onClick={()=>{runInAction(()=>{Store.referenceBooks.pool.push({poolName:'',poolAddress:''})})}}>PUSH</Button>
-                    <Button onClick={()=>{UpdateReference()}}>Сохранить</Button>
+                    <div className={classes.control}>
+                        <Button variant={"contained"} color={"primary"} onClick={()=>{runInAction(()=>{Store.referenceBooks.pool.push({poolName:'',poolAddress:''})})}}>Добавить новый</Button>
+                        <Button variant={"contained"} color={"secondary"} onClick={()=>{UpdateReference()}}>Сохранить</Button>
+                    </div>
                 </div>
             </div>
         </div>

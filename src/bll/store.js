@@ -18,7 +18,7 @@ class Store {
         runInAction(() => {this.isLoading = true})
         try {
             const response = await AdminOtherService.referenceBookGet();
-            const ref = this.referenceBooks = response.data
+            const ref = response.data
             delete ref._id
             delete ref.__v
             runInAction(() => {this.referenceBooks = ref})
@@ -36,11 +36,13 @@ class Store {
         runInAction(() => {this.isLoading = true})
         try {
             const clearNullPool = this.referenceBooks.pool.filter((i)=> {
+                let item = null
                 if(i.poolName && i.poolAddress){
-                    return {poolName:i.poolName,poolAddress:i.poolAddress}
+                    item = {poolName:i.poolName,poolAddress:i.poolAddress}
                 }
+                return item
             });
-            runInAction(() => {this.referenceBooks.pool = clearNullPool})
+            await runInAction(() => {this.referenceBooks.pool = clearNullPool})
             await AdminOtherService.referenceBookUpdate(this.referenceBooks);
         } catch (e) {
             console.log(e)
