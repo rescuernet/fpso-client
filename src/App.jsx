@@ -28,7 +28,6 @@ window.addEventListener("resize", (event) => {
 })
 
 const App = () => {
-
     const classes = useStyles();
     const location = useLocation().pathname;
 
