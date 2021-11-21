@@ -120,9 +120,9 @@ const RouterManager = {
         },
     },
     Admin__News__Edit: {
-        path: `${PrefixPath.admin}/news/edit/:id`,
+        path: `${PrefixPath.admin}/news/:id`,
         Component: AdminNewsCreate,
-        getUrl(id) {return `${PrefixPath.admin}/news/edit/${id}`},
+        getUrl(id) {return `${PrefixPath.admin}/news/${id}`},
         auth: true,
         header: {
             view: false
