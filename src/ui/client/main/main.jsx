@@ -4,11 +4,12 @@ import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Brand from "./brand";
 import {runInAction, toJS} from "mobx";
-import UiNewsStore from '../../bll/ui/ui-news-store'
+import UiNewsStore from '../../../bll/ui/ui-news-store'
 import NewsCardDesktop from "../news/news-card/news-card-desktop";
-import Store from "../../bll/store";
+import Store from "../../../bll/store";
 import {NewsCardMobile} from "../news/news-card/news-card-mobile";
-import {useGridPoint} from "../../utils/breakpoints";
+import {useGridPoint} from "../../../utils/breakpoints";
+import Header from "../header/header";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,28 +58,32 @@ const Main = () => {
     },[])
 
     return (
-        <Box className={classes.root}>
-            <Brand/>
-            <Container className={classes.container} fixed>
-                <div className={classes.lastNews}>
-                    <div className={classes.headerSection}>Последние новости</div>
-                    <div className={classes.lastNewsItems}>
-                        {Store.width < 750 &&
+        <>
+            <Header title={'Главная'}/>
+            <Box className={classes.root}>
+                <Brand/>
+                <Container className={classes.container} fixed>
+                    <div className={classes.lastNews}>
+                        <div className={classes.headerSection}>Последние новости</div>
+                        <div className={classes.lastNewsItems}>
+                            {Store.width < 750 &&
                             lastNews.map((i,index)=>(
                                 <NewsCardMobile key={index} news={i} />
                             ))
-                        }
+                            }
 
-                        {Store.width >= 750 &&
+                            {Store.width >= 750 &&
                             lastNews.map((i,index)=>(
                                 <NewsCardDesktop key={index} news={i} />
                             ))
-                        }
+                            }
+                        </div>
                     </div>
-                </div>
 
-            </Container>
-        </Box>
+                </Container>
+            </Box>
+        </>
+
 
     );
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import Store from '../../bll/store'
-import brand from '../../common/assets/image/brand.jpg'
-import brandMob from '../../common/assets/image/brand_mob.jpg'
+import Store from '../../../bll/store'
+import brand from '../../../common/assets/image/brand.jpg'
+import brandMob from '../../../common/assets/image/brand_mob.jpg'
 import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({

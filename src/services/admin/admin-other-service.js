@@ -1,13 +1,15 @@
 import $api from "../../http/api";
-import {RM} from "../../routes/routes";
+import {ADM_API_RM} from "../../routes/admin-api-routes";
+import {ADM_RM} from "../../routes/admin-routes";
+
 
 export default class AdminOtherService {
 
     static async referenceBookUpdate(Arr) {
-        return $api.post(RM.Admin__Reference__Books__update.path,Arr)
+        return $api.post(ADM_API_RM.Reference__Books__update.path,Arr)
     }
 
     static async referenceBookGet() {
-        return $api.get(RM.Admin__Reference__Books.path)
+        return $api.get(ADM_RM.Reference__Books.path)
     }
 }

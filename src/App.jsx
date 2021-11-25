@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from "react";
-import Header from "./ui/header/header";
 import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import Store from "./bll/store";
 import {runInAction} from "mobx";
-import {RM} from "./routes/routes"
+import {UI_RM} from "./routes/ui-routes"
 import {useGridPoint} from "./utils/breakpoints";
-import {ThemeProvider } from "@material-ui/core/styles";
-import {Backdrop, CircularProgress } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
+import {Backdrop, CircularProgress} from "@material-ui/core";
+import {ADM_RM} from "./routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
@@ -18,16 +17,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-
-const Routes = []
-for (let key in RM) {Routes.push(RM[key])}
-
 window.addEventListener("resize", (event) => {
     runInAction(() => {Store.width = window.outerWidth})
 
 })
 
 const App = () => {
+
+    console.log('app')
+    const Routes = []
+    for (let key in UI_RM) {Routes.push(UI_RM[key])}
+    for (let key in ADM_RM) {Routes.push(ADM_RM[key])}
     const classes = useStyles();
     const location = useLocation().pathname;
 
@@ -64,7 +64,6 @@ const App = () => {
                 <Backdrop className={classes.backdrop} open={backdrop}>
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                {Routes.map(({path, header}) => (path === location && header.view) && <Header title={header.title}/>)}
                 {isInit &&
                 <Switch>
                     {Routes.map(({path,Component,auth}) => (auth === isAuth || !auth) && <Route key={path} exact path={path} component={Component}/>)}

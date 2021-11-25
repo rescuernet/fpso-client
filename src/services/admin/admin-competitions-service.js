@@ -1,5 +1,5 @@
 import $api from "../../http/api";
-import {RM} from "../../routes/routes";
+import {RM} from "../../routes/ui-routes";
 
 export default class AdminCompetitionsService {
 

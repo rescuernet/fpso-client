@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Box, Button, Container, TextField} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
-import AuthStore from "../../bll/auth-store";
+import AuthStore from "../../../bll/auth-store";
 import {Redirect} from "react-router-dom";
 import {runInAction} from "mobx";
-import {RM} from "../../routes/routes";
 import {makeStyles} from "@material-ui/core/styles";
+import {ADM_RM} from "../../../routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +39,7 @@ const LoginForm = () => {
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
 
-    if(AuthStore.isAuth){return <Redirect to={RM.Admin.path}/>}
+    if(AuthStore.isAuth){return <Redirect to={ADM_RM.Main.path}/>}
     const authError = AuthStore?.authError?.data?.message
 
     const clearAuthError = () => {

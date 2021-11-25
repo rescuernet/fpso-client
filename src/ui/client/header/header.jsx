@@ -3,8 +3,8 @@ import {AppBar, Container, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";
-import AuthStore from "../../bll/auth-store";
-import {useGridPoint} from "../../utils/breakpoints";
+import AuthStore from "../../../bll/auth-store";
+import {useGridPoint} from "../../../utils/breakpoints";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -57,19 +57,15 @@ const Header = (props) => {
     const isAuth = AuthStore.isAuth
 
     return (
-        <>
-            <AppBar className={classes.appBar}>
+        <AppBar className={classes.appBar}>
+            <Container className={classes.container} fixed>
                 <Menu isAuth={isAuth} logout={AuthStore.logout}/>
-                <Container className={classes.container} fixed>
-                    <Toolbar className={classes.toolBar}>
-                        <div className={classes.title}>{props.title}</div>
-                        <div className={classes.fpso}>samara swimming</div>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-
-        </>
-
+                <Toolbar className={classes.toolBar}>
+                    <div className={classes.title}>{props.title}</div>
+                    <div className={classes.fpso}>samara swimming</div>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 };
 

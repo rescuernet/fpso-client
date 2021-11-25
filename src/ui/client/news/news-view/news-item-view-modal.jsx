@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import {runInAction, toJS} from "mobx";
-import UiStore from "../../../bll/ui/ui-news-store";
+import UiStore from "../../../../bll/ui/ui-news-store";
 import {makeStyles} from "@material-ui/core/styles";
-import {API_URL} from "../../../const/const";
-import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
+import {API_URL} from "../../../../const/const";
+import noNewsAvatar from "../../../../common/assets/image/no_news_avatar.jpg";
 import {Divider, Fab} from "@material-ui/core";
 import Close from '@material-ui/icons/Close';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import {useGridPoint} from "../../../utils/breakpoints";
+import {useGridPoint} from "../../../../utils/breakpoints";
 import Snackbar from '@material-ui/core/Snackbar';
-import pdfIcon from "../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
+import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
+import docIcon from "../../../../common/assets/image/icons/doc.png";
+import docxIcon from "../../../../common/assets/image/icons/docx.png";
+import xlsIcon from "../../../../common/assets/image/icons/xls.png";
+import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
 import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles({

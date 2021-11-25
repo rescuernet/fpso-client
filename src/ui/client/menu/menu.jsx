@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, Drawer, IconButton, List, ListItem} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
-import {RM} from "../../routes/routes";
+import {UI_RM} from "../../../routes/ui-routes";
 import MenuIcon from '@material-ui/icons/Menu';
 import {useEffect} from "react";
 
@@ -43,11 +43,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const menuItems = []
-for (let key in RM) {menuItems.push(RM[key])}
-
 
 const Menu = (props) => {
+    const menuItems = []
+    for (let key in UI_RM) {menuItems.push(UI_RM[key])}
 
     const classes = useStyles()
 
@@ -90,18 +89,14 @@ const Menu = (props) => {
                     {'Главная'}
                 </ListItem>
                 {menuItems.map((i) =>
-                    !props.isAuth && i.auth
-                        ?
-                        null
-                        : i.menu?.type !== 'main'
-                            ? null
-                            : (<ListItem
-                                button key={i.path}
-                                className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                                onClick={()=> setLink(i.path)}
-                            >
-                                {i.menu.title}
-                            </ListItem>)
+                    i.menu?.type === 'main' &&
+                    (<ListItem
+                        button key={i.path}
+                        className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                        onClick={()=> setLink(i.path)}
+                    >
+                        {i.menu.title}
+                    </ListItem>)
                 )}
             </List>
         </Box>

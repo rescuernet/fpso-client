@@ -2,12 +2,11 @@ import React from 'react';
 import {observer} from "mobx-react-lite";
 import AdminMenu from "../admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {RM} from "../../../routes/routes";
 import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Store from '../../../bll/store';
 import AdminHeader from "../header/admin-header";
-
+import {ADM_API_RM} from "../../../routes/admin-api-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +52,7 @@ const Competitions = (props) => {
     const history = useHistory();
 
     const createCompetitions = () => {
-        history.push(RM.Admin__Competitions__Create.path);
+        history.push(ADM_API_RM.Competitions__Create.path);
     }
 
 

@@ -8,7 +8,7 @@ import AdminHeader from "../header/admin-header";
 import {runInAction, toJS} from "mobx";
 import ReferenceBooksPoolItem from "./reference-books-pool-item";
 import {useHistory} from "react-router-dom";
-import {RM} from "../../../routes/routes";
+import {ADM_RM} from "../../../routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,7 +64,7 @@ const ReferenceBooksPool = (props) => {
     const UpdateReference = ()=> {
         runInAction(async ()=>{
             await Store.referenceBookUpdate()
-            history.push(RM.Admin__Reference__Books.path)
+            history.push(ADM_RM.Reference__Books.path)
         })
     }
 

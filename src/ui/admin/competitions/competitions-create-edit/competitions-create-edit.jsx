@@ -8,7 +8,7 @@ import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
 import {AlertDialog} from "./competitions-alert";
 import {useHistory, useParams} from "react-router-dom";
-import {RM} from "../../../../routes/routes";
+import {RM} from "../../../../routes/ui-routes";
 import Store from "../../../../bll/store";
 import * as dateFns from "date-fns";
 import CompetitionsAvatar from "./competitions-avatar";

@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {runInAction, toJS} from "mobx";
-import UiNewsStore from '../../bll/ui/ui-news-store'
+import UiNewsStore from '../../../bll/ui/ui-news-store'
 import {observer} from "mobx-react-lite";
 import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Store from "../../bll/store";
+import Store from "../../../bll/store";
 import {Pagination} from "@material-ui/lab";
-import {useGridPoint} from "../../utils/breakpoints";
+import {useGridPoint} from "../../../utils/breakpoints";
 import {NewsCardMobile} from "./news-card/news-card-mobile";
 import {NewsItemViewModal} from "./news-view/news-item-view-modal";
 import NewsCardDesktop from "./news-card/news-card-desktop";
+import Header from "../../client/header/header";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,57 +64,58 @@ const News = () => {
     };
 
     return (
-        <Box className={classes.root}>
-            <Container fixed className={classes.container}>
-                {newsItem &&
-                <>
-                    {pagesCount > 10 &&
-                    <div className={classes.paginationTop}>
-                        <Pagination
-                            count={pagesCount}
-                            page={pageNum}
-                            color={"primary"}
-                            size={Store.width < 750 ? 'small' : 'medium'}
-                            onChange={ChangePage}
-                        />
-                    </div>
-                    }
-
-
-                    <Box className={classes.newsListItem}>
-                        {Store.width < 750 &&
+        <>
+            <Header title={'Новости'}/>
+            <Box className={classes.root}>
+                <Container fixed className={classes.container}>
+                    {newsItem &&
+                    <>
+                        {pagesCount > 10 &&
+                        <div className={classes.paginationTop}>
+                            <Pagination
+                                count={pagesCount}
+                                page={pageNum}
+                                color={"primary"}
+                                size={Store.width < 750 ? 'small' : 'medium'}
+                                onChange={ChangePage}
+                            />
+                        </div>
+                        }
+                        <Box className={classes.newsListItem}>
+                            {Store.width < 750 &&
                             newsItem.map((i,index)=>(
                                 <NewsCardMobile key={index} index={index} news={i} />
                             ))
-                        }
+                            }
 
-                        {Store.width >= 750 &&
+                            {Store.width >= 750 &&
                             newsItem.map((i,index)=>(
                                 <NewsCardDesktop key={index} index={index} news={i} />
                             ))
+                            }
+                        </Box>
+                        {pagesCount > 10 &&
+                        <div className={classes.paginationBottom}>
+                            <Pagination
+                                count={pagesCount}
+                                page={pageNum}
+                                color={"primary"}
+                                size={Store.width < 750 ? 'small' : 'medium'}
+                                onChange={ChangePage}
+                            />
+                        </div>
                         }
-                    </Box>
-
-                    {pagesCount > 10 &&
-                    <div className={classes.paginationBottom}>
-                        <Pagination
-                            count={pagesCount}
-                            page={pageNum}
-                            color={"primary"}
-                            size={Store.width < 750 ? 'small' : 'medium'}
-                            onChange={ChangePage}
-                        />
-                    </div>
+                    </>
                     }
-                </>
-                }
-                {UiNewsStore.newsViewModal_open &&
+                    {UiNewsStore.newsViewModal_open &&
                     <NewsItemViewModal
                         open={UiNewsStore.newsViewModal_open}
                     />
-                }
-            </Container>
-        </Box>
+                    }
+                </Container>
+            </Box>
+        </>
+
 
     );
 };

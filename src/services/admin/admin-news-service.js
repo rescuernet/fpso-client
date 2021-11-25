@@ -1,37 +1,38 @@
 import $api from "../../http/api";
-import {RM} from "../../routes/routes";
+import {ADM_API_RM} from "../../routes/admin-api-routes";
+import {ADM_RM} from "../../routes/admin-routes";
 
 export default class AdminNewsService {
 
     static async newsAvatarCreate(avatar) {
-        return $api.post(RM.Admin__News__Avatar__Create.path,avatar)
+        return $api.post(ADM_API_RM.News__Avatar__Create.path,avatar)
     }
 
     static async newsImageCreate(image) {
-        return $api.post(RM.Admin__News__Image__Create.path,image)
+        return $api.post(ADM_API_RM.News__Image__Create.path,image)
     }
 
     static async newsDocsCreate(doc) {
-        return $api.post(RM.Admin__News__Docs__Create.path,doc)
+        return $api.post(ADM_API_RM.News__Docs__Create.path,doc)
     }
 
     static async newsCreate(Arr) {
-        return $api.post(RM.Admin__News__Create.path,Arr)
+        return $api.post(ADM_API_RM.News__Create.path,Arr)
     }
 
     static async newsUpdate(Arr) {
-        return $api.post(RM.Admin__News__Update.path,Arr)
+        return $api.post(ADM_API_RM.News__Update.path,Arr)
     }
 
     static async newsDelete(id) {
-        return $api.post(RM.Admin__News__Delete.path,{id})
+        return $api.post(ADM_API_RM.News__Delete.path,{id})
     }
 
     static async getNews() {
-        return $api.get(RM.Admin__News.path)
+        return $api.get(ADM_RM.News.path)
     }
 
     static async getNewsId(id) {
-        return $api.get(`${RM.Admin__News.path}/${id}`)
+        return $api.get(`${ADM_RM.News.path}/${id}`)
     }
 }

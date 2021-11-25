@@ -2,6 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react-lite";
 import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import Header from "../header/header";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,11 +15,15 @@ const Competitions = (props) => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.root}>
-            <Container fixed>
-                Competitions
-            </Container>
-        </Box>
+        <>
+            <Header title={'Соревнования'}/>
+            <Box className={classes.root}>
+                <Container fixed>
+                    Competitions
+                </Container>
+            </Box>
+        </>
+
     );
 };
 

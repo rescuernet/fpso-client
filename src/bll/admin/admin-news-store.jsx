@@ -162,16 +162,20 @@ class AdminNewsStore {
     }
 
     getNews = async () => {
-        runInAction(() => {Store.isLoading = true})
-        runInAction(() => {this.clearData()})
+        runInAction(() => {
+            Store.isLoading = true
+            this.clearData()
+        })
         try {
             const response = await AdminNewsService.getNews();
             runInAction(() => {this.news = response.data})
         } catch (e) {
             console.log(e)
         } finally {
-            runInAction(() => {Store.isInit = true})
-            runInAction(() => {Store.isLoading = false})
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
         }
     }
 

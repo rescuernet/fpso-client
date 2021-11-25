@@ -8,9 +8,10 @@ import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined'
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Store from '../../../bll/store';
-import {RM} from "../../../routes/routes";
 import AdminNewsStore from "../../../bll/admin/admin-news-store";
 import {runInAction, toJS} from "mobx";
+import {ADM_RM} from "../../../routes/admin-routes";
+import {observer} from "mobx-react-lite";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NewsItem = () => {
 
+    console.log('NewsItem')
+
     const classes = useStyles();
     const history = useHistory();
 
@@ -66,7 +69,7 @@ const NewsItem = () => {
 
     const newsEdit = (id) => {
         runInAction(()=>{AdminNewsStore.clearData()})
-        history.push(RM.Admin__News__Edit.getUrl(id))
+        history.push(ADM_RM.News__Edit.getUrl(id))
     }
 
 
@@ -105,4 +108,4 @@ const NewsItem = () => {
     );
 };
 
-export default NewsItem;
+export default observer(NewsItem);

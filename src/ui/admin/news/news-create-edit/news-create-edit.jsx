@@ -8,13 +8,13 @@ import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
 import {AlertDialog} from "./news-alert";
 import {useHistory, useParams} from "react-router-dom";
-import {RM} from "../../../../routes/routes";
 import Store from "../../../../bll/store";
 import NewsAvatar from "./news-avatar";
 import NewsImages from "./news-images";
 import NewsFields from "./news-fields";
 import NewsCheckbox from "./news-checkbox";
 import NewsDocs from "./news-docs";
+import {ADM_RM} from "../../../../routes/admin-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,7 +102,7 @@ const NewsCreateEdit = () => {
 
     //отмена
     const Cancel = () => {
-        history.push(RM.Admin__News.path)
+        history.push(ADM_RM.News.path)
     };
 
 
@@ -113,7 +113,7 @@ const NewsCreateEdit = () => {
         })
         const result = await AdminNewsStore.newsUpdate(id)
         if(result === 200){
-            history.push(RM.Admin__News.path)
+            history.push(ADM_RM.News.path)
         }
     };
 
@@ -125,7 +125,7 @@ const NewsCreateEdit = () => {
         setDeleteNews(false)
         const result = await AdminNewsStore.newsDelete(id)
         if(result === 200){
-            history.push(RM.Admin__News.path)
+            history.push(ADM_RM.News.path)
         }
     }
 

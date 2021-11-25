@@ -2,17 +2,17 @@ import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
-import UiStore from "../../../bll/ui/ui-news-store";
-import {API_URL} from "../../../const/const";
-import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
+import UiStore from "../../../../bll/ui/ui-news-store";
+import {API_URL} from "../../../../const/const";
+import noNewsAvatar from "../../../../common/assets/image/no_news_avatar.jpg";
 import {Box, Container, Divider} from "@material-ui/core";
-import pdfIcon from "../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
+import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
+import docIcon from "../../../../common/assets/image/icons/doc.png";
+import docxIcon from "../../../../common/assets/image/icons/docx.png";
+import xlsIcon from "../../../../common/assets/image/icons/xls.png";
+import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
 import {makeStyles} from "@material-ui/core/styles";
-import {useGridPoint} from "../../../utils/breakpoints";
+import {useGridPoint} from "../../../../utils/breakpoints";
 import Header from "../../header/header";
 
 const useStyles = makeStyles({

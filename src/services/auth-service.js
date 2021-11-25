@@ -1,9 +1,9 @@
 import $api from "../http/api";
-import {RM} from "../routes/routes";
+import {UI_RM} from "../routes/ui-routes";
 
 export default class AuthService {
     static async login(email,password) {
-        return $api.post(RM.Login.path,{email,password})
+        return $api.post(UI_RM.Login.path,{email,password})
     }
 
     static async registration(email,password) {

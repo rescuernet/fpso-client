@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {useHistory, useLocation} from "react-router-dom";
-import {RM} from "../../routes/routes";
 import {Box, Divider, IconButton} from "@material-ui/core";
 import AuthStore from '../../bll/auth-store'
 import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
 import MenuIcon from "@material-ui/icons/Menu";
 import {runInAction} from "mobx";
-
+import {ADM_RM} from "../../routes/admin-routes";
 
 
 const drawerWidth = 240;
@@ -108,7 +107,7 @@ const AdminMenu = (props) => {
     }, [link,history]);
 
     const menuItems = []
-    for (let key in RM) {menuItems.push(RM[key])}
+    for (let key in ADM_RM) {menuItems.push(ADM_RM[key])}
     const classes = useStyles();
 
     return (
@@ -157,8 +156,8 @@ const AdminMenu = (props) => {
                     <List>
                         <ListItem
                             button key={2}
-                            className={location === RM.Admin.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                            onClick={()=> setLink(RM.Admin.path)}
+                            className={location === ADM_RM.Main.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                            onClick={()=> setLink(ADM_RM.Main.path)}
                         >
                             Главная панель
                         </ListItem>

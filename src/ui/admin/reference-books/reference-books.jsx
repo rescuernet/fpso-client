@@ -7,7 +7,8 @@ import AdminMenu from "../admin-menu";
 import AdminHeader from "../header/admin-header";
 import PoolIcon from '@material-ui/icons/Pool';
 import {NavLink} from "react-router-dom";
-import {RM} from "../../../routes/routes";
+
+import {ADM_RM} from "../../../routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -83,7 +84,7 @@ const ReferenceBooks = (props) => {
                 <Divider/>
                 <div className={classes.content}>
                     <div className={classes.reference}>
-                        <NavLink to={RM.Admin__Reference__Books__Pool.path}>
+                        <NavLink to={ADM_RM.Reference__Books__Pool.path}>
                             <div className={classes.referenceItem}>
                                 <PoolIcon />
                                 <div className={classes.referenceTitle}>
