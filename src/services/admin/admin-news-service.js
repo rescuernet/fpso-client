@@ -4,6 +4,14 @@ import {ADM_RM} from "../../routes/admin-routes";
 
 export default class AdminNewsService {
 
+    static async newsCreate() {
+        return $api.post(ADM_API_RM.News__Create.path)
+    }
+
+    static async getNewsId(id) {
+        return $api.get(ADM_RM.News__Edit.getUrl(id))
+    }
+
     static async newsAvatarCreate(avatar) {
         return $api.post(ADM_API_RM.News__Avatar__Create.path,avatar)
     }
@@ -16,10 +24,6 @@ export default class AdminNewsService {
         return $api.post(ADM_API_RM.News__Docs__Create.path,doc)
     }
 
-    static async newsCreate() {
-        return $api.post(ADM_API_RM.News__Create.path)
-    }
-
     static async newsUpdate(Arr) {
         return $api.post(ADM_API_RM.News__Update.path,Arr)
     }
@@ -30,9 +34,5 @@ export default class AdminNewsService {
 
     static async getNews() {
         return $api.get(ADM_RM.News.path)
-    }
-
-    static async getNewsId(id) {
-        return $api.get(`${ADM_RM.News.path}/${id}`)
     }
 }

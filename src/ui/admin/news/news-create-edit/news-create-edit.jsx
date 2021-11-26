@@ -3,10 +3,10 @@ import AdminMenu from "../../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
-import {AlertDialog} from "./news-alert";
+import {NewsAlertDialog} from "./news-alert";
 import {useHistory, useParams} from "react-router-dom";
 import Store from "../../../../bll/store";
 import NewsAvatar from "./news-avatar";
@@ -95,7 +95,6 @@ const NewsCreateEdit = () => {
         }
     },[id])
 
-
     const classes = useStyles();
 
     const [deleteNews, setDeleteNews] = useState(false);
@@ -136,72 +135,75 @@ const NewsCreateEdit = () => {
                 {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
+                    {AdminNewsStore.newsOne &&
+                        <>
+                            <NewsAvatar newsId={id}/>
 
-                    <NewsAvatar newsId={id}/>
+                            <Divider/>
 
-                    <Divider/>
+                            <NewsFields/>
 
-                    <NewsFields/>
+                            <Divider/>
 
-                    <Divider/>
+                            <NewsImages newsId={id}/>
 
-                    <NewsImages newsId={id}/>
+                            <Divider/>
 
-                    <Divider/>
+                            <NewsDocs newsId={id}/>
 
-                    <NewsDocs newsId={id}/>
+                            <Divider/>
 
-                    <Divider/>
+                            <div className={classes.control}>
 
-                    <div className={classes.control}>
+                                <NewsCheckbox />
 
-                        <NewsCheckbox />
+                                <Divider/>
+                                <div className={classes.controlButton}>
+                                    <Button
+                                        className={classes.Button}
+                                        variant={"outlined"}
+                                        color={"primary"}
+                                        onClick={()=>{Cancel()}}
+                                    >
+                                        Отмена
+                                    </Button>
+                                    <Button
+                                        className={classes.Button}
+                                        variant="contained"
+                                        color={"primary"}
+                                        onClick={()=>{UpdateArr()}}
+                                    >
+                                        Сохранить
+                                    </Button>
+                                    {!AdminNewsStore.newsOne.tmpNews &&
+                                    <Button
+                                        className={classes.Button}
+                                        variant="contained"
+                                        color={"secondary"}
+                                        onClick={()=>{newsDelete()}}
+                                    >
+                                        удалить
+                                    </Button>
+                                    }
+                                    {deleteNews &&
+                                    <NewsAlertDialog
+                                        alertType={'confirm'}
+                                        open={true}
+                                        header={'Внимание!'}
+                                        text={'Подтвердите удаление новости'}
+                                        delete={()=>{newsDeleteConfirm(id)}}
+                                        close={()=>{setDeleteNews(false)}}
+                                    />
+                                    }
 
-                        <Divider/>
-                        <div className={classes.controlButton}>
-                            <Button
-                                className={classes.Button}
-                                variant={"outlined"}
-                                color={"primary"}
-                                onClick={()=>{Cancel()}}
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                className={classes.Button}
-                                variant="contained"
-                                color={"primary"}
-                                onClick={()=>{UpdateArr()}}
-                            >
-                                Сохранить
-                            </Button>
-                            {!AdminNewsStore.newsOne.tmpNews &&
-                            <Button
-                                className={classes.Button}
-                                variant="contained"
-                                color={"secondary"}
-                                onClick={()=>{newsDelete()}}
-                            >
-                                удалить
-                            </Button>
-                            }
-                            {deleteNews &&
-                            <AlertDialog
-                                alertType={'confirm'}
-                                open={true}
-                                header={'Внимание!'}
-                                text={'Подтвердите удаление новости'}
-                                delete={()=>{newsDeleteConfirm(id)}}
-                                close={()=>{setDeleteNews(false)}}
-                            />
-                            }
-
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
             {AdminNewsStore.news_tmp_errors &&
-                <AlertDialog
+                <NewsAlertDialog
                     open={true}
                     header={'Ошибка!'}
                     text={AdminNewsStore.news_tmp_errors}

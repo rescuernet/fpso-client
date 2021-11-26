@@ -55,9 +55,9 @@ const Competitions = (props) => {
 
     const createCompetitions = () => {
         runInAction(async ()=>{
-            const response = await AdminCompetitionsStore.create()
+            const response = await AdminCompetitionsStore.compCreate()
             response === 'OK'
-                ? history.push(ADM_RM.Competitions__Edit.getUrl(AdminCompetitionsStore.tmpId))
+                ? history.push(ADM_RM.Competitions__Edit.getUrl(AdminCompetitionsStore.tmpCompId))
                 : history.push(ADM_RM.Main.path)
         })
     }

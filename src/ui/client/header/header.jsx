@@ -60,8 +60,8 @@ const Header = (props) => {
 
     return (
         <AppBar className={classes.appBar}>
+            <Menu isAuth={isAuth} logout={AuthStore.logout}/>
             <Container className={classes.container} fixed>
-                <Menu isAuth={isAuth} logout={AuthStore.logout}/>
                 <Toolbar className={classes.toolBar}>
                     <div className={classes.title}>{props.title}</div>
                     <div className={classes.fpso}>samara swimming</div>

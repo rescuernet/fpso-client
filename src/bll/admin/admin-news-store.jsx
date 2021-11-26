@@ -1,27 +1,13 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import Store from "../store"
 import AdminNewsService from "../../services/admin/admin-news-service";
-import * as dateFns from "date-fns";
 
 
 class AdminNewsStore {
     news_tmp_errors = null
     news = []
     tmpNewsId = null
-    newsOne = {
-        dateStart: '',
-        dateEnd: '',
-        headerFirst: '',
-        headerSecond: '',
-        textMain: '',
-        fixedNews: false,
-        importantNews: false,
-        published: false,
-        avatar: '',
-        images: [],
-        docs: [],
-        tmpNews: false
-    }
+    newsOne = null
 
 
     constructor() {
@@ -32,18 +18,7 @@ class AdminNewsStore {
         runInAction(() => {
             this.news_tmp_errors = null
             this.tmpNewsId = null
-            this.newsOne.dateStart = dateFns.format(new Date(), 'yyyy-MM-dd')
-            this.newsOne.dateEnd = ''
-            this.newsOne.headerFirst = ''
-            this.newsOne.headerSecond = ''
-            this.newsOne.textMain = ''
-            this.newsOne.fixedNews = false
-            this.newsOne.importantNews = false
-            this.newsOne.published = false
-            this.newsOne.avatar = ''
-            this.newsOne.images = []
-            this.newsOne.docs = []
-            this.newsOne.tmpNews = false
+            this.newsOne = null
         })
     }
 

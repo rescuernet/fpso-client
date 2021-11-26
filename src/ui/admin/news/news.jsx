@@ -10,7 +10,6 @@ import NewsItem from "./news-item";
 import {runInAction} from "mobx";
 import AdminNewsStore from "../../../bll/admin/admin-news-store";
 import {ADM_RM} from "../../../routes/admin-routes";
-import AdminCompetitionsStore from "../../../bll/admin/admin-competitions-store";
 
 
 const useStyles = makeStyles((theme) => ({
