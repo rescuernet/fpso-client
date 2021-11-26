@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Divider, Typography} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import Store from "../../../bll/store";
-import AdminMenu from "../admin-menu";
+import AdminMenu from "../menu/admin-menu";
 import AdminHeader from "../header/admin-header";
 import PoolIcon from '@material-ui/icons/Pool';
 import {NavLink} from "react-router-dom";

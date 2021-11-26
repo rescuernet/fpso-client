@@ -1,12 +1,14 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import AdminMenu from "../admin-menu";
+import AdminMenu from "../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import Store from '../../../bll/store';
 import AdminHeader from "../header/admin-header";
-import {ADM_API_RM} from "../../../routes/admin-api-routes";
+import {runInAction} from "mobx";
+import AdminCompetitionsStore from "../../../bll/admin/admin-competitions-store";
+import {ADM_RM} from "../../../routes/admin-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     control: {
         marginBottom: 20,
     },
-    competitionsList: {
+    newsList: {
         margin: '20px 0'
     },
 }));
@@ -52,7 +54,12 @@ const Competitions = (props) => {
     const history = useHistory();
 
     const createCompetitions = () => {
-        history.push(ADM_API_RM.Competitions__Create.path);
+        runInAction(async ()=>{
+            const response = await AdminCompetitionsStore.create()
+            response === 'OK'
+                ? history.push(ADM_RM.Competitions__Edit.getUrl(AdminCompetitionsStore.tmpId))
+                : history.push(ADM_RM.Main.path)
+        })
     }
 
 
@@ -72,8 +79,7 @@ const Competitions = (props) => {
                             Создать соревнование
                         </Button>
                     </div>
-                    <div className={classes.competitionsList}>
-
+                    <div className={classes.newsList}>
                         {/*<NewsItem />*/}
 
                     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppBar} from "@material-ui/core";
-import AdminMenu from "../admin-menu";
+import AdminMenu from "../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {useGridPoint} from "../../../utils/breakpoints";
 

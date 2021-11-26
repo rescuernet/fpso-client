@@ -1,9 +1,13 @@
 import $api from "../../http/api";
-import {RM} from "../../routes/ui-routes";
+import {ADM_API_RM} from "../../routes/admin-api-routes";
 
 export default class AdminCompetitionsService {
 
-    static async compAvatarCreate(avatar) {
+    static async create() {
+        return $api.post(ADM_API_RM.Competitions__Create.path)
+    }
+
+    /*static async compAvatarCreate(avatar) {
         return $api.post(RM.Admin__Competitions__Avatar__Create.path,avatar)
     }
 
@@ -11,7 +15,7 @@ export default class AdminCompetitionsService {
         return $api.post(RM.Admin__Competitions__Image__Create.path,image)
     }
 
-/*    static async newsDocsCreate(doc) {
+    static async newsDocsCreate(doc) {
         return $api.post(RM.Admin__News__Docs__Create.path,doc)
     }
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Redirect, Route, Switch, useLocation} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import AuthStore from "./bll/auth-store";
 import Store from "./bll/store";
@@ -23,13 +23,10 @@ window.addEventListener("resize", (event) => {
 })
 
 const App = () => {
-
-    console.log('app')
     const Routes = []
     for (let key in UI_RM) {Routes.push(UI_RM[key])}
     for (let key in ADM_RM) {Routes.push(ADM_RM[key])}
     const classes = useStyles();
-    const location = useLocation().pathname;
 
     useEffect(() => {
         if(localStorage.getItem('token')){

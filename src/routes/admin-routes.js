@@ -1,7 +1,8 @@
-import Admin from "../ui/admin/admin";
+import Admin from "../ui/admin/main/admin";
 import AdminNews from "../ui/admin/news/news";
 import AdminNewsEdit from "../ui/admin/news/news-create-edit/news-create-edit";
 import AdminCompetitions from "../ui/admin/competitions/competitions";
+import AdminCompetitionsEdit from "../ui/admin/competitions/competitions-edit/competitions-edit";
 import AdminReferenceBooks from "../ui/admin/reference-books/reference-books";
 import AdminReferenceBooksPool from "../ui/admin/reference-books/reference-books-pool";
 
@@ -24,10 +25,6 @@ const AdminRouterManager = {
         header: {
             view: false
         },
-        menu: {
-            type: MenuTypes.admin,
-            title: 'Панель управления'
-        }
     },
     News: {
         path: `${PrefixPath.admin}/news`,
@@ -63,6 +60,15 @@ const AdminRouterManager = {
             type: MenuTypes.admin,
             title: 'Соревнования'
         }
+    },
+    Competitions__Edit: {
+        path: `${PrefixPath.admin}/competitions/:id`,
+        Component: AdminCompetitionsEdit,
+        getUrl(id) {return `${PrefixPath.admin}/competitions/${id}`},
+        auth: true,
+        header: {
+            view: false
+        },
     },
     Reference__Books: {
         path:`${PrefixPath.admin}/reference-books`,

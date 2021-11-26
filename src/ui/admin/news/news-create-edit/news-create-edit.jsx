@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import AdminMenu from "../../admin-menu";
+import AdminMenu from "../../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";

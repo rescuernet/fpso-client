@@ -56,8 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NewsItem = () => {
 
-    console.log('NewsItem')
-
     const classes = useStyles();
     const history = useHistory();
 
@@ -91,7 +89,7 @@ const NewsItem = () => {
             }
             {news && news.length > 0 && news.map((i) => (
                 <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
-                    {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.dateCreated), 'dd.MM.yyyy')}</td>}
+                    {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
                     <td>{i.headerFirst}</td>
                     {Store.width > 750 &&

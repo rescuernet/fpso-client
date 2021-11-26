@@ -5,11 +5,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {useHistory, useLocation} from "react-router-dom";
 import {Box, Divider, IconButton} from "@material-ui/core";
-import AuthStore from '../../bll/auth-store'
-import NoAvatar__img from '../../common/assets/image/no_avatar.jpg'
+import AuthStore from '../../../bll/auth-store'
+import NoAvatar__img from '../../../common/assets/image/no_avatar.jpg'
 import MenuIcon from "@material-ui/icons/Menu";
 import {runInAction} from "mobx";
-import {ADM_RM} from "../../routes/admin-routes";
+import {ADM_RM} from "../../../routes/admin-routes";
 
 
 const drawerWidth = 240;
@@ -162,17 +162,16 @@ const AdminMenu = (props) => {
                             Главная панель
                         </ListItem>
                         {menuItems.map((i) =>
-                            i.menu?.type !== 'admin'
-                                ? null
-                                : (
-                                    <ListItem
-                                        button key={i.path}
-                                        className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
-                                        onClick={()=> setLink(i.path)}
-                                    >
-                                        {i.menu.title}
-                                    </ListItem>
-                                )
+                            i.menu?.type === 'admin' &&
+                            (
+                                <ListItem
+                                    button key={i.path}
+                                    className={location.includes(i.path) ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
+                                    onClick={()=> setLink(i.path)}
+                                >
+                                    {i.menu.title}
+                                </ListItem>
+                            )
                         )}
                     </List>
                 </Box>

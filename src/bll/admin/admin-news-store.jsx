@@ -52,15 +52,28 @@ class AdminNewsStore {
         try {
             const response = await AdminNewsService.newsCreate();
             if(response.data?.error){
-                runInAction(() => {this.news_tmp_errors =
-                    <div>{response.data.error}</div>})
+                console.log(response.data.error)
+                return 'ERROR'
             }else{
                 runInAction(() => {
                     this.clearData()
                     this.tmpNewsId = response.data
                 })
-                return response
+                return 'OK'
             }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    getNewsId = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminNewsService.getNewsId(id);
+            runInAction(() => {this.newsOne = response.data})
         } catch (e) {
             console.log(e)
         } finally {
@@ -179,18 +192,7 @@ class AdminNewsStore {
         }
     }
 
-    getNewsId = async (id) => {
-        runInAction(() => {Store.isLoading = true})
-        try {
-            const response = await AdminNewsService.getNewsId(id);
-            runInAction(() => {this.newsOne = response.data})
-        } catch (e) {
-            console.log(e)
-        } finally {
-            runInAction(() => {Store.isInit = true})
-            runInAction(() => {Store.isLoading = false})
-        }
-    }
+
 
 }
 

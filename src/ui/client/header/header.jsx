@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
         textShadow: '1px 1px 3px #000',
         [useGridPoint.breakpoints.down('xs')]: {
             textAlign: 'right',
-            fontSize: 13
+            fontSize: 10,
+            letterSpacing: 5,
+            width: 100,
         }
     },
     title: {

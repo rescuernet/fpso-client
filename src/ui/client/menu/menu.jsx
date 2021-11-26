@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {UI_RM} from "../../../routes/ui-routes";
 import MenuIcon from '@material-ui/icons/Menu';
 import {useEffect} from "react";
+import {useGridPoint} from "../../../utils/breakpoints";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -36,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '700'
     },
     menuIcon: {
-        fontSize: 25
+        fontSize: 40,
+        [useGridPoint.breakpoints.down('xs')]: {
+            fontSize: 30,
+        }
     },
     divider: {
         backgroundColor: "#ff6200"
@@ -98,6 +102,12 @@ const Menu = (props) => {
                         {i.menu.title}
                     </ListItem>)
                 )}
+                <ListItem
+                    button key={1}
+                    onClick={()=> setLink('/5070/admin/')}
+                >
+                    {'admin'}
+                </ListItem>
             </List>
         </Box>
     );

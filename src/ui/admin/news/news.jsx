@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import AdminMenu from "../admin-menu";
+import AdminMenu from "../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
@@ -10,6 +10,7 @@ import NewsItem from "./news-item";
 import {runInAction} from "mobx";
 import AdminNewsStore from "../../../bll/admin/admin-news-store";
 import {ADM_RM} from "../../../routes/admin-routes";
+import AdminCompetitionsStore from "../../../bll/admin/admin-competitions-store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,12 +57,12 @@ const News = (props) => {
 
     const createNews = () => {
         runInAction(async ()=>{
-            await AdminNewsStore.newsCreate()
-            history.push(ADM_RM.News__Edit.getUrl(AdminNewsStore.tmpNewsId))
+            const response = await AdminNewsStore.newsCreate()
+            response === 'OK'
+                ? history.push(ADM_RM.News__Edit.getUrl(AdminNewsStore.tmpNewsId))
+                : history.push(ADM_RM.Main.path)
         })
     }
-
-    console.log('news')
 
     return (
         <div className={classes.root}>

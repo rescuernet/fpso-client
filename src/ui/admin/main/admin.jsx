@@ -1,9 +1,9 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
-import AdminMenu from "./admin-menu";
+import AdminMenu from "../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import Store from "../../bll/store";
-import AdminHeader from "./header/admin-header";
+import Store from "../../../bll/store";
+import AdminHeader from "../header/admin-header";
 import {Divider, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

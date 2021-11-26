@@ -16,8 +16,8 @@ export default class AdminNewsService {
         return $api.post(ADM_API_RM.News__Docs__Create.path,doc)
     }
 
-    static async newsCreate(Arr) {
-        return $api.post(ADM_API_RM.News__Create.path,Arr)
+    static async newsCreate() {
+        return $api.post(ADM_API_RM.News__Create.path)
     }
 
     static async newsUpdate(Arr) {
