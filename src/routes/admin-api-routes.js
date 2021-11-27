@@ -40,6 +40,10 @@ const AdminAPIRouterManager = {
         path: `${PrefixPath.admin}/competitions/avatar-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/avatar-create`},
     },
+    Competitions__Docs__Create: {
+        path: `${PrefixPath.admin}/competitions/docs-create`,
+        getUrl() {return `${PrefixPath.admin}/competitions/docs-create`},
+    },
     Competitions__Image__Create: {
         path: `${PrefixPath.admin}/competitions/image-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/image-create`},

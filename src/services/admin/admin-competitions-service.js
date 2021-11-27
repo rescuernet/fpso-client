@@ -16,4 +16,8 @@ export default class AdminCompetitionsService {
         return $api.post(ADM_API_RM.Competitions__Avatar__Create.path,avatar)
     }
 
+    static async compDocsCreate(doc) {
+        return $api.post(ADM_API_RM.Competitions__Docs__Create.path,doc)
+    }
+
 }

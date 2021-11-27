@@ -10,6 +10,7 @@ import CompAvatar from "./comp-avatar";
 import {useParams} from "react-router-dom";
 import {runInAction} from "mobx";
 import CompFields from "./comp-fields";
+import CompDocs from "./comp-docs";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -109,15 +110,17 @@ const CompetitionsEdit = (props) => {
 
                         <Divider/>
 
+                        <CompDocs compId={id}/>
+
+                        <Divider/>
+
                         {/*
 
                         <NewsImages newsId={id}/>
 
                         <Divider/>
 
-                        <NewsDocs newsId={id}/>
 
-                        <Divider/>
 
                         <div className={classes.control}>
 
