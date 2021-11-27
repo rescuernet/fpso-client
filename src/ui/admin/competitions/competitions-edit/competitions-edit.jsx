@@ -7,8 +7,9 @@ import AdminMenu from "../../menu/admin-menu";
 import AdminHeader from "../../header/admin-header";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import CompAvatar from "./comp-avatar";
-import {useHistory, useParams} from "react-router-dom";
-import {runInAction, toJS} from "mobx";
+import {useParams} from "react-router-dom";
+import {runInAction} from "mobx";
+import CompFields from "./comp-fields";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompetitionsEdit = (props) => {
-    const history = useHistory();
+    /*const history = useHistory();*/
     const { id } = useParams();
 
     useEffect(()=>{
@@ -88,8 +89,6 @@ const CompetitionsEdit = (props) => {
             runInAction(() => {AdminCompStore.clearData()})
         }
     },[id])
-
-    console.log(toJS(AdminCompStore.compOne))
 
     const classes = useStyles();
 
@@ -106,9 +105,11 @@ const CompetitionsEdit = (props) => {
 
                         <Divider/>
 
-                        {/*<NewsFields/>
+                        <CompFields/>
 
                         <Divider/>
+
+                        {/*
 
                         <NewsImages newsId={id}/>
 

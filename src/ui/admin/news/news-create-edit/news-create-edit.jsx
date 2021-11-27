@@ -3,7 +3,7 @@ import AdminMenu from "../../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
 import {NewsAlertDialog} from "./news-alert";
