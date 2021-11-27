@@ -20,4 +20,8 @@ export default class AdminCompetitionsService {
         return $api.post(ADM_API_RM.Competitions__Docs__Create.path,doc)
     }
 
+    static async compUpdate(Arr) {
+        return $api.post(ADM_API_RM.Competitions__Update.path,Arr)
+    }
+
 }

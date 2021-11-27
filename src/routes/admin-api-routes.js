@@ -36,6 +36,10 @@ const AdminAPIRouterManager = {
         path: `${PrefixPath.admin}/competitions/create`,
         getUrl() {return `${PrefixPath.admin}/competitions/create`},
     },
+    Competitions__Update: {
+        path: `${PrefixPath.admin}/competitions/update`,
+        getUrl() {return `${PrefixPath.admin}/competitions/update`},
+    },
     Competitions__Avatar__Create: {
         path: `${PrefixPath.admin}/competitions/avatar-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/avatar-create`},

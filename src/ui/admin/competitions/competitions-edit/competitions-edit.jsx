@@ -107,9 +107,9 @@ const CompetitionsEdit = (props) => {
     //создание массива для обновления
     const UpdateArr = async () => {
         runInAction(()=>{
-            AdminCompStore.compOne.tmpNews = false
+            AdminCompStore.compOne.tmp = false
         })
-        const result = await AdminCompStore.compUpdate(id)
+        const result = await AdminCompStore.compUpdate()
         if(result === 200){
             history.push(ADM_RM.Competitions.path)
         }

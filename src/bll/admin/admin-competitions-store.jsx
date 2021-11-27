@@ -92,6 +92,25 @@ class AdminCompetitionsStore {
         }
     }
 
+    compUpdate = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminCompetitionsService.compUpdate(this.compOne);
+            if(response.data?.error){
+                runInAction(() => {this.tmp_errors =
+                    <div>{response.data.error}</div>})
+            }else{
+                runInAction(() => {this.clearData()})
+                return 200
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
 }
 
 export default new AdminCompetitionsStore();
