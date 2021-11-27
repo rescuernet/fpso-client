@@ -9,6 +9,7 @@ import AdminHeader from "../header/admin-header";
 import {runInAction} from "mobx";
 import AdminCompetitionsStore from "../../../bll/admin/admin-competitions-store";
 import {ADM_RM} from "../../../routes/admin-routes";
+import CompItem from "./comp-item";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,8 +81,7 @@ const Competitions = (props) => {
                         </Button>
                     </div>
                     <div className={classes.newsList}>
-                        {/*<NewsItem />*/}
-
+                        <CompItem />
                     </div>
                 </div>
             </div>

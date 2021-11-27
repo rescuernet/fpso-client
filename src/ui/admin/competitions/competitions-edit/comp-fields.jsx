@@ -56,8 +56,6 @@ const CompFields = (props) => {
         })
     },[])
 
-    console.log('compOne',compOne)
-
     return (
         <>
             <div className={classes.fieldsDates}>

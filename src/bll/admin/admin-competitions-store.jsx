@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import Store from "../store"
 import AdminCompetitionsService from "../../services/admin/admin-competitions-service";
+import AdminNewsService from "../../services/admin/admin-news-service";
 
 class AdminCompetitionsStore {
     tmp_errors = null
@@ -108,6 +109,24 @@ class AdminCompetitionsStore {
         } finally {
             runInAction(() => {Store.isInit = true})
             runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    getComp = async () => {
+        runInAction(() => {
+            Store.isLoading = true
+            this.clearData()
+        })
+        try {
+            const response = await AdminCompetitionsService.getComp();
+            runInAction(() => {this.comp = response.data})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
         }
     }
 

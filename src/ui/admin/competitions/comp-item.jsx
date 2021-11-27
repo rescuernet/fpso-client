@@ -1,0 +1,109 @@
+import React, {useEffect} from 'react';
+import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
+import * as dateFns from "date-fns";
+import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
+import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import RemoveIcon from '@material-ui/icons/Remove';
+import Store from '../../../bll/store';
+import AdminCompStore from "../../../bll/admin/admin-competitions-store";
+import {runInAction, toJS} from "mobx";
+import {ADM_RM} from "../../../routes/admin-routes";
+import {observer} from "mobx-react-lite";
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        minHeight: '100%',
+        '@media (max-width: 750px)' : {
+            justifyContent: 'center'
+        },
+        position: "relative"
+    },
+    table: {
+        width: '100%',
+        borderCollapse: "collapse",
+        fontFamily: 'Roboto',
+        color: '#545454',
+        '& tr': {
+            borderTop: '1px solid #ccc',
+            borderBottom: '1px solid #ccc'
+        },
+        '& tr:hover': {
+            transition: '0.3s',
+            backgroundColor: '#f2f2f2',
+            cursor: 'pointer'
+        },
+        '& td': {
+            padding: '20px 10px',
+            [theme.breakpoints.down('xs')]: {
+                padding: '10px 5px',
+            }
+        }
+    },
+    min: {
+        width: 100,
+        textAlign: "center",
+        padding: '0 5px',
+        '@media (max-width: 1050px)' : {
+            width: 50,
+        },
+    },
+}));
+
+const CompItem = () => {
+
+    const classes = useStyles();
+    const history = useHistory();
+
+    useEffect(()=>{
+        runInAction(()=>{AdminCompStore.getComp()})
+    },[])
+
+    const comp = toJS(AdminCompStore.comp)
+
+    const newsEdit = (id) => {
+        runInAction(()=>{AdminCompStore.clearData()})
+        history.push(ADM_RM.Competitions__Edit.getUrl(id))
+    }
+
+
+    return (
+        <table className={classes.table}>
+            {Store.width > 750 && comp &&
+            <>
+                {Store.width > 1000 &&
+                <th className={classes.min}>создана</th>
+                }
+
+                <th></th>
+                <th>заголовок</th>
+                <th className={classes.min}>старт</th>
+                <th className={classes.min}>финиш</th>
+                <th className={classes.min}>закреплена</th>
+                <th className={classes.min}>важная</th>
+            </>
+            }
+            {comp && comp.length > 0 && comp.map((i) => (
+                <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
+                    {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
+                    <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
+                    <td>{i.headerFirst}</td>
+                    {Store.width > 750 &&
+                    <>
+                        <td className={classes.min}>{dateFns.format(new Date(i.dateStart), 'dd.MM.yyyy')}</td>
+                        <td className={classes.min}>{i.dateEnd ? dateFns.format(new Date(i.dateEnd), 'dd.MM.yyyy') : <RemoveIcon color={"primary"}/>}</td>
+                        <td className={classes.min}>{i.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
+                        <td className={classes.min}>{i.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
+                    </>
+                    }
+                </tr>
+            ))}
+        </table>
+    );
+};
+
+export default observer(CompItem);
