@@ -1,16 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider, Typography} from "@material-ui/core";
+import {Button, Divider, Typography} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import Store from "../../../../bll/store";
 import AdminMenu from "../../menu/admin-menu";
 import AdminHeader from "../../header/admin-header";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import CompAvatar from "./comp-avatar";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {runInAction} from "mobx";
 import CompFields from "./comp-fields";
 import CompDocs from "./comp-docs";
+import {CompAlertDialog} from "./comp-alert";
+import {ADM_RM} from "../../../../routes/admin-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompetitionsEdit = (props) => {
-    /*const history = useHistory();*/
+    const history = useHistory();
     const { id } = useParams();
 
     useEffect(()=>{
@@ -92,6 +94,37 @@ const CompetitionsEdit = (props) => {
     },[id])
 
     const classes = useStyles();
+
+    const [deleteComp, setDeleteComp] = useState(false);
+
+    //отмена
+    const Cancel = () => {
+        history.push(ADM_RM.Competitions.path)
+    };
+
+
+    //создание массива для обновления
+    const UpdateArr = async () => {
+        runInAction(()=>{
+            AdminCompStore.compOne.tmpNews = false
+        })
+        const result = await AdminCompStore.compUpdate(id)
+        if(result === 200){
+            history.push(ADM_RM.Competitions.path)
+        }
+    };
+
+    const compDelete = () => {
+        setDeleteComp(true)
+    }
+
+    const compDeleteConfirm = async (id) => {
+        setDeleteComp(false)
+        const result = await AdminCompStore.compDelete(id)
+        if(result === 200){
+            history.push(ADM_RM.Competitions.path)
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -114,17 +147,9 @@ const CompetitionsEdit = (props) => {
 
                         <Divider/>
 
-                        {/*
-
-                        <NewsImages newsId={id}/>
-
-                        <Divider/>
-
-
-
                         <div className={classes.control}>
 
-                            <NewsCheckbox />
+                            {/*<NewsCheckbox />*/}
 
                             <Divider/>
                             <div className={classes.controlButton}>
@@ -144,40 +169,50 @@ const CompetitionsEdit = (props) => {
                                 >
                                     Сохранить
                                 </Button>
-                                {!AdminNewsStore.newsOne.tmpNews &&
+                                {!AdminCompStore.compOne.tmp &&
                                 <Button
                                     className={classes.Button}
                                     variant="contained"
                                     color={"secondary"}
-                                    onClick={()=>{newsDelete()}}
+                                    onClick={()=>{compDelete()}}
                                 >
                                     удалить
                                 </Button>
                                 }
-                                {deleteNews &&
-                                <AlertDialog
+                                {deleteComp &&
+                                <CompAlertDialog
                                     alertType={'confirm'}
                                     open={true}
                                     header={'Внимание!'}
                                     text={'Подтвердите удаление новости'}
-                                    delete={()=>{newsDeleteConfirm(id)}}
-                                    close={()=>{setDeleteNews(false)}}
+                                    delete={()=>{compDeleteConfirm(id)}}
+                                    close={()=>{setDeleteComp(false)}}
                                 />
                                 }
 
                             </div>
-                        </div>*/}
+                        </div>
+
+                        {/*
+
+                        <NewsImages newsId={id}/>
+
+                        <Divider/>
+
+
+
+                        */}
                     </>
                     }
                 </div>
             </div>
-            {/*{AdminNewsStore.news_tmp_errors &&
-            <AlertDialog
+            {AdminCompStore.tmp_errors &&
+            <CompAlertDialog
                 open={true}
                 header={'Ошибка!'}
-                text={AdminNewsStore.news_tmp_errors}
+                text={AdminCompStore.tmp_errors}
             />
-            }*/}
+            }
         </div>
     );
 };
