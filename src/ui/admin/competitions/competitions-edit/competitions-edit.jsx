@@ -13,6 +13,7 @@ import CompFields from "./comp-fields";
 import CompDocs from "./comp-docs";
 import {CompAlertDialog} from "./comp-alert";
 import {ADM_RM} from "../../../../routes/admin-routes";
+import CompCheckbox from "./comp-checkbox";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -149,7 +150,7 @@ const CompetitionsEdit = (props) => {
 
                         <div className={classes.control}>
 
-                            {/*<NewsCheckbox />*/}
+                            <CompCheckbox />
 
                             <Divider/>
                             <div className={classes.controlButton}>
@@ -194,13 +195,9 @@ const CompetitionsEdit = (props) => {
                         </div>
 
                         {/*
-
                         <NewsImages newsId={id}/>
 
                         <Divider/>
-
-
-
                         */}
                     </>
                     }
