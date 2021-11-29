@@ -86,8 +86,6 @@ const NewsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
 
-    console.log(toJS(AdminNewsStore.newsOne))
-
     useEffect(()=>{
         runInAction(() => {
             AdminNewsStore.getNewsId(id)

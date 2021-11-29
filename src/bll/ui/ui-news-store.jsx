@@ -7,9 +7,8 @@ import uiNewsService from "../../services/ui/ui-news-service";
 class UiNewsStore {
 
     news = []
+    newsOne = null
     news_for_main = []
-    newsViewModal_open = false
-    newsViewModal_index = null
 
     constructor() {
         makeAutoObservable(this);
@@ -32,7 +31,7 @@ class UiNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await uiNewsService.getNewsId(id);
-            runInAction(() => {this.news.push(response.data)})
+            runInAction(() => {this.newsOne = response.data})
         } catch (e) {
             console.log(e)
         } finally {

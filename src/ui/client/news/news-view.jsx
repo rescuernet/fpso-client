@@ -2,50 +2,70 @@ import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
-import UiStore from "../../../../bll/ui/ui-news-store";
-import {API_URL} from "../../../../const/const";
-import noNewsAvatar from "../../../../common/assets/image/no_news_avatar.jpg";
+import UiStore from "../../../bll/ui/ui-news-store";
+import {API_URL} from "../../../const/const";
+import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Box, Container, Divider} from "@material-ui/core";
-import pdfIcon from "../../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../../common/assets/image/icons/xlsx.png";
+import pdfIcon from "../../../common/assets/image/icons/pdf.png";
+import docIcon from "../../../common/assets/image/icons/doc.png";
+import docxIcon from "../../../common/assets/image/icons/docx.png";
+import xlsIcon from "../../../common/assets/image/icons/xls.png";
+import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
 import {makeStyles} from "@material-ui/core/styles";
-import {useGridPoint} from "../../../../utils/breakpoints";
-import Header from "../../header/header";
+import {useGridPoint} from "../../../utils/breakpoints";
+import Header from "../header/header";
+import s from "./news-view.module.css"
 
 const useStyles = makeStyles({
     root: {
+        minHeight: '100%',
         paddingTop: 50,
     },
     container: {
+        minHeight: '100%',
         display: "flex",
         justifyContent: "center",
     },
-    newsWrap: {
-        maxWidth: 760,
+    news: {
+        width: 760,
+        [useGridPoint.breakpoints.down('md')]: {
+            width: 600,
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            width: 340,
+        },
         backgroundColor: '#fff',
         padding: 20
+    },
+    header: {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 20,
+        [useGridPoint.breakpoints.down('xs')]: {
+            flexDirection: 'column',
+            marginBottom: 0
+        },
     },
     avatar: {
         display: "flex",
         justifyContent: "center",
         flex: '0 0 auto',
         fontSize: 0,
-        padding: '20px 0',
         '& img': {
-            borderRadius: 100
+            borderRadius: 10,
         }
     },
     headerFirst: {
-        padding: 40,
         fontSize: '130%',
         fontWeight: 700,
         fontFamily: 'Roboto',
+        margin: '0 40px',
+        [useGridPoint.breakpoints.down('md')]: {
+            margin: '0 20px',
+        },
         [useGridPoint.breakpoints.down('xs')]: {
-            padding: '20px 0',
-        }
+            margin: '20px 0',
+        },
     },
     textMain: {
         flex: '1 0',
@@ -103,12 +123,13 @@ const useStyles = makeStyles({
     }
 })
 
-const NewsItemView = () => {
+const NewsView = () => {
     const classes = useStyles();
 
-    const news = toJS(UiStore.news)
+    const news = toJS(UiStore.newsOne)
 
     const { id } = useParams();
+
 
     useEffect(()=>{
         runInAction(()=>{
@@ -116,7 +137,7 @@ const NewsItemView = () => {
         })
         return ()=> {
             runInAction(()=>{
-                UiStore.news = []
+                UiStore.newsOne = null
             })
         }
     },[id])
@@ -124,33 +145,34 @@ const NewsItemView = () => {
     return (
         <>
             <Header title={'Новости'}/>
-            {news.length > 0 &&
+            {news &&
                 <Box className={classes.root}>
                     <Container className={classes.container} fixed>
-                        <Box className={classes.newsWrap}>
-                            <div className={classes.avatar}>
-                                <img src={
-                                    news[0].avatar
-                                        ? `${API_URL}/news/${news[0]._id}/avatar/${news[0].avatar}`
-                                        : noNewsAvatar
-                                } alt=""/>
+                        <Box className={classes.news}>
+                            <div className={classes.header}>
+                                <div className={classes.avatar}>
+                                    <img src={
+                                        news.avatar
+                                            ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
+                                            : noNewsAvatar
+                                    } alt=""/>
+                                </div>
+                                <div>
+                                    <div className={`${classes.headerFirst} ${s.headerText}`}>
+                                        {news.headerFirst}
+                                    </div>
+                                </div>
                             </div>
 
                             <Divider/>
 
-                            <div className={classes.headerFirst}>
-                                {news[0].headerFirst}
-                            </div>
+                            <div className={classes.textMain}>{news.textMain}</div>
 
                             <Divider/>
 
-                            <div className={classes.textMain}>{news[0].textMain}</div>
-
-                            <Divider/>
-
-                            {news[0].docs.length > 0 &&
+                            {news.docs.length > 0 &&
                             <div className={classes.docs}>
-                                {news[0].docs.map((i) => (
+                                {news.docs.map((i) => (
                                     <div className={classes.docsItem}>
                                         {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'pdf' &&
                                         <img src={pdfIcon} alt="" width={40}/>
@@ -167,7 +189,7 @@ const NewsItemView = () => {
                                         {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
                                         <img src={xlsxIcon} alt="" width={40}/>
                                         }
-                                        <a href={`${API_URL}/news/${news[0]._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
+                                        <a href={`${API_URL}/news/${news._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
                                     </div>
                                 ))}
                             </div>
@@ -175,10 +197,10 @@ const NewsItemView = () => {
 
                             <Divider/>
 
-                            {news[0].images.length > 0 &&
+                            {news.images.length > 0 &&
                             <div className={classes.images}>
-                                {news[0].images.map((i) => (
-                                    <img src={`${API_URL}/news/${news[0]._id}/images/${i}`} alt=""/>
+                                {news.images.map((i) => (
+                                    <img src={`${API_URL}/news/${news._id}/images/${i}`} alt=""/>
                                 ))}
                             </div>
                             }
@@ -192,4 +214,4 @@ const NewsItemView = () => {
     );
 };
 
-export default observer(NewsItemView);
+export default observer(NewsView);

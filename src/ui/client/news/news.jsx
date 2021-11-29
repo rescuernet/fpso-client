@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {runInAction, toJS} from "mobx";
 import UiNewsStore from '../../../bll/ui/ui-news-store'
 import {observer} from "mobx-react-lite";
@@ -8,9 +8,10 @@ import Store from "../../../bll/store";
 import {Pagination} from "@material-ui/lab";
 import {useGridPoint} from "../../../utils/breakpoints";
 import {NewsCardMobile} from "./news-card/news-card-mobile";
-import {NewsItemViewModal} from "./news-view/news-item-view-modal";
 import NewsCardDesktop from "./news-card/news-card-desktop";
 import Header from "../../client/header/header";
+import {useHistory, useParams} from "react-router-dom";
+import {UI_RM} from "../../../routes/ui-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,24 +44,23 @@ const useStyles = makeStyles((theme) => ({
 
 const News = () => {
 
-    const pagesCount = toJS(UiNewsStore.news.pages)
-    const newsItem = toJS(UiNewsStore.news.docs)
+    const history = useHistory()
+    const {page} = useParams()
 
-    const [pageNum,setPageNum] = useState(1)
+    const pagesCount = toJS(UiNewsStore.news.pages)
+    const pageCur = toJS(UiNewsStore.news.page)
+    const newsItem = toJS(UiNewsStore.news.docs)
 
     const classes = useStyles();
 
     useEffect(()=>{
-        runInAction(()=>{UiNewsStore.getNews()})
-        return ()=> {
-            runInAction(()=>{UiNewsStore.news = []})
-        }
-    },[])
-
-    const ChangePage = (e, page) => {
-        window.scrollTo(0,0)
-        setPageNum(page)
         runInAction(()=>{UiNewsStore.getNews(page)})
+        return ()=> {runInAction(()=>{UiNewsStore.news = []})}
+    },[page])
+
+    const ChangePage = (e, toPage) => {
+        window.scrollTo(0,0)
+        history.push(UI_RM.NewsPage.getUrl(toPage))
     };
 
     return (
@@ -70,11 +70,11 @@ const News = () => {
                 <Container fixed className={classes.container}>
                     {newsItem &&
                     <>
-                        {pagesCount > 10 &&
+                        {pagesCount > 1 &&
                         <div className={classes.paginationTop}>
                             <Pagination
                                 count={pagesCount}
-                                page={pageNum}
+                                page={pageCur}
                                 color={"primary"}
                                 size={Store.width < 750 ? 'small' : 'medium'}
                                 onChange={ChangePage}
@@ -84,21 +84,21 @@ const News = () => {
                         <Box className={classes.newsListItem}>
                             {Store.width < 750 &&
                             newsItem.map((i,index)=>(
-                                <NewsCardMobile key={index} index={index} news={i} />
+                                <NewsCardMobile key={index} news={i} />
                             ))
                             }
 
                             {Store.width >= 750 &&
                             newsItem.map((i,index)=>(
-                                <NewsCardDesktop key={index} index={index} news={i} />
+                                <NewsCardDesktop key={index} news={i} />
                             ))
                             }
                         </Box>
-                        {pagesCount > 10 &&
+                        {pagesCount > 1 &&
                         <div className={classes.paginationBottom}>
                             <Pagination
                                 count={pagesCount}
-                                page={pageNum}
+                                page={pageCur}
                                 color={"primary"}
                                 size={Store.width < 750 ? 'small' : 'medium'}
                                 onChange={ChangePage}
@@ -106,11 +106,6 @@ const News = () => {
                         </div>
                         }
                     </>
-                    }
-                    {UiNewsStore.newsViewModal_open &&
-                    <NewsItemViewModal
-                        open={UiNewsStore.newsViewModal_open}
-                    />
                     }
                 </Container>
             </Box>
