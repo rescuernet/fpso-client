@@ -148,11 +148,12 @@ const CompetitionsEdit = (props) => {
 
                         <Divider/>
 
+                        <CompCheckbox />
+
+                        <Divider/>
+
                         <div className={classes.control}>
 
-                            <CompCheckbox />
-
-                            <Divider/>
                             <div className={classes.controlButton}>
                                 <Button
                                     className={classes.Button}

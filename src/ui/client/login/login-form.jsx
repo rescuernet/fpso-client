@@ -6,6 +6,7 @@ import {Redirect} from "react-router-dom";
 import {runInAction} from "mobx";
 import {makeStyles} from "@material-ui/core/styles";
 import {ADM_RM} from "../../../routes/admin-routes";
+import Header from "../header/header";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,54 +57,58 @@ const LoginForm = () => {
 
 
     return (
-        <Container className={classes.root}>
-            <Box className={classes.container}>
-                <Box
-                    component="form"
-                    noValidate
-                    autoComplete="off"
-                >
-                    <TextField
-                        className={classes.textField}
-                        id="login"
-                        label="логин"
-                        variant="outlined"
-                        autoComplete='off'
-                        value={email}
-                        fullWidth={true}
-                        onChange={(e)=>setEmail(e.target.value)}
-                        error={!!authError}
-                        onFocus={()=>{clearAuthError()}}
-                    />
-                    <TextField
-                        className={classes.textField}
-                        id="outlined-basic"
-                        label="password"
-                        variant="outlined"
-                        type="password"
-                        autoComplete='new-password'
-                        value={password}
-                        fullWidth={true}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        error={!!authError}
-                        onFocus={()=>{clearAuthError()}}
-                        onKeyDown={onKeyDown}
-                    />
+        <>
+            <Header title={'Авторизация'}/>
+            <Container className={classes.root}>
+                <Box className={classes.container}>
+                    <Box
+                        component="form"
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField
+                            className={classes.textField}
+                            id="login"
+                            label="логин"
+                            variant="outlined"
+                            autoComplete='off'
+                            value={email}
+                            fullWidth={true}
+                            onChange={(e)=>setEmail(e.target.value)}
+                            error={!!authError}
+                            onFocus={()=>{clearAuthError()}}
+                        />
+                        <TextField
+                            className={classes.textField}
+                            id="outlined-basic"
+                            label="password"
+                            variant="outlined"
+                            type="password"
+                            autoComplete='new-password'
+                            value={password}
+                            fullWidth={true}
+                            onChange={(e)=>setPassword(e.target.value)}
+                            error={!!authError}
+                            onFocus={()=>{clearAuthError()}}
+                            onKeyDown={onKeyDown}
+                        />
+                    </Box>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={() => AuthStore.login(email,password)}
+                    >
+                        Войти
+                    </Button>
+                    {authError &&
+                    <div className={classes.authError}>{authError}</div>
+                    }
                 </Box>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={() => AuthStore.login(email,password)}
-                >
-                    Войти
-                </Button>
-                {authError &&
-                <div className={classes.authError}>{authError}</div>
-                }
-            </Box>
-        </Container>
+            </Container>
+        </>
+
     );
 };
 

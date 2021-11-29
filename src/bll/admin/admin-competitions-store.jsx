@@ -1,7 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import Store from "../store"
 import AdminCompetitionsService from "../../services/admin/admin-competitions-service";
-import AdminNewsService from "../../services/admin/admin-news-service";
 
 class AdminCompetitionsStore {
     tmp_errors = null

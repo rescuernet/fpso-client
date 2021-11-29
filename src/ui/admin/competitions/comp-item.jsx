@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import * as dateFns from "date-fns";
-import CheckBoxOutlineBlankOutlinedIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
-import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -52,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
             width: 50,
         },
     },
+    notPublished: {
+        color: '#ff0000'
+    }
 }));
 
 const CompItem = () => {
@@ -65,7 +66,7 @@ const CompItem = () => {
 
     const comp = toJS(AdminCompStore.comp)
 
-    const newsEdit = (id) => {
+    const compEdit = (id) => {
         runInAction(()=>{AdminCompStore.clearData()})
         history.push(ADM_RM.Competitions__Edit.getUrl(id))
     }
@@ -76,19 +77,17 @@ const CompItem = () => {
             {Store.width > 750 && comp &&
             <>
                 {Store.width > 1000 &&
-                <th className={classes.min}>создана</th>
+                <th className={classes.min}>создано</th>
                 }
 
                 <th></th>
                 <th>заголовок</th>
                 <th className={classes.min}>старт</th>
                 <th className={classes.min}>финиш</th>
-                <th className={classes.min}>закреплена</th>
-                <th className={classes.min}>важная</th>
             </>
             }
             {comp && comp.length > 0 && comp.map((i) => (
-                <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
+                <tr onClick={()=>{compEdit(i._id)}} id={i._id} className={!i.published ? classes.notPublished : null}>
                     {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
                     <td>{i.headerFirst}</td>
@@ -96,8 +95,6 @@ const CompItem = () => {
                     <>
                         <td className={classes.min}>{dateFns.format(new Date(i.dateStart), 'dd.MM.yyyy')}</td>
                         <td className={classes.min}>{i.dateEnd ? dateFns.format(new Date(i.dateEnd), 'dd.MM.yyyy') : <RemoveIcon color={"primary"}/>}</td>
-                        <td className={classes.min}>{i.fixedNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
-                        <td className={classes.min}>{i.importantNews ? <CheckBoxOutlinedIcon color={"secondary"}/> : <CheckBoxOutlineBlankOutlinedIcon color={"primary"}/>}</td>
                     </>
                     }
                 </tr>
