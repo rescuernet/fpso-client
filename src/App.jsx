@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 window.addEventListener("resize", (event) => {
     runInAction(() => {Store.width = window.outerWidth})
-
 })
+
 
 const App = () => {
     const Routes = []

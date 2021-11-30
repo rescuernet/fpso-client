@@ -1,13 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
-import {runInAction} from "mobx";
-import UiNewsStore from "../../../../bll/ui/ui-news-store";
 import {API_URL} from "../../../../const/const";
-import noNewsAvatar from "../../../../common/assets/image/no_news_avatar.jpg";
 import {Divider} from "@material-ui/core";
+import {UI_RM} from "../../../../routes/ui-routes";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -58,13 +57,16 @@ const useStyles = makeStyles({
 
 export const NewsCardMobile = ({news, index})=> {
     const classes = useStyles();
+
     return (
         <div className={classes.root}>
             <div className={classes.image}>
                 <img src={
                     news.avatar
                         ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
-                        : noNewsAvatar
+                        : index || index === 0
+                            ? `${API_URL}/nonewsavatar/${index}.jpg`
+                            : `${API_URL}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                 } alt=""/>
             </div>
             <div className={classes.header}>
@@ -74,19 +76,14 @@ export const NewsCardMobile = ({news, index})=> {
             </div>
             <Divider/>
             <div className={classes.control}>
-                {index >= 0 &&
+                <NavLink to={UI_RM.News__Id.getUrl(news._id)}>
                     <Button
                         size="small"
                         color="primary"
-                        onClick={()=>{runInAction(()=>{
-                            UiNewsStore.newsViewModal_open = true;
-                            UiNewsStore.newsViewModal_index = index
-                        })}}
                     >
                         Подробнее..
                     </Button>
-                }
-
+                </NavLink>
                 <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>
             </div>
         </div>

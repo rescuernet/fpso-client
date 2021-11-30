@@ -70,7 +70,7 @@ const NewsCheckbox = () => {
                         color="secondary"
                     />
                 }
-                label={'опубликовать'}
+                label={!AdminNewsStore.newsOne.published ? 'опубликовать' : 'снять с публикации'}
             />
         </div>
     );

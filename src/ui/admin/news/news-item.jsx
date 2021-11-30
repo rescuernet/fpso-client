@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
             width: 50,
         },
     },
+    notPublished: {
+    color: '#ff0000'
+}
 }));
 
 const NewsItem = () => {
@@ -88,7 +91,7 @@ const NewsItem = () => {
             </>
             }
             {news && news.length > 0 && news.map((i) => (
-                <tr onClick={()=>{newsEdit(i._id)}} id={i._id}>
+                <tr onClick={()=>{newsEdit(i._id)}} id={i._id} className={!i.published ? classes.notPublished : null}>
                     {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
                     <td>{i.headerFirst}</td>

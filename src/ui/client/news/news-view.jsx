@@ -4,7 +4,6 @@ import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
 import UiStore from "../../../bll/ui/ui-news-store";
 import {API_URL} from "../../../const/const";
-import noNewsAvatar from "../../../common/assets/image/no_news_avatar.jpg";
 import {Box, Container, Divider} from "@material-ui/core";
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
 import docIcon from "../../../common/assets/image/icons/doc.png";
@@ -123,6 +122,7 @@ const useStyles = makeStyles({
     }
 })
 
+
 const NewsView = () => {
     const classes = useStyles();
 
@@ -154,7 +154,7 @@ const NewsView = () => {
                                     <img src={
                                         news.avatar
                                             ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
-                                            : noNewsAvatar
+                                            : `${API_URL}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                                     } alt=""/>
                                 </div>
                                 <div>

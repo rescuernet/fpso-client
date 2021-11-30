@@ -10,6 +10,8 @@ import Store from "../../../bll/store";
 import {NewsCardMobile} from "../news/news-card/news-card-mobile";
 import {useGridPoint} from "../../../utils/breakpoints";
 import Header from "../header/header";
+import {NavLink} from "react-router-dom";
+import {UI_RM} from "../../../routes/ui-routes";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +59,7 @@ const Main = () => {
         }
     },[])
 
+
     return (
         <>
             <Header title={'Главная'}/>
@@ -64,7 +67,9 @@ const Main = () => {
                 <Brand/>
                 <Container className={classes.container} fixed>
                     <div className={classes.lastNews}>
-                        <div className={classes.headerSection}>Последние новости</div>
+                        <NavLink to={UI_RM.News.path}>
+                            <div className={classes.headerSection}>Последние новости</div>
+                        </NavLink>
                         <div className={classes.lastNewsItems}>
                             {Store.width < 750 &&
                             lastNews.map((i,index)=>(

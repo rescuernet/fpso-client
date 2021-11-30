@@ -4,9 +4,9 @@ import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
 import {API_URL} from "../../../../const/const";
-import noNewsAvatar from "../../../../common/assets/image/no_news_avatar.jpg"
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../../routes/ui-routes";
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles({
     root: {
@@ -55,16 +55,17 @@ const useStyles = makeStyles({
     }
 });
 
-const NewsCardDesktop = ({news,index}) => {
+const NewsCardDesktop = ({news,index,mainIndex}) => {
     const classes = useStyles();
-
     return (
         <div className={`${classes.root} ${news.importantNews && classes.importantNews}`}>
             <div className={classes.image}>
                 <img src={
                     news.avatar
                         ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
-                        : noNewsAvatar
+                        : index || index === 0
+                            ? `${API_URL}/nonewsavatar/${index}.jpg`
+                            : `${API_URL}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                 } alt=""/>
             </div>
             <div className={classes.data}>
@@ -83,12 +84,10 @@ const NewsCardDesktop = ({news,index}) => {
                             Подробнее..
                         </Button>
                     </NavLink>
-
-
                 </div>
             </div>
         </div>
     );
 };
 
-export default NewsCardDesktop;
+export default observer(NewsCardDesktop);

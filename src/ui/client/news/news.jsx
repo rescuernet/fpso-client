@@ -84,13 +84,13 @@ const News = () => {
                         <Box className={classes.newsListItem}>
                             {Store.width < 750 &&
                             newsItem.map((i,index)=>(
-                                <NewsCardMobile key={index} news={i} />
+                                <NewsCardMobile key={index} news={i} index={index} />
                             ))
                             }
 
                             {Store.width >= 750 &&
                             newsItem.map((i,index)=>(
-                                <NewsCardDesktop key={index} news={i} />
+                                <NewsCardDesktop key={index} news={i} index={index} />
                             ))
                             }
                         </Box>
