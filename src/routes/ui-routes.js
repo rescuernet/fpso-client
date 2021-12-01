@@ -38,6 +38,16 @@ const UIRouterManager = {
             title: 'Соревнования'
         }
     },
+    Competitions__Page: {
+        path:'/competitions/:page',
+        Component: Competitions,
+        getUrl(page) {return `/competitions/${page}`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Соревнования'
+        }
+    },
     News: {
         path:'/news',
         Component: News,
@@ -52,7 +62,7 @@ const UIRouterManager = {
             title: 'Новости'
         }
     },
-    NewsPage: {
+    News__Page: {
         path:'/news/:page',
         Component: News,
         getUrl(page) {return `/news/${page}`},

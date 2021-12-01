@@ -60,7 +60,7 @@ const News = () => {
 
     const ChangePage = (e, toPage) => {
         window.scrollTo(0,0)
-        history.push(UI_RM.NewsPage.getUrl(toPage))
+        history.push(UI_RM.News__Page.getUrl(toPage))
     };
 
     return (
