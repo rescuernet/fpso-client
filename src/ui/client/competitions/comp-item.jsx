@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Divider} from "@material-ui/core";
+import {Box} from "@material-ui/core";
+import s from './comp.module.css'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -10,7 +11,9 @@ const useStyles = makeStyles((theme) => ({
         height: 455,
         backgroundColor: '#fff',
         boxShadow: '4px 4px 10px rgba(0,0,0,0.2)',
-        margin: '0 10px 40px 10px'
+        margin: '0 10px 40px 10px',
+        borderRadius: 5,
+        overflow: "hidden"
     },
     avatar: {
         fontSize: 0,
@@ -74,7 +77,11 @@ const CompItem = (props) => {
                 <div>Дельфин</div>
                 <div>Новокуйбышевск, проспект Победы 1в</div>
             </div>
-            <div className={classes.text}>Соревнования Самарской области среди юношей и девушек 9-10 лет, 11-12 лет и юношей 13-14 лет по плаванию</div>
+            <div className={classes.text}>
+                <div className={s.text}>
+                    Соревнования Самарской области среди юношей и девушек 9-10 лет, 11-12 лет и юношей 13-14 лет по плаванию
+                </div>
+            </div>
             <div className={classes.more}>подробнее</div>
         </Box>
     );
