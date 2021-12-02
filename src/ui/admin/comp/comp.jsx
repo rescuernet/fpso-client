@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Competitions = (props) => {
+const Comp = (props) => {
     window.scrollTo(0,0)
     const classes = useStyles();
     const history = useHistory();
@@ -89,4 +89,4 @@ const Competitions = (props) => {
     );
 };
 
-export default observer(Competitions);
+export default observer(Comp);

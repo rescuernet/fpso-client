@@ -49,10 +49,10 @@ const Comp = () => {
 
     const classes = useStyles();
 
-    /*useEffect(()=>{
-        runInAction(()=>{UiCompStore.getNews(page)})
+    useEffect(()=>{
+        runInAction(()=>{UiCompStore.getComp(page)})
         return ()=> {runInAction(()=>{UiCompStore.comp = []})}
-    },[page])*/
+    },[page])
 
     const ChangePage = (e, toPage) => {
         window.scrollTo(0,0)
@@ -64,13 +64,6 @@ const Comp = () => {
             <Header title={'Соревнования'}/>
             <Box className={classes.root}>
                 <Container fixed>
-                    <div className={classes.item}>
-                        <CompItem/>
-                        <CompItem/>
-                        <CompItem/>
-                    </div>
-
-
                     {compItem &&
                     <>
                         {pagesCount > 1 &&
@@ -84,18 +77,8 @@ const Comp = () => {
                             />
                         </div>
                         }
-                        <Box className={classes.newsListItem}>
-                            {/*{Store.width < 750 &&
-                            compItem.map((i,index)=>(
-                                <NewsCardMobile key={index} news={i} index={index} />
-                            ))
-                            }
-
-                            {Store.width >= 750 &&
-                            compItem.map((i,index)=>(
-                                <NewsCardDesktop key={index} news={i} index={index} />
-                            ))
-                            }*/}
+                        <Box className={classes.item}>
+                            {compItem.map((i,index)=> <CompItem key={index} comp={i} index={index} />)}
                         </Box>
                         {pagesCount > 1 &&
                         <div className={classes.paginationBottom}>

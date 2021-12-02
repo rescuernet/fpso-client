@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
-import UiStore from "../../../bll/ui/ui-news-store";
+import UiNewsStore from "../../../bll/ui/ui-news-store";
 import {API_URL} from "../../../const/const";
 import {Box, Container, Divider} from "@material-ui/core";
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
@@ -126,18 +126,18 @@ const useStyles = makeStyles({
 const NewsView = () => {
     const classes = useStyles();
 
-    const news = toJS(UiStore.newsOne)
+    const news = toJS(UiNewsStore.newsOne)
 
     const { id } = useParams();
 
 
     useEffect(()=>{
         runInAction(()=>{
-            UiStore.getNewsId(id)
+            UiNewsStore.getNewsId(id)
         })
         return ()=> {
             runInAction(()=>{
-                UiStore.newsOne = null
+                UiNewsStore.newsOne = null
             })
         }
     },[id])
@@ -154,7 +154,7 @@ const NewsView = () => {
                                     <img src={
                                         news.avatar
                                             ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
-                                            : `${API_URL}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
+                                            : `${API_URL}/img/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                                     } alt=""/>
                                 </div>
                                 <div>
@@ -209,8 +209,6 @@ const NewsView = () => {
                 </Box>
             }
         </>
-
-
     );
 };
 

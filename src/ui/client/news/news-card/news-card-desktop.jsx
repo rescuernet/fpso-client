@@ -64,8 +64,8 @@ const NewsCardDesktop = ({news,index,mainIndex}) => {
                     news.avatar
                         ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
                         : index || index === 0
-                            ? `${API_URL}/nonewsavatar/${index}.jpg`
-                            : `${API_URL}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
+                            ? `${API_URL}/img/nonewsavatar/${index}.jpg`
+                            : `${API_URL}/img/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                 } alt=""/>
             </div>
             <div className={classes.data}>

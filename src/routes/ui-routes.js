@@ -1,8 +1,9 @@
-import Competitions from "../ui/client/competitions/competitions";
+import Competitions from "../ui/client/comp/comp";
+import CompetitionsView from "../ui/client/comp/comp-view";
 import LoginForm from "../ui/client/login/login-form";
 import Main from "../ui/client/main/main";
 import News from "../ui/client/news/news";
-import NewsItemView from "../ui/client/news/news-view";
+import NewsView from "../ui/client/news/news-view";
 
 
 export const MenuTypes = {
@@ -48,6 +49,16 @@ const UIRouterManager = {
             title: 'Соревнования'
         }
     },
+    Competitions__Id: {
+        path:'/competitions/view/:id',
+        Component: CompetitionsView,
+        getUrl(id) {return `/competitions/view/${id}`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Соревнования'
+        }
+    },
     News: {
         path:'/news',
         Component: News,
@@ -74,7 +85,7 @@ const UIRouterManager = {
     },
     News__Id: {
         path:'/news/view/:id',
-        Component: NewsItemView,
+        Component: NewsView,
         getUrl(id) {return `/news/view/${id}`},
         auth: false,
         header: {

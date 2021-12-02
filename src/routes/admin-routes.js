@@ -1,8 +1,8 @@
 import Admin from "../ui/admin/main/admin";
 import AdminNews from "../ui/admin/news/news";
 import AdminNewsEdit from "../ui/admin/news/news-create-edit/news-create-edit";
-import AdminCompetitions from "../ui/admin/competitions/competitions";
-import AdminCompetitionsEdit from "../ui/admin/competitions/competitions-edit/competitions-edit";
+import AdminCompetitions from "../ui/admin/comp/comp";
+import AdminCompetitionsEdit from "../ui/admin/comp/comp-edit/comp-edit";
 import AdminReferenceBooks from "../ui/admin/reference-books/reference-books";
 import AdminReferenceBooksPool from "../ui/admin/reference-books/reference-books-pool";
 

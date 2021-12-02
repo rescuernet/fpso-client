@@ -9,6 +9,6 @@ export default class uiNewsService {
 
 
     static async getNewsId(id) {
-        return $api.get(`/news/${id}`)
+        return $api.get(`/news/view/${id}`)
     }
 }

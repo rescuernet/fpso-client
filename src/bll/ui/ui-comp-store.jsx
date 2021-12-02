@@ -14,11 +14,11 @@ class UiCompStore {
         makeAutoObservable(this);
     }
 
-    /*getNews = async (page) => {
+    getComp = async (page) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await uiNewsService.getNews(page);
-            runInAction(() => {this.news = response.data})
+            const response = await uiCompService.getComp(page);
+            runInAction(() => {this.comp = response.data})
         } catch (e) {
             console.log(e)
         } finally {
@@ -27,7 +27,7 @@ class UiCompStore {
         }
     }
 
-    getNewsId = async (id) => {
+    /*getNewsId = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await uiNewsService.getNewsId(id);

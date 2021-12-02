@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CompetitionsEdit = (props) => {
+const CompEdit = (props) => {
     const history = useHistory();
     const { id } = useParams();
 
@@ -215,4 +215,4 @@ const CompetitionsEdit = (props) => {
     );
 };
 
-export default observer(CompetitionsEdit);
+export default observer(CompEdit);
