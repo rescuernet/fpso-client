@@ -7,7 +7,7 @@ export default class uiCompService {
         return $api.get(`/competitions?page=${page}&limit=${limit}`)
     }
 
-    /*static async getNewsId(id) {
-        return $api.get(`/news/${id}`)
-    }*/
+    static async getCompId(id) {
+        return $api.get(`/competitions/view/${id}`)
+    }
 }

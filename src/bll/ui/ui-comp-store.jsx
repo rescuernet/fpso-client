@@ -27,11 +27,11 @@ class UiCompStore {
         }
     }
 
-    /*getNewsId = async (id) => {
+    getCompId = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await uiNewsService.getNewsId(id);
-            runInAction(() => {this.newsOne = response.data})
+            const response = await uiCompService.getCompId(id);
+            runInAction(() => {this.compOne = response.data})
         } catch (e) {
             console.log(e)
         } finally {
@@ -40,7 +40,7 @@ class UiCompStore {
         }
     }
 
-    getNewsForMain = async (limit) => {
+    /*getNewsForMain = async (limit) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await uiNewsService.getNews(1,limit);
