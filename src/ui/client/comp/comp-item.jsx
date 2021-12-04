@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     text: {
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
         color: '#333',
         fontFamily: 'Robobto',
         fontSize: '110%',

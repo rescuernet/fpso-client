@@ -48,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Icon = {xls, xlsx, doc, docx, pdf}
 
+//удаление одного документа
+const DeleteOneDocs = (docsId) => {
+    runInAction(() => {AdminCompStore.compOne.docs.splice(docsId,1)})
+};
+
 const CompDocsItem = (props) => {
     const classes = useStyles();
     const extension = AdminCompStore.compOne.docs[props.index].doc.slice(AdminCompStore.compOne.docs[props.index].doc.lastIndexOf(".") + 1)
@@ -73,7 +78,7 @@ const CompDocsItem = (props) => {
             </a>
             <Divider orientation={"vertical"} flexItem={true}/>
             <HighlightOffIcon onClick={() => {
-                props.DeleteOneDocs(props.index)
+                DeleteOneDocs(props.index)
             }} color={'error'}/>
         </div>
     );

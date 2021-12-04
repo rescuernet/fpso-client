@@ -74,11 +74,14 @@ class AdminCompetitionsStore {
         }
     }
 
-    compDocsCreate = async (doc,originName) => {
+    compDocsCreate = async (doc,originName,component) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminCompetitionsService.compDocsCreate(doc);
-            runInAction(() => {this.compOne.docs.push({title:originName,doc:response.data.doc})})
+            if(component === 'docs'){
+                runInAction(() => {this.compOne.docs.push({title:originName,doc:response.data.doc})})
+            }
+
         } catch (e) {
             runInAction(() => {this.tmp_errors =
                 <div>

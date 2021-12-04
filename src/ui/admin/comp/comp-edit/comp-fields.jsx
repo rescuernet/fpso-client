@@ -128,9 +128,9 @@ const CompFields = (props) => {
                     variant="outlined"
                     multiline
                     rows={1}
-                    rowsMax={2}
-                    error={compOne?.headerFirst && compOne?.headerFirst.length > 100}
-                    helperText={compOne?.headerFirst && compOne?.headerFirst.length > 100 && 'максимум 100 символов'}
+                    rowsMax={5}
+                    error={compOne?.headerFirst && compOne?.headerFirst.length > 150}
+                    helperText={compOne?.headerFirst && compOne?.headerFirst.length > 150 && 'максимум 150 символов'}
                 />
                 <TextField
                     id="textMain"

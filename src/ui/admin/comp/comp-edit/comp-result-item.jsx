@@ -1,25 +1,17 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Button} from "@material-ui/core";
-import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
-import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
-import CompDocsItem from "./comp-docs-item";
+import {Button} from "@material-ui/core";
+import {runInAction} from "mobx";
+import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 
 const useStyles = makeStyles((theme) => ({
-    docs: {
-        padding: '20px 0'
-    },
     header: {
+        fontFamily: "Roboto",
+        fontSize: '100%',
+        fontWeight: 'bold',
         textAlign: "center",
-        fontSize: '110%',
-        fontWeight: "bold"
-    },
-    docsDeclarationText: {
-        fontSize: '90%',
-        color: '#00000085',
-        marginBottom: 20,
-        textAlign: "center",
+        marginBottom: 20
     },
     docsAdd: {
         display: "flex",
@@ -27,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const CompDocs = ({compId}) => {
+const CompResultItem = ({index,compId}) => {
     const classes = useStyles();
 
     //загрузка документов
     const UploadDocs = (event) => {
         event.preventDefault();
-        const component = 'docs'
+        const component = 'results'
         const originName = event.target.files[0].name.substr(0,event.target.files[0].name.lastIndexOf("."))
         const data = new FormData()
         data.append('files',event.target.files[0]);
@@ -42,16 +34,16 @@ const CompDocs = ({compId}) => {
             await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,component)})
         })
     };
+    //удаление одного документа
+    const DeleteOneDocs = (docsId) => {
+        runInAction(() => {AdminCompStore.compOne.docs.splice(docsId,1)})
+    };
 
     return (
-        <div className={classes.docs}>
-            <div className={classes.header}>Документы</div>
-            <div className={classes.docsDeclarationText}>* Здесь добавляются только общие документы</div>
-            {
-                AdminCompStore.compOne.docs && AdminCompStore.compOne.docs.map((item,index)=>(
-                    <CompDocsItem key={'docs'+index} item={item} index={index} compId={compId}/>
-                ))
-            }
+        <>
+            <div className={classes.header}>
+                {`Результаты ${index +1}-го дня соревнований`}
+            </div>
             <div className={classes.docsAdd}>
                 <label htmlFor="docs">
                     <input
@@ -71,8 +63,8 @@ const CompDocs = ({compId}) => {
                     </Button>
                 </label>
             </div>
-        </div>
+        </>
     );
 };
 
-export default observer(CompDocs);
+export default observer(CompResultItem);

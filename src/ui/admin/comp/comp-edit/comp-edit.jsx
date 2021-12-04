@@ -14,6 +14,7 @@ import CompDocs from "./comp-docs";
 import {CompAlertDialog} from "./comp-alert";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import CompCheckbox from "./comp-checkbox";
+import CompResult from "./comp-result";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -146,6 +147,9 @@ const CompEdit = (props) => {
 
                         <CompDocs compId={id}/>
 
+                        <Divider/>
+
+                        <CompResult compId={id}/>
                         <Divider/>
 
                         <CompCheckbox />
