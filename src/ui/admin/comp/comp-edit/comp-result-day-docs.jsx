@@ -1,57 +1,58 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import {Button} from "@material-ui/core";
-import {runInAction} from "mobx";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
+import {runInAction, toJS} from "mobx";
+import {Button} from "@material-ui/core";
+import CompResultDayDocsItem from "./comp-result-day-docs-item";
 
 const useStyles = makeStyles((theme) => ({
-    header: {
-        fontFamily: "Roboto",
-        fontSize: '100%',
-        fontWeight: 'bold',
-        textAlign: "center",
-        marginBottom: 20
-    },
     docsAdd: {
         display: "flex",
         justifyContent: "center",
+        marginBottom: 20
     },
 }))
 
-const CompResultItem = ({index,compId}) => {
+
+const CompResultDayDocs = ({indexDay,compId}) => {
     const classes = useStyles();
 
+    const docs = toJS(AdminCompStore.compOne.results[indexDay].docs)
+
+    console.log('docs',docs)
+
     //загрузка документов
-    const UploadDocs = (event) => {
+    const UploadResultsDocs = (event) => {
         event.preventDefault();
-        const component = 'results'
+        const section = {
+            name:'results',
+            day: indexDay
+        }
         const originName = event.target.files[0].name.substr(0,event.target.files[0].name.lastIndexOf("."))
         const data = new FormData()
         data.append('files',event.target.files[0]);
         data.append('compId',compId);
         runInAction( async () => {
-            await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,component)})
+            await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,section)})
         })
-    };
-    //удаление одного документа
-    const DeleteOneDocs = (docsId) => {
-        runInAction(() => {AdminCompStore.compOne.docs.splice(docsId,1)})
     };
 
     return (
-        <>
-            <div className={classes.header}>
-                {`Результаты ${index +1}-го дня соревнований`}
-            </div>
+        <div>
+            {docs.length > 0 &&
+            docs.map((item,index)=>(
+                <CompResultDayDocsItem key={index} item={item} index={index} indexDay={indexDay} compId={compId}/>
+            ))
+            }
             <div className={classes.docsAdd}>
-                <label htmlFor="docs">
+                <label htmlFor={`${indexDay}resultsDocs`}>
                     <input
                         style={{ display: 'none' }}
-                        id="docs"
-                        name="docs"
+                        id={`${indexDay}resultsDocs`}
+                        name="resultsDocs"
                         type="file"
-                        onChange={UploadDocs}
+                        onChange={UploadResultsDocs}
                     />
                     <Button
                         color="primary"
@@ -63,8 +64,8 @@ const CompResultItem = ({index,compId}) => {
                     </Button>
                 </label>
             </div>
-        </>
+        </div>
     );
 };
 
-export default observer(CompResultItem);
+export default observer(CompResultDayDocs);

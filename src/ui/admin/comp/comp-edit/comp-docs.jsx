@@ -10,16 +10,19 @@ const useStyles = makeStyles((theme) => ({
     docs: {
         padding: '20px 0'
     },
-    header: {
+    headerWrap: {
+        backgroundColor: '#e6e6e6',
         textAlign: "center",
+        padding: '5px 0',
+        marginBottom: 20,
+    },
+    header: {
         fontSize: '110%',
         fontWeight: "bold"
     },
     docsDeclarationText: {
         fontSize: '90%',
         color: '#00000085',
-        marginBottom: 20,
-        textAlign: "center",
     },
     docsAdd: {
         display: "flex",
@@ -32,21 +35,26 @@ const CompDocs = ({compId}) => {
 
     //загрузка документов
     const UploadDocs = (event) => {
+        console.log('docsAAA')
         event.preventDefault();
-        const component = 'docs'
+        const section = {
+            name:'docs'
+        }
         const originName = event.target.files[0].name.substr(0,event.target.files[0].name.lastIndexOf("."))
         const data = new FormData()
         data.append('files',event.target.files[0]);
         data.append('compId',compId);
         runInAction( async () => {
-            await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,component)})
+            await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,section)})
         })
     };
 
     return (
         <div className={classes.docs}>
-            <div className={classes.header}>Документы</div>
-            <div className={classes.docsDeclarationText}>* Здесь добавляются только общие документы</div>
+            <div className={classes.headerWrap}>
+                <div className={classes.header}>Документы</div>
+                <div className={classes.docsDeclarationText}>* Здесь добавляются только общие документы</div>
+            </div>
             {
                 AdminCompStore.compOne.docs && AdminCompStore.compOne.docs.map((item,index)=>(
                     <CompDocsItem key={'docs'+index} item={item} index={index} compId={compId}/>

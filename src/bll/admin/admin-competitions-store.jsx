@@ -74,12 +74,16 @@ class AdminCompetitionsStore {
         }
     }
 
-    compDocsCreate = async (doc,originName,component) => {
+    compDocsCreate = async (doc,originName,section) => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminCompetitionsService.compDocsCreate(doc);
-            if(component === 'docs'){
+            if(section.name === 'docs'){
                 runInAction(() => {this.compOne.docs.push({title:originName,doc:response.data.doc})})
+            }
+            if(section.name === 'results'){
+                console.log(section.day)
+                runInAction(() => {this.compOne.results[section.day].docs.push({title:originName,doc:response.data.doc})})
             }
 
         } catch (e) {
