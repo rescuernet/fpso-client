@@ -1,20 +1,25 @@
 import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Container} from "@material-ui/core";
+import {Box, Container, Divider} from "@material-ui/core";
 import {runInAction, toJS} from "mobx";
-import UiCompStore from "../../../bll/ui/ui-comp-store";
+import UiCompStore from "../../../../bll/ui/ui-comp-store";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import Header from "../header/header";
-import {API_URL} from "../../../const/const";
-import {useGridPoint} from "../../../utils/breakpoints";
+import Header from "../../header/header";
+import {API_URL} from "../../../../const/const";
+import {useGridPoint} from "../../../../utils/breakpoints";
 import s from "./comp-view.module.css"
 import * as dateFns from "date-fns";
+import CompViewDocs from "./comp-view-docs";
+import CompViewResults from "./comp-view-results/comp-view-results";
 
 const useStyles = makeStyles({
     root: {
         height: '100%',
         paddingTop: 50,
+        '& .MuiDivider-root': {
+            marginBottom: 20
+        }
     },
     container: {
         minHeight: '100%',
@@ -24,7 +29,7 @@ const useStyles = makeStyles({
     comp: {
         width: 760,
         [useGridPoint.breakpoints.down('md')]: {
-            width: 600,
+            width: 700,
         },
         [useGridPoint.breakpoints.down('xs')]: {
             width: 340,
@@ -61,7 +66,7 @@ const useStyles = makeStyles({
         fontWeight: 'bold',
         fontSize: '100%',
         color: '#fff',
-        margin: '20px 10px 0 10px',
+        margin: '20px 0 0 10px',
         padding: '5px 0',
         [useGridPoint.breakpoints.down('xs')]: {
             margin: '20px 0',
@@ -75,7 +80,7 @@ const useStyles = makeStyles({
     headerFirst: {
         fontSize: '130%',
         fontWeight: 700,
-        margin: '0 40px',
+        margin: '0 30px',
         lineHeight: '1.5',
         [useGridPoint.breakpoints.down('md')]: {
             margin: '0 20px',
@@ -95,6 +100,19 @@ const useStyles = makeStyles({
     text: {
         fontSize: '110%',
         lineHeight: '1.8',
+        marginBottom: 20
+    },
+    docs: {},
+    docsHeader: {
+        fontSize: '110%',
+        fontWeight: 'bold',
+        textAlign: "center"
+    },
+    results: {},
+    resultsHeader: {
+        fontSize: '110%',
+        fontWeight: 'bold',
+        textAlign: "center"
     }
 })
 
@@ -102,6 +120,8 @@ const CompView = (props) => {
     const classes = useStyles();
     const comp = toJS(UiCompStore.compOne)
     const { id } = useParams();
+
+    console.log('comp',comp)
 
 
     useEffect(()=>{
@@ -153,6 +173,21 @@ const CompView = (props) => {
                         <div className={classes.text}>
                             {comp.textMain}
                         </div>
+                        <Divider/>
+                        <div className={classes.docs}>
+                            <div className={classes.docsHeader}>Документы соревнования</div>
+                            {comp.docs.map((item,index)=>(
+                                <CompViewDocs key={index} index={index} item={item} compId={id}/>
+                            ))}
+                        </div>
+                        <Divider/>
+                        <div className={classes.results}>
+                            <div className={classes.resultsHeader}>Результаты соревнования</div>
+                            {comp.results.map((item,index)=>(
+                                <CompViewResults key={index} index={index} item={item} compId={id}/>
+                            ))}
+                        </div>
+                        <Divider/>
                     </Box>
                 </Container>
             </Box>

@@ -1,5 +1,5 @@
 import Competitions from "../ui/client/comp/comp";
-import CompetitionsView from "../ui/client/comp/comp-view";
+import CompetitionsView from "../ui/client/comp/comp-view/comp-view";
 import LoginForm from "../ui/client/login/login-form";
 import Main from "../ui/client/main/main";
 import News from "../ui/client/news/news";
