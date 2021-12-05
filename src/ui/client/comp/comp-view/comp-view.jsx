@@ -108,12 +108,7 @@ const useStyles = makeStyles({
         fontWeight: 'bold',
         textAlign: "center"
     },
-    results: {},
-    resultsHeader: {
-        fontSize: '110%',
-        fontWeight: 'bold',
-        textAlign: "center"
-    }
+
 })
 
 const CompView = (props) => {
@@ -181,12 +176,8 @@ const CompView = (props) => {
                             ))}
                         </div>
                         <Divider/>
-                        <div className={classes.results}>
-                            <div className={classes.resultsHeader}>Результаты соревнования</div>
-                            {comp.results.map((item,index)=>(
-                                <CompViewResults key={index} index={index} item={item} compId={id}/>
-                            ))}
-                        </div>
+
+                        <CompViewResults/>
                         <Divider/>
                     </Box>
                 </Container>
