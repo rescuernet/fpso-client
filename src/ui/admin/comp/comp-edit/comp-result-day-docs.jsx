@@ -20,8 +20,6 @@ const CompResultDayDocs = ({indexDay,compId}) => {
 
     const docs = toJS(AdminCompStore.compOne.results[indexDay].docs)
 
-    console.log('docs',docs)
-
     //загрузка документов
     const UploadResultsDocs = (event) => {
         event.preventDefault();

@@ -8,7 +8,7 @@ import AdminHeader from "../../header/admin-header";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import CompAvatar from "./comp-avatar";
 import {useHistory, useParams} from "react-router-dom";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import CompFields from "./comp-fields";
 import CompDocs from "./comp-docs";
 import {CompAlertDialog} from "./comp-alert";
@@ -89,6 +89,7 @@ const CompEdit = (props) => {
     useEffect(()=>{
         runInAction(() => {
             AdminCompStore.getCompId(id)
+            Store.referenceBookGet()
         })
         return ()=> {
             runInAction(() => {AdminCompStore.clearData()})
@@ -138,26 +139,21 @@ const CompEdit = (props) => {
                     {AdminCompStore.compOne &&
                     <>
                         <CompAvatar compId={id}/>
-
                         <Divider/>
 
                         <CompFields/>
-
                         <Divider/>
 
                         <CompDocs compId={id}/>
-
                         <Divider/>
 
                         <CompResult compId={id}/>
                         <Divider/>
 
                         <CompCheckbox />
-
                         <Divider/>
 
                         <div className={classes.control}>
-
                             <div className={classes.controlButton}>
                                 <Button
                                     className={classes.Button}

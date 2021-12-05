@@ -17,7 +17,7 @@ class AdminCompetitionsStore {
         runInAction(() => {
             this.tmp_errors = null
             this.tmpCompId = null
-            this.competitionsOne = null
+            this.compOne = null
         })
     }
 
@@ -82,7 +82,6 @@ class AdminCompetitionsStore {
                 runInAction(() => {this.compOne.docs.push({title:originName,doc:response.data.doc})})
             }
             if(section.name === 'results'){
-                console.log(section.day)
                 runInAction(() => {this.compOne.results[section.day].docs.push({title:originName,doc:response.data.doc})})
             }
 

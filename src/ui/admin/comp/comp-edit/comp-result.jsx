@@ -1,7 +1,6 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import Store from "../../../../bll/store";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {runInAction, toJS} from "mobx";
 import {dateDifference} from "../../../../utils/dateDifference";
@@ -37,8 +36,6 @@ const CompResult = ({compId}) => {
     const countCompDay = dateDifference(AdminCompStore.compOne.dateStart, AdminCompStore.compOne.dateEnd)
 
     const results = toJS(AdminCompStore.compOne.results)
-
-    console.log('results',results)
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
@@ -50,103 +50,102 @@ const CompFields = (props) => {
 
     const locationPool = Store.referenceBooks?.pool || []
 
-    useEffect(()=>{
-        runInAction(async ()=>{
-            await Store.referenceBookGet()
-        })
-    },[])
-
     return (
         <>
-            <div className={classes.fieldsDates}>
-                <TextField
-                    id="dateStart"
-                    label="Дата начала"
-                    type="date"
-                    value={compOne?.dateStart && dateFns.format(new Date(compOne.dateStart), 'yyyy-MM-dd')}
-                    onChange={(e)=>{
-                        runInAction(()=>{
-                            AdminCompStore.compOne.dateStart = e.target.value
-                        })
-                    }}
-                    className={classes.fieldDate}
-                    variant={"outlined"}
-                    InputLabelProps={{shrink: true,}}
-                />
-                <TextField
-                    id="dateEnd"
-                    label="Дата окончания"
-                    type="date"
-                    value={compOne?.dateEnd && dateFns.format(new Date(compOne.dateEnd), 'yyyy-MM-dd')}
-                    onChange={(e)=>{
-                        runInAction(()=>{
-                            AdminCompStore.compOne.dateEnd = e.target.value
-                        })
-                    }}
-                    className={classes.fieldDate}
-                    variant={"outlined"}
-                    InputLabelProps={{shrink: true,}}
-                />
-            </div>
-            <div className={classes.selectLocation}>
-                <FormControl variant="outlined" fullWidth>
-                    <InputLabel id="location-select-label">Место проведения</InputLabel>
-                    <Select
-                        labelId="location-select-label"
-                        id="locationSelect"
-                        value={locationPool.length ? compOne.location : ''}
-                        onChange={(e)=>{
-                            runInAction(()=>{
-                                AdminCompStore.compOne.location = e.target.value
-                            })
-                        }}
-                        label="Место проведения"
-                        classes={{
-                            selectMenu: classes.selectMenu
-                        }}
-                    >
-                        <MenuItem value="">
-                            <em>Не выбрано</em>
-                        </MenuItem>
-                        {locationPool.length > 0 &&
-                        locationPool.map((item)=>(
-                            <MenuItem classes={{root: classes.selectMenuItem}} value={`${item.poolName}, ${item.poolAddress}`}>{`${item.poolName}, ${item.poolAddress}`}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </div>
-            <div className={classes.fieldsText} >
-                <TextField
-                    id="headerFirst"
-                    label="Заголовок"
-                    value={compOne?.headerFirst}
-                    onChange={(e)=>{
-                        runInAction(()=>{
-                            AdminCompStore.compOne.headerFirst = e.target.value
-                        })
-                    }}
-                    variant="outlined"
-                    multiline
-                    rows={1}
-                    rowsMax={5}
-                    error={compOne?.headerFirst && compOne?.headerFirst.length > 150}
-                    helperText={compOne?.headerFirst && compOne?.headerFirst.length > 150 && 'максимум 150 символов'}
-                />
-                <TextField
-                    id="textMain"
-                    label="Описание соревнований"
-                    value={compOne.textMain}
-                    onChange={(e)=>{
-                        runInAction(()=>{
-                            AdminCompStore.compOne.textMain = e.target.value
-                        })
-                    }}
-                    variant="outlined"
-                    multiline
-                    rows={3}
-                    rowsMax={10}
-                />
-            </div>
+            {compOne &&
+                <>
+                    <div className={classes.fieldsDates}>
+                        <TextField
+                            id="dateStart"
+                            label="Дата начала"
+                            type="date"
+                            value={compOne?.dateStart && dateFns.format(new Date(compOne.dateStart), 'yyyy-MM-dd')}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    AdminCompStore.compOne.dateStart = e.target.value
+                                })
+                            }}
+                            className={classes.fieldDate}
+                            variant={"outlined"}
+                            InputLabelProps={{shrink: true,}}
+                        />
+                        <TextField
+                            id="dateEnd"
+                            label="Дата окончания"
+                            type="date"
+                            value={compOne?.dateEnd && dateFns.format(new Date(compOne.dateEnd), 'yyyy-MM-dd')}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    AdminCompStore.compOne.dateEnd = e.target.value
+                                })
+                            }}
+                            className={classes.fieldDate}
+                            variant={"outlined"}
+                            InputLabelProps={{shrink: true,}}
+                        />
+                    </div>
+                    <div className={classes.selectLocation}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="location-select-label">Место проведения</InputLabel>
+                            <Select
+                                labelId="location-select-label"
+                                id="locationSelect"
+                                value={compOne.location || ''}
+                                onChange={(e)=>{
+                                    runInAction(()=>{
+                                        AdminCompStore.compOne.location = e.target.value
+                                    })
+                                }}
+                                label="Место проведения"
+                                classes={{
+                                    selectMenu: classes.selectMenu
+                                }}
+                            >
+                                <MenuItem value=''>
+                                    <em>Не выбрано</em>
+                                </MenuItem>
+                                {locationPool.length > 0 &&
+                                    locationPool.map((item)=>(
+                                        <MenuItem classes={{root: classes.selectMenuItem}} value={`${item.poolName}, ${item.poolAddress}`}>{`${item.poolName}, ${item.poolAddress}`}</MenuItem>
+                                    ))}
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div className={classes.fieldsText} >
+                        <TextField
+                            id="headerFirst"
+                            label="Заголовок"
+                            value={compOne?.headerFirst}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    AdminCompStore.compOne.headerFirst = e.target.value
+                                })
+                            }}
+                            variant="outlined"
+                            multiline
+                            rows={1}
+                            rowsMax={5}
+                            error={compOne?.headerFirst && compOne?.headerFirst.length > 150}
+                            helperText={compOne?.headerFirst && compOne?.headerFirst.length > 150 && 'максимум 150 символов'}
+                        />
+                        <TextField
+                            id="textMain"
+                            label="Описание соревнований"
+                            value={compOne.textMain}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    AdminCompStore.compOne.textMain = e.target.value
+                                })
+                            }}
+                            variant="outlined"
+                            multiline
+                            rows={3}
+                            rowsMax={10}
+                        />
+                    </div>
+                </>
+            }
+
         </>
     );
 };
