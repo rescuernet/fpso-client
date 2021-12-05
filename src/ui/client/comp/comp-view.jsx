@@ -9,6 +9,7 @@ import Header from "../header/header";
 import {API_URL} from "../../../const/const";
 import {useGridPoint} from "../../../utils/breakpoints";
 import s from "./comp-view.module.css"
+import * as dateFns from "date-fns";
 
 const useStyles = makeStyles({
     root: {
@@ -33,11 +34,9 @@ const useStyles = makeStyles({
     },
     header: {
         display: "flex",
-        alignItems: "center",
         marginBottom: 20,
         [useGridPoint.breakpoints.down('xs')]: {
             flexDirection: 'column',
-            marginBottom: 0
         },
     },
     avatar: {
@@ -49,18 +48,54 @@ const useStyles = makeStyles({
             borderRadius: 10,
         }
     },
-    headerFirst: {
-        fontSize: '130%',
-        fontWeight: 700,
-        fontFamily: 'Roboto',
-        margin: '0 40px',
-        [useGridPoint.breakpoints.down('md')]: {
-            margin: '0 20px',
-        },
+    dateWrap: {
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: "column"
+    },
+    date: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: '#ff6000',
+        fontWeight: 'bold',
+        fontSize: '100%',
+        color: '#fff',
+        margin: '20px 10px 0 10px',
+        padding: '5px 0',
         [useGridPoint.breakpoints.down('xs')]: {
             margin: '20px 0',
         },
     },
+    headerFirstWrap: {
+        flexGrow: 1,
+        display: "flex",
+        alignItems: "center",
+    },
+    headerFirst: {
+        fontSize: '130%',
+        fontWeight: 700,
+        margin: '0 40px',
+        lineHeight: '1.5',
+        [useGridPoint.breakpoints.down('md')]: {
+            margin: '0 20px',
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            margin: 0,
+            lineHeight: 'normal',
+        },
+    },
+    location: {
+        backgroundColor: '#ff6000',
+        color: '#fff',
+        padding: '5px 0',
+        textAlign: "center",
+        marginBottom: 20
+    },
+    text: {
+        fontSize: '110%',
+        lineHeight: '1.8',
+    }
 })
 
 const CompView = (props) => {
@@ -80,6 +115,9 @@ const CompView = (props) => {
         }
     },[id])
 
+    const curDate = Date.parse(dateFns.format(new Date(), 'MM.dd.yyyy'))
+    const compDateEnd = comp?.dateEnd && Date.parse(dateFns.format(new Date(comp.dateEnd), 'MM.dd.yyyy'))
+
     return (
         <>
             <Header title={'Соревнования'}/>
@@ -95,11 +133,25 @@ const CompView = (props) => {
                                         : null
                                 } alt=""/>
                             </div>
-                            <div>
-                                <div className={`${classes.headerFirst} ${s.headerText}`}>
-                                    {comp.headerFirst}
+                            <div className={classes.dateWrap}>
+                                <div className={classes.date}>
+                                    {comp.dateStart === comp.dateEnd
+                                        ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
+                                        : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
                                 </div>
+                                <div className={classes.headerFirstWrap}>
+                                    <div className={`${classes.headerFirst} ${s.headerText}`}>
+                                        {comp.headerFirst}
+                                    </div>
+                                </div>
+
                             </div>
+                        </div>
+                        <div className={classes.location}>
+                            {comp.location}
+                        </div>
+                        <div className={classes.text}>
+                            {comp.textMain}
                         </div>
                     </Box>
                 </Container>
