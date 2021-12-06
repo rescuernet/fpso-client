@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         padding: '20px 0'
     },
     headerWrap: {
-        backgroundColor: '#e6e6e6',
         textAlign: "center",
         padding: '5px 0',
         marginBottom: 20,

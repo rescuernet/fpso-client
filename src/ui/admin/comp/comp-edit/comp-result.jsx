@@ -8,9 +8,7 @@ import CompResultDay from "./comp-result-day";
 import {Button} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    results: {
-        paddingTop: 20
-    },
+    results: {},
     headerWrap: {
         backgroundColor: '#e6e6e6',
         textAlign: "center",
@@ -40,11 +38,6 @@ const CompResult = ({compId}) => {
     return (
         <>
             <div className={classes.results}>
-                <div className={classes.headerWrap}>
-                    <div className={classes.header}>Результаты</div>
-                    <div className={classes.docsDeclarationText}>* Результаты привязываются к конкретной дате (дню соревнований)</div>
-                </div>
-
                 {results.length > 0 && results.map((item,index)=> (
                     <CompResultDay key={index} index={index} compId={compId} item={item}/>
                 ))}
@@ -54,9 +47,9 @@ const CompResult = ({compId}) => {
                             variant={"contained"}
                             color={"primary"}
                             onClick={()=>{
-                                runInAction(()=>{AdminCompStore.compOne.results.push({docs:[]})})}}
+                                runInAction(()=>{AdminCompStore.compOne.results.push({docs:[],videoTranslation:''})})}}
                         >
-                            {`Создать результаты ${results.length +1}-го дня`}
+                            {`Создать данные ${results.length +1}-го дня`}
                         </Button>
                     </div>
                 }

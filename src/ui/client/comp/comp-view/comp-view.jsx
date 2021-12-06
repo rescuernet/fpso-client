@@ -169,16 +169,25 @@ const CompView = (props) => {
                             {comp.textMain}
                         </div>
                         <Divider/>
-                        <div className={classes.docs}>
-                            <div className={classes.docsHeader}>Документы соревнования</div>
-                            {comp.docs.map((item,index)=>(
-                                <CompViewDocs key={index} index={index} item={item} compId={id}/>
-                            ))}
-                        </div>
-                        <Divider/>
 
-                        <CompViewResults/>
-                        <Divider/>
+                        {comp.docs.length > 0 &&
+                            <>
+                                <div className={classes.docs}>
+                                    <div className={classes.docsHeader}>Документы соревнования</div>
+                                    {comp.docs.map((item,index)=>(
+                                        <CompViewDocs key={index} index={index} item={item} compId={id}/>
+                                    ))}
+                                </div>
+                                <Divider/>
+                            </>
+                        }
+
+                        {comp.results.length > 0 &&
+                            <>
+                                <CompViewResults/>
+                                <Divider/>
+                            </>
+                        }
                     </Box>
                 </Container>
             </Box>

@@ -12,6 +12,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         marginBottom: 20
     },
+    header: {
+        fontFamily: "Roboto",
+        fontSize: '100%',
+        fontWeight: 'bold',
+        textAlign: "center",
+        margin: '10px 0 20px 0'
+    },
 }))
 
 
@@ -39,9 +46,19 @@ const CompResultDayDocs = ({indexDay,compId}) => {
     return (
         <div>
             {docs.length > 0 &&
-            docs.map((item,index)=>(
-                <CompResultDayDocsItem key={index} item={item} index={index} indexDay={indexDay} compId={compId}/>
-            ))
+                <>
+                    <div className={classes.header}>
+                        Документы
+                    </div>
+                    {docs.map((item, index) => (
+                        <CompResultDayDocsItem
+                            key={index}
+                            item={item}
+                            index={index}
+                            indexDay={indexDay}
+                            compId={compId}/>
+                    ))}
+                </>
             }
             <div className={classes.docsAdd}>
                 <label htmlFor={`${indexDay}resultsDocs`}>
