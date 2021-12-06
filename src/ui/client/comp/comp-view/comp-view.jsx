@@ -116,9 +116,6 @@ const CompView = (props) => {
     const comp = toJS(UiCompStore.compOne)
     const { id } = useParams();
 
-    console.log('comp',comp)
-
-
     useEffect(()=>{
         runInAction(()=>{
             UiCompStore.getCompId(id)
@@ -183,10 +180,7 @@ const CompView = (props) => {
                         }
 
                         {comp.results.length > 0 &&
-                            <>
-                                <CompViewResults/>
-                                <Divider/>
-                            </>
+                            <CompViewResults/>
                         }
                     </Box>
                 </Container>

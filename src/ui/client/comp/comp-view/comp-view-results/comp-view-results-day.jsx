@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
     header: {
         fontSize: '110%',
         fontWeight: 'bold',
-        textAlign: "center"
+        textAlign: "center",
+        marginBottom: 20
+    },
+    videoTranslation: {
+        marginBottom: 20
     }
 }))
 
@@ -28,21 +32,22 @@ const CompViewResultsDay = ({index,item}) => {
         },
     };
 
-    console.log(item)
-
     return (
         <div className={classes.day}>
             <div className={classes.header}>
-                {`Результаты ${index + 1}-го дня соревнований`}
+                {`${index + 1}-й день соревнований`}
             </div>
             {item.videoTranslation &&
-                <YouTube videoId={item.videoTranslation} opts={opts}/>
+                <YouTube videoId={item.videoTranslation} opts={opts} className={classes.videoTranslation}/>
             }
-            <div className={classes.docs}>
-                {item.docs.map((itemDoc,indexDoc)=>(
-                    <CompViewResultsDayDocs key={indexDoc} index={indexDoc} item={itemDoc}/>
-                ))}
-            </div>
+            {item.docs.length > 0 &&
+                <div className={classes.docs}>
+                    <div className={classes.header}>Результаты</div>
+                    {item.docs.map((itemDoc,indexDoc)=>(
+                        <CompViewResultsDayDocs key={indexDoc} index={indexDoc} item={itemDoc}/>
+                    ))}
+                </div>
+            }
         </div>
     );
 };
