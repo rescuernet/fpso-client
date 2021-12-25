@@ -106,7 +106,7 @@ const CompFields = (props) => {
                                 </MenuItem>
                                 {locationPool.length > 0 &&
                                     locationPool.map((item)=>(
-                                        <MenuItem classes={{root: classes.selectMenuItem}} value={`${item.poolName}, ${item.poolAddress}`}>{`${item.poolName}, ${item.poolAddress}`}</MenuItem>
+                                        <MenuItem key={item.poolName} classes={{root: classes.selectMenuItem}} value={`${item.poolName}, ${item.poolAddress}`}>{`${item.poolName}, ${item.poolAddress}`}</MenuItem>
                                     ))}
                             </Select>
                         </FormControl>
@@ -123,8 +123,8 @@ const CompFields = (props) => {
                             }}
                             variant="outlined"
                             multiline
-                            rows={1}
-                            rowsMax={5}
+                            minRows={1}
+                            maxRows={5}
                             error={compOne?.headerFirst && compOne?.headerFirst.length > 150}
                             helperText={compOne?.headerFirst && compOne?.headerFirst.length > 150 && 'максимум 150 символов'}
                         />
@@ -139,8 +139,8 @@ const CompFields = (props) => {
                             }}
                             variant="outlined"
                             multiline
-                            rows={3}
-                            rowsMax={10}
+                            minRows={3}
+                            maxRows={10}
                         />
                     </div>
                 </>

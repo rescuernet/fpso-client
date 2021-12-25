@@ -54,10 +54,10 @@ const NewsDocsItem = (props) => {
                 }}
                 variant="outlined"
                 multiline
-                rows={1}
-                rowsMax={10}
+                minRows={1}
+                maxRows={10}
             />
-            <a href={`${API_URL}/news/${props.newsId}/docs/${props.item.doc}`} target={'_blank'} rel="noreferrer">
+            <a href={props.item.doc} target={'_blank'} rel="noreferrer">
                 <img src={Icon[extension]} alt="" width={40}/>
             </a>
             <Divider orientation={"vertical"} flexItem={true}/>

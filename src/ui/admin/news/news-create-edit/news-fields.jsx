@@ -81,8 +81,8 @@ const NewsFields = (props) => {
                     }}
                     variant="outlined"
                     multiline
-                    rows={1}
-                    rowsMax={2}
+                    minRows={1}
+                    maxRows={2}
                     error={newsOne?.headerFirst && newsOne?.headerFirst.length > 100}
                     helperText={newsOne?.headerFirst && newsOne?.headerFirst.length > 100 && 'максимум 100 символов'}
                 />
@@ -97,8 +97,8 @@ const NewsFields = (props) => {
                     }}
                     variant="outlined"
                     multiline
-                    rows={1}
-                    rowsMax={2}
+                    minRows={1}
+                    maxRows={2}
                     error={newsOne?.headerSecond && newsOne?.headerSecond.length > 100}
                     helperText={newsOne?.headerSecond && newsOne?.headerSecond.length > 100 && 'максимум 100 символов'}
                 />
@@ -114,8 +114,8 @@ const NewsFields = (props) => {
                     }}
                     variant="outlined"
                     multiline
-                    rows={3}
-                    rowsMax={10}
+                    minRows={3}
+                    maxRows={10}
                 />
             </div>
         </>

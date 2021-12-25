@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 import {API_URL} from "../../../../const/const";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,13 +61,14 @@ const NewsAvatar = ({newsId}) => {
         })
     };
 
+    console.log(toJS(AdminNewsStore.newsOne.avatar))
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
                 {AdminNewsStore.newsOne.avatar &&
                 <>
-                    <img src={`${API_URL}/news/${newsId}/avatar/${AdminNewsStore.newsOne.avatar}`} alt=""/>
+                    <img src={AdminNewsStore.newsOne.avatar} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

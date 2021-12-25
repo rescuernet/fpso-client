@@ -138,14 +138,14 @@ const AdminMenu = (props) => {
                         <div className={classes.avatar}>{AuthStore.user.avatar ? <img src={AuthStore.user.avatar} alt=""/> : <img src={NoAvatar__img} alt=""/>}</div>
                         <div className={classes.userEmail}>{AuthStore.user.email}</div>
                         <ListItem
-                            button key={1}
+                            button key={'logout'+1}
                             className={`${classes.menuItem} ${classes.logout}`}
                             onClick={()=>{runInAction(() => {AuthStore.logout()})}}
                         >
                             ВЫХОД
                         </ListItem>
                         <ListItem
-                            button key={1}
+                            button key={'goToSite'+1}
                             className={`${classes.menuItem} ${classes.goToSite}`}
                             onClick={()=> setLink('/')}
                         >
@@ -155,7 +155,7 @@ const AdminMenu = (props) => {
                     <Divider style={{backgroundColor: '#ccc'}}/>
                     <List>
                         <ListItem
-                            button key={2}
+                            button key={'goToMain'+1}
                             className={location === ADM_RM.Main.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
                             onClick={()=> setLink(ADM_RM.Main.path)}
                         >

@@ -70,8 +70,8 @@ const CompDocsItem = (props) => {
                 }}
                 variant="outlined"
                 multiline
-                rows={1}
-                rowsMax={10}
+                minRows={1}
+                maxRows={10}
             />
             <a href={`${API_URL}/competitions/${props.compId}/docs/${props.item.doc}`} target={'_blank'} rel="noreferrer">
                 <img src={Icon[extension]} alt="" />

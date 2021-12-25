@@ -76,22 +76,23 @@ const NewsItem = () => {
 
     return (
         <table className={classes.table}>
+            <tbody>
             {Store.width > 750 && news &&
-            <>
-                {Store.width > 1000 &&
-                <th className={classes.min}>создана</th>
-                }
+                <>
+                    {Store.width > 1000 &&
+                        <th className={classes.min}>создана</th>
+                    }
 
-                <th></th>
-                <th>заголовок</th>
-                <th className={classes.min}>старт</th>
-                <th className={classes.min}>финиш</th>
-                <th className={classes.min}>закреплена</th>
-                <th className={classes.min}>важная</th>
-            </>
+                    <th></th>
+                    <th>заголовок</th>
+                    <th className={classes.min}>старт</th>
+                    <th className={classes.min}>финиш</th>
+                    <th className={classes.min}>закреплена</th>
+                    <th className={classes.min}>важная</th>
+                </>
             }
             {news && news.length > 0 && news.map((i) => (
-                <tr onClick={()=>{newsEdit(i._id)}} id={i._id} className={!i.published ? classes.notPublished : null}>
+                <tr key={i._id} onClick={()=>{newsEdit(i._id)}} id={i._id} className={!i.published ? classes.notPublished : null}>
                     {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
                     <td>{i.headerFirst}</td>
@@ -105,6 +106,7 @@ const NewsItem = () => {
                     }
                 </tr>
             ))}
+            </tbody>
         </table>
     );
 };
