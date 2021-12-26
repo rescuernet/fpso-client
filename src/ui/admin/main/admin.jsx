@@ -37,6 +37,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+let aaa = [1, 3, 4, 5, 7, 8],
+    bbb = [1, 2, 3, 4, 5, 6];
+
+const diff = function(aaa, bbb) {
+    return bbb.filter(i=>!aaa.includes(i))
+}
+
+console.log(diff(aaa,bbb))
+
+
 
 const Admin = () => {
     const classes = useStyles();

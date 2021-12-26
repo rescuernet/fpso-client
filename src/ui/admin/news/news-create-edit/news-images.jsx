@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import {observer} from "mobx-react-lite";
 import NewsImagesItem from "./news-images-item";
 
@@ -36,8 +36,11 @@ const NewsImages = ({newsId}) => {
     };
 
     //удаление одной фоографии
-    const DeleteOneImage = (imgId) => {
-        runInAction(() => {AdminNewsStore.newsOne.images.splice(imgId,1)})
+    const DeleteOneImage = (imgId,imgName) => {
+        runInAction(() => {
+            AdminNewsStore.mediaDel.push(imgName)
+            AdminNewsStore.newsOne.images.splice(imgId,1)
+        })
     };
 
     return (

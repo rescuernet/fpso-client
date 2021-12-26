@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../../routes/ui-routes";
 import {observer} from "mobx-react-lite";
@@ -59,13 +59,13 @@ const NewsCardDesktop = ({news,index,mainIndex}) => {
     const classes = useStyles();
     return (
         <div className={`${classes.root} ${news.importantNews && classes.importantNews}`}>
-            <div className={classes.image}>
+            <div className={classes.image}>sdsdf
                 <img src={
                     news.avatar
-                        ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
+                        ? news.avatar
                         : index || index === 0
-                            ? `${API_URL}/img/nonewsavatar/${index}.jpg`
-                            : `${API_URL}/img/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
+                            ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${index}.jpg`
+                            : `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                 } alt=""/>
             </div>
             <div className={classes.data}>

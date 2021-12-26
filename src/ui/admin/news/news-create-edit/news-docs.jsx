@@ -31,8 +31,11 @@ const NewsDocs = ({newsId}) => {
         })
     };
     //удаление одного документа
-    const DeleteOneDocs = (docsId) => {
-        runInAction(() => {AdminNewsStore.newsOne.docs.splice(docsId,1)})
+    const DeleteOneDocs = (docsId,docsName) => {
+        runInAction(() => {
+            AdminNewsStore.mediaDel.push(docsName)
+            AdminNewsStore.newsOne.docs.splice(docsId,1)
+        })
     };
 
     return (

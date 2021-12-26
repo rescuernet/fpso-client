@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {runInAction, toJS} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -57,18 +57,18 @@ const NewsAvatar = ({newsId}) => {
     //удаление аватара
     const DeleteAvatar = () => {
         runInAction(() => {
+            AdminNewsStore.mediaDel.push(AdminNewsStore.newsOne.avatar)
             AdminNewsStore.newsOne.avatar = ''
         })
     };
 
-    console.log(toJS(AdminNewsStore.newsOne.avatar))
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
                 {AdminNewsStore.newsOne.avatar &&
                 <>
-                    <img src={AdminNewsStore.newsOne.avatar} alt=""/>
+                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${AdminNewsStore.newsOne.avatar}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

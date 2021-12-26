@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import {API_URL} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 
 const useStyles = makeStyles((theme) => ({
     imagesItem: {
@@ -27,8 +27,8 @@ const NewsImagesItem = (props) => {
 
     return (
         <div className={classes.imagesItem}>
-            <HighlightOffIcon id={props.index} onClick={()=> {props.DeleteOneImage(props.index)}} color={'error'}/>
-            <img src={`${API_URL}/news/${props.newsId}/images/crop_${props.item}`} alt=""/>
+            <HighlightOffIcon id={props.index} onClick={()=> {props.DeleteOneImage(props.index,props.item)}} color={'error'}/>
+            <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crop_${props.item}`} alt=""/>
         </div>
     );
 };

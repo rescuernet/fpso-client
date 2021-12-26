@@ -8,6 +8,7 @@ class AdminNewsStore {
     news = []
     tmpNewsId = null
     newsOne = null
+    mediaDel = []
 
 
     constructor() {
@@ -19,6 +20,7 @@ class AdminNewsStore {
             this.news_tmp_errors = null
             this.tmpNewsId = null
             this.newsOne = null
+            this.mediaDel = []
         })
     }
 
@@ -114,7 +116,7 @@ class AdminNewsStore {
     newsUpdate = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminNewsService.newsUpdate(this.newsOne);
+            const response = await AdminNewsService.newsUpdate({data:this.newsOne,mediaDel: this.mediaDel});
             if(response.data?.error){
                 runInAction(() => {this.news_tmp_errors =
                     <div>{response.data.error}</div>})
