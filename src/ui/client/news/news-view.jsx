@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
 import UiNewsStore from "../../../bll/ui/ui-news-store";
-import {API_URL} from "../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
 import {Box, Container, Divider} from "@material-ui/core";
 import pdfIcon from "../../../common/assets/image/icons/pdf.png";
 import docIcon from "../../../common/assets/image/icons/doc.png";
@@ -153,8 +153,8 @@ const NewsView = () => {
                                 <div className={classes.avatar}>
                                     <img src={
                                         news.avatar
-                                            ? `${API_URL}/news/${news._id}/avatar/${news.avatar}`
-                                            : `${API_URL}/img/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
+                                            ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
+                                            : `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
                                     } alt=""/>
                                 </div>
                                 <div>
