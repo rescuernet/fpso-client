@@ -189,7 +189,7 @@ const NewsView = () => {
                                         {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
                                         <img src={xlsxIcon} alt="" width={40}/>
                                         }
-                                        <a href={`${API_URL}/news/${news._id}/docs/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
+                                        <a href={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
                                     </div>
                                 ))}
                             </div>
@@ -200,7 +200,7 @@ const NewsView = () => {
                             {news.images.length > 0 &&
                             <div className={classes.images}>
                                 {news.images.map((i) => (
-                                    <img src={`${API_URL}/news/${news._id}/images/${i}`} alt=""/>
+                                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${i}`} alt=""/>
                                 ))}
                             </div>
                             }
