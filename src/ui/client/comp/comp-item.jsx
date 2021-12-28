@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         position: "absolute",
         top: 0,
+        left: 0,
         width: '100%',
     },
     avatar: {
