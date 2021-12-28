@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -48,7 +48,6 @@ const CompAvatar = ({compId}) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
-        data.append('compId',compId);
         runInAction(async () => {
             await AdminCompStore.compAvatarCreate(data)
         })
@@ -57,6 +56,7 @@ const CompAvatar = ({compId}) => {
     //удаление аватара
     const DeleteAvatar = () => {
         runInAction(() => {
+            AdminCompStore.mediaDel.push(AdminCompStore.compOne.avatar)
             AdminCompStore.compOne.avatar = ''
         })
     };
@@ -67,7 +67,7 @@ const CompAvatar = ({compId}) => {
             <div className={classes.avatarControl}>
                 {AdminCompStore.compOne.avatar &&
                 <>
-                    <img src={`${API_URL}/competitions/${compId}/avatar/${AdminCompStore.compOne.avatar}`} alt=""/>
+                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${AdminCompStore.compOne.avatar}`} alt=""/>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

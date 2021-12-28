@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width: 430px)' : {
             marginBottom: 20,
         },
+        width: 180
     },
     fieldsText: {
         display: "flex",

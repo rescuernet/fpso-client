@@ -113,7 +113,7 @@ class AdminNewsStore {
         }
     }
 
-    newsUpdate = async (id) => {
+    newsUpdate = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.newsUpdate({data:this.newsOne,mediaDel: this.mediaDel});

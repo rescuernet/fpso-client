@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Divider, TextField} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {runInAction} from "mobx";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import pdf from "../../../../common/assets/image/icons/pdf.png";
 import doc from "../../../../common/assets/image/icons/doc.png";
 import docx from "../../../../common/assets/image/icons/docx.png";
@@ -49,8 +49,11 @@ const useStyles = makeStyles((theme) => ({
 const Icon = {xls, xlsx, doc, docx, pdf}
 
 //удаление одного документа
-const DeleteOneDocs = (docsId) => {
-    runInAction(() => {AdminCompStore.compOne.docs.splice(docsId,1)})
+const DeleteOneDocs = (docsId,docsName) => {
+    runInAction(() => {
+        AdminCompStore.mediaDel.push(docsName)
+        AdminCompStore.compOne.docs.splice(docsId,1)
+    })
 };
 
 const CompDocsItem = (props) => {
@@ -73,12 +76,12 @@ const CompDocsItem = (props) => {
                 minRows={1}
                 maxRows={10}
             />
-            <a href={`${API_URL}/competitions/${props.compId}/docs/${props.item.doc}`} target={'_blank'} rel="noreferrer">
+            <a href={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${props.item.doc}`} target={'_blank'} rel="noreferrer">
                 <img src={Icon[extension]} alt="" />
             </a>
             <Divider orientation={"vertical"} flexItem={true}/>
             <HighlightOffIcon onClick={() => {
-                DeleteOneDocs(props.index)
+                DeleteOneDocs(props.index,props.item.doc)
             }} color={'error'}/>
         </div>
     );

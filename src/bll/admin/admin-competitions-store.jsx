@@ -7,6 +7,7 @@ class AdminCompetitionsStore {
     comp = []
     tmpCompId = null
     compOne = null
+    mediaDel = []
 
 
     constructor() {
@@ -101,7 +102,7 @@ class AdminCompetitionsStore {
     compUpdate = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminCompetitionsService.compUpdate(this.compOne);
+            const response = await AdminCompetitionsService.compUpdate({data: this.compOne,mediaDel: this.mediaDel});
             if(response.data?.error){
                 runInAction(() => {this.tmp_errors =
                     <div>{response.data.error}</div>})

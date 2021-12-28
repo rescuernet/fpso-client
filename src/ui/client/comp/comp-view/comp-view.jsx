@@ -6,7 +6,7 @@ import UiCompStore from "../../../../bll/ui/ui-comp-store";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import Header from "../../header/header";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {useGridPoint} from "../../../../utils/breakpoints";
 import s from "./comp-view.module.css"
 import * as dateFns from "date-fns";
@@ -141,7 +141,7 @@ const CompView = (props) => {
                             <div className={classes.avatar}>
                                 <img src={
                                     comp.avatar
-                                        ? `${API_URL}/competitions/${comp._id}/avatar/${comp.avatar}`
+                                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
                                         : null
                                 } alt=""/>
                             </div>

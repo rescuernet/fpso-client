@@ -48,7 +48,6 @@ const NewsAvatar = ({newsId}) => {
         event.preventDefault();
         const data = new FormData()
         data.append('files',event.target.files[0]);
-        data.append('newsId',newsId);
         runInAction(async () => {
             await AdminNewsStore.newsAvatarCreate(data)
         })

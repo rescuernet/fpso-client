@@ -63,7 +63,7 @@ export const NewsCardMobile = ({news, index})=> {
             <div className={classes.image}>
                 <img src={
                     news.avatar
-                        ? news.avatar
+                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
                         : index || index === 0
                             ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${index}.jpg`
                             : `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`

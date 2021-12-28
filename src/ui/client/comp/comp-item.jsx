@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Box, Divider} from "@material-ui/core";
 import s from './comp.module.css'
 import * as dateFns from "date-fns";
-import {API_URL} from "../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import Button from "@material-ui/core/Button";
@@ -86,13 +86,13 @@ const CompItem = ({comp,index}) => {
         <Box className={classes.root}>
             {curDate > compDateEnd &&
                 <div className={classes.compEndMedal}>
-                    <img src={`${API_URL}/img/medalsCompCard.png`} alt=""/>
+                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/medalsCompCard.png`} alt=""/>
                 </div>
             }
             <div className={classes.avatar}>
                 <img src={
                     comp.avatar
-                        ? `${API_URL}/competitions/${comp._id}/avatar/${comp.avatar}`
+                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
                         : "http://khvnews.ru/wp-content/uploads/2020/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-42.jpg"
                 } alt=""/>
             </div>

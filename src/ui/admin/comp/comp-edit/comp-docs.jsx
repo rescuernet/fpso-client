@@ -42,7 +42,6 @@ const CompDocs = ({compId}) => {
         const originName = event.target.files[0].name.substr(0,event.target.files[0].name.lastIndexOf("."))
         const data = new FormData()
         data.append('files',event.target.files[0]);
-        data.append('compId',compId);
         runInAction( async () => {
             await runInAction(()=>{AdminCompStore.compDocsCreate(data,originName,section)})
         })

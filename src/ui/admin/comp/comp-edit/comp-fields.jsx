@@ -50,6 +50,8 @@ const CompFields = (props) => {
 
     const locationPool = Store.referenceBooks?.pool || []
 
+    const curDate = dateFns.format(new Date(), 'yyyy-MM-dd')
+
     return (
         <>
             {compOne &&
@@ -68,6 +70,8 @@ const CompFields = (props) => {
                             className={classes.fieldDate}
                             variant={"outlined"}
                             InputLabelProps={{shrink: true,}}
+                            error={compOne?.dateStart && compOne.dateStart < curDate}
+                            helperText={compOne?.dateStart && compOne.dateStart < curDate && 'не верная дата'}
                         />
                         <TextField
                             id="dateEnd"
@@ -82,6 +86,8 @@ const CompFields = (props) => {
                             className={classes.fieldDate}
                             variant={"outlined"}
                             InputLabelProps={{shrink: true,}}
+                            error={compOne?.dateEnd && (compOne.dateEnd < curDate || compOne.dateEnd < compOne.dateStart)}
+                            helperText={compOne?.dateEnd && (compOne.dateEnd < curDate || compOne.dateEnd < compOne.dateStart) && 'не верная дата'}
                         />
                     </div>
                     <div className={classes.selectLocation}>
