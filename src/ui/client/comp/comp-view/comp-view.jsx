@@ -6,7 +6,7 @@ import UiCompStore from "../../../../bll/ui/ui-comp-store";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import Header from "../../header/header";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {useGridPoint} from "../../../../utils/breakpoints";
 import s from "./comp-view.module.css"
 import * as dateFns from "date-fns";
@@ -80,7 +80,7 @@ const useStyles = makeStyles({
     headerFirst: {
         fontSize: '130%',
         fontWeight: 700,
-        margin: '0 30px',
+        margin: '0 20px',
         lineHeight: '1.5',
         [useGridPoint.breakpoints.down('md')]: {
             margin: '0 20px',
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
     location: {
         backgroundColor: '#ff6000',
         color: '#fff',
-        padding: '5px 0',
+        padding: 5,
         textAlign: "center",
         marginBottom: 20
     },
@@ -127,8 +127,6 @@ const CompView = (props) => {
         }
     },[id])
 
-    const curDate = Date.parse(dateFns.format(new Date(), 'MM.dd.yyyy'))
-    const compDateEnd = comp?.dateEnd && Date.parse(dateFns.format(new Date(comp.dateEnd), 'MM.dd.yyyy'))
 
     return (
         <>

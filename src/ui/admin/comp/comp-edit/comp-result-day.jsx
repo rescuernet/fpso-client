@@ -8,7 +8,7 @@ import {runInAction} from "mobx";
 
 const useStyles = makeStyles((theme) => ({
     compDay: {
-        border: '1px solid #ccc',
+        border: '1px solid #0095e1',
         padding: '0 10px',
         marginBottom: 20,
     },

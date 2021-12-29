@@ -4,7 +4,6 @@ import {observer} from "mobx-react-lite";
 import {toJS} from "mobx";
 import UiCompStore from "../../../../../bll/ui/ui-comp-store";
 import CompViewResultsDay from "./comp-view-results-day";
-import {Divider} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     results: {},
@@ -17,11 +16,7 @@ const CompViewResults = (props) => {
     return (
         <div className={classes.results}>
             {results.map((item,index)=>(
-                <>
-                    <CompViewResultsDay key={index} index={index} item={item}/>
-                    <Divider/>
-                </>
-
+                <CompViewResultsDay key={index+'Results'} index={index} item={item}/>
             ))}
         </div>
     );

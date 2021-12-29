@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Box, Divider} from "@material-ui/core";
 import s from './comp.module.css'
 import * as dateFns from "date-fns";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import Button from "@material-ui/core/Button";
@@ -22,13 +22,9 @@ const useStyles = makeStyles((theme) => ({
         position: "relative"
     },
     compEndMedal: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        top: 0,
-        left: 0,
+        position: "absolute",
         width: '100%',
+        textAlign: "center"
     },
     avatar: {
         fontSize: 0,
@@ -79,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
 const CompItem = ({comp,index}) => {
     const classes = useStyles();
 
-    const curDate = Date.parse(dateFns.format(new Date(), 'MM.dd.yyyy'))
-    const compDateEnd = Date.parse(dateFns.format(new Date(comp.dateEnd), 'MM.dd.yyyy'))
+    const curDate = dateFns.format(new Date(), 'yyyy-MM-dd')
+    const compDateEnd = dateFns.format(new Date(comp.dateEnd), 'yyyy-MM-dd')
 
     return (
         <Box className={classes.root}>

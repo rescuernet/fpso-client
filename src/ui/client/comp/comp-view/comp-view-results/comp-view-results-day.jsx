@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite";
 import CompViewResultsDayDocs from "./comp-view-results-day-docs";
 import YouTube from "react-youtube";
 import Store from "../../../../../bll/store"
+import {Divider} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     day: {
@@ -33,22 +34,26 @@ const CompViewResultsDay = ({index,item}) => {
     };
 
     return (
-        <div className={classes.day}>
-            <div className={classes.header}>
-                {`${index + 1}-й день соревнований`}
-            </div>
-            {item.videoTranslation &&
-                <YouTube videoId={item.videoTranslation} opts={opts} className={classes.videoTranslation}/>
-            }
-            {item.docs.length > 0 &&
-                <div className={classes.docs}>
-                    <div className={classes.header}>Результаты</div>
-                    {item.docs.map((itemDoc,indexDoc)=>(
-                        <CompViewResultsDayDocs key={indexDoc} index={indexDoc} item={itemDoc}/>
-                    ))}
+        <>
+            <div className={classes.day}>
+                <div className={classes.header}>
+                    {`${index + 1}-й день соревнований`}
                 </div>
-            }
-        </div>
+                {item.docs.length > 0 &&
+                    <div className={classes.docs}>
+                        <div className={classes.header}>документы</div>
+                        {item.docs.map((itemDoc,indexDoc)=>(
+                            <CompViewResultsDayDocs key={indexDoc} index={indexDoc} item={itemDoc}/>
+                        ))}
+                    </div>
+                }
+                {item.videoTranslation &&
+                    <YouTube videoId={item.videoTranslation} opts={opts} className={classes.videoTranslation}/>
+                }
+            </div>
+            <Divider/>
+        </>
+
     );
 };
 
