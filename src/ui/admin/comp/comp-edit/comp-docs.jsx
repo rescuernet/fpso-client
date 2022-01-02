@@ -34,7 +34,6 @@ const CompDocs = ({compId}) => {
 
     //загрузка документов
     const UploadDocs = (event) => {
-        console.log('docsAAA')
         event.preventDefault();
         const section = {
             name:'docs'

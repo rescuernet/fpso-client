@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {Divider, TextField} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {runInAction} from "mobx";
-import {API_URL} from "../../../../const/const";
+import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import pdf from "../../../../common/assets/image/icons/pdf.png";
 import doc from "../../../../common/assets/image/icons/doc.png";
 import docx from "../../../../common/assets/image/icons/docx.png";
@@ -47,12 +47,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Icon = {xls, xlsx, doc, docx, pdf}
 
-const CompResultDayDocsItem = ({item,indexDay,index,compId}) => {
+const CompResultDayDocsItem = ({item,indexDay,index}) => {
     const classes = useStyles();
     const extension = item.doc.slice(item.doc.lastIndexOf(".") + 1)
 
     //удаление одного документа
-    const DeleteOneDocs = (docsId) => {
+    const DeleteOneDocs = (docsName) => {
+        AdminCompStore.mediaDel.push(docsName)
         runInAction(() => {AdminCompStore.compOne.results[indexDay].docs.splice(index,1)})
     };
 
@@ -73,12 +74,12 @@ const CompResultDayDocsItem = ({item,indexDay,index,compId}) => {
                 rows={1}
                 rowsMax={10}
             />
-            <a href={`${API_URL}/competitions/${compId}/docs/${item.doc}`} target={'_blank'} rel="noreferrer">
+            <a href={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${item.doc}`} target={'_blank'} rel="noreferrer">
                 <img src={Icon[extension]} alt="" />
             </a>
             <Divider orientation={"vertical"} flexItem={true}/>
             <HighlightOffIcon onClick={() => {
-                DeleteOneDocs(index)
+                DeleteOneDocs(item.doc)
             }} color={'error'}/>
         </div>
     );

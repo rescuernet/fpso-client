@@ -8,6 +8,10 @@ const PrefixPath = {
 
 
 const AdminAPIRouterManager = {
+    mediaDelTmp: {
+        path: `${PrefixPath.admin}/mediadeltmp`,
+        getUrl() {return `${PrefixPath.admin}/mediadeltmp`},
+    },
     News__Create: {
         path: `${PrefixPath.admin}/news/create`,
         getUrl() {return `${PrefixPath.admin}/news/create`},

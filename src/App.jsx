@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#ff6200',
+        '& .MuiCircularProgress-root': {
+            width: '100px!important',
+            height: '100px!important'
+        }
     }
 }))
 

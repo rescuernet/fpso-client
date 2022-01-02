@@ -10,8 +10,17 @@ const useStyles = makeStyles((theme) => ({
     day: {
         marginBottom: 30
     },
+    dayHeader: {
+        backgroundColor: '#ff6000',
+        color: '#fff',
+        padding: 5,
+        textAlign: "center",
+        marginBottom: 20
+    },
+    docs: {
+        marginBottom: 40
+    },
     header: {
-        fontSize: '110%',
         fontWeight: 'bold',
         textAlign: "center",
         marginBottom: 20
@@ -36,7 +45,7 @@ const CompViewResultsDay = ({index,item}) => {
     return (
         <>
             <div className={classes.day}>
-                <div className={classes.header}>
+                <div className={classes.dayHeader}>
                     {`${index + 1}-й день соревнований`}
                 </div>
                 {item.docs.length > 0 &&
@@ -48,7 +57,10 @@ const CompViewResultsDay = ({index,item}) => {
                     </div>
                 }
                 {item.videoTranslation &&
-                    <YouTube videoId={item.videoTranslation} opts={opts} className={classes.videoTranslation}/>
+                    <div className={classes.videoTranslation}>
+                        <div className={classes.header}>трансляция</div>
+                        <YouTube videoId={item.videoTranslation} opts={opts}/>
+                    </div>
                 }
             </div>
             <Divider/>

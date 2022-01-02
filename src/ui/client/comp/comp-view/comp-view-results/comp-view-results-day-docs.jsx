@@ -12,7 +12,7 @@ import xlsx from "../../../../../common/assets/image/icons/xlsx.png";
 const useStyles = makeStyles((theme) => ({
     itemWrap: {
         display: "flex",
-        margin: '20px 0',
+        marginBottom: 20,
     },
     item: {
         display: "flex",

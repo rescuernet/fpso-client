@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
@@ -60,7 +60,6 @@ const NewsAvatar = ({newsId}) => {
             AdminNewsStore.newsOne.avatar = ''
         })
     };
-
 
     return (
         <div className={classes.avatar} id={'avatar'}>

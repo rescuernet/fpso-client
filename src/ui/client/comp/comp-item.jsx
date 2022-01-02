@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         width: 300,
-        height: 462,
+        height: 510,
         backgroundColor: '#fff',
         boxShadow: '4px 4px 10px rgba(0,0,0,0.2)',
         margin: '0 10px 40px 10px',
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 0,
         '& img': {
             width: 300,
-            height: 250,
+            height: 300,
         }
     },
     date: {
@@ -51,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         fontFamily: 'Roboto',
         fontSize: '85%',
-        padding: '10px 20px'
+        padding: '0 20px',
+        height: 45
     },
     text: {
         display: "flex",

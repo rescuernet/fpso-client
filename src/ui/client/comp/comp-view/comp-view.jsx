@@ -47,11 +47,14 @@ const useStyles = makeStyles({
     avatar: {
         display: "flex",
         justifyContent: "center",
-        flex: '0 0 auto',
+        margin: '0 20px 0 0',
         fontSize: 0,
         '& img': {
             borderRadius: 10,
-        }
+        },
+        [useGridPoint.breakpoints.down('xs')]: {
+            margin: '0 0 20px 0',
+        },
     },
     dateWrap: {
         flexGrow: 1,
@@ -59,18 +62,17 @@ const useStyles = makeStyles({
         flexDirection: "column"
     },
     date: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        textAlign: "center",
         backgroundColor: '#ff6000',
         fontWeight: 'bold',
-        fontSize: '100%',
         color: '#fff',
-        margin: '20px 0 0 10px',
+        marginBottom: 20,
         padding: '5px 0',
-        [useGridPoint.breakpoints.down('xs')]: {
-            margin: '20px 0',
-        },
+    },
+    location: {
+        padding: '5px 5px 15px 5px',
+        marginBottom: 10,
+        borderBottom: '1px solid #ccc'
     },
     headerFirstWrap: {
         flexGrow: 1,
@@ -80,23 +82,13 @@ const useStyles = makeStyles({
     headerFirst: {
         fontSize: '130%',
         fontWeight: 700,
-        margin: '0 20px',
         lineHeight: '1.5',
-        [useGridPoint.breakpoints.down('md')]: {
-            margin: '0 20px',
-        },
         [useGridPoint.breakpoints.down('xs')]: {
             margin: 0,
             lineHeight: 'normal',
         },
     },
-    location: {
-        backgroundColor: '#ff6000',
-        color: '#fff',
-        padding: 5,
-        textAlign: "center",
-        marginBottom: 20
-    },
+
     text: {
         fontSize: '110%',
         lineHeight: '1.8',
@@ -104,7 +96,6 @@ const useStyles = makeStyles({
     },
     docs: {},
     docsHeader: {
-        fontSize: '110%',
         fontWeight: 'bold',
         textAlign: "center"
     },
@@ -149,6 +140,7 @@ const CompView = (props) => {
                                         ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
                                         : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
                                 </div>
+                                <div className={classes.location}>{comp.location}</div>
                                 <div className={classes.headerFirstWrap}>
                                     <div className={`${classes.headerFirst} ${s.headerText}`}>
                                         {comp.headerFirst}
@@ -157,12 +149,8 @@ const CompView = (props) => {
 
                             </div>
                         </div>
-                        <div className={classes.location}>
-                            {comp.location}
-                        </div>
-                        <div className={classes.text}>
-                            {comp.textMain}
-                        </div>
+                        <Divider/>
+                        <div className={classes.text}>{comp.textMain}</div>
                         <Divider/>
 
                         {comp.docs.length > 0 &&

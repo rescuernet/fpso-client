@@ -3,7 +3,7 @@ import AdminMenu from "../../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import AdminHeader from "../../header/admin-header";
 import {observer} from "mobx-react-lite";
 import {NewsAlertDialog} from "./news-alert";
@@ -86,14 +86,24 @@ const NewsCreateEdit = () => {
     const history = useHistory();
     const { id } = useParams();
 
+
     useEffect(()=>{
-        runInAction(() => {
-            AdminNewsStore.getNewsId(id)
+        runInAction(async () => {
+            if(localStorage.getItem('mediaDelTmp')){
+                await Store.sendMediaDelTmp()
+            }
+            await AdminNewsStore.getNewsId(id)
         })
         return ()=> {
+            runInAction(async () => {
+                if(localStorage.getItem('mediaDelTmp')){
+                    await Store.sendMediaDelTmp()
+                }
+            })
             runInAction(() => {AdminNewsStore.clearData()})
         }
     },[id])
+
 
     const classes = useStyles();
 

@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 const News = (props) => {
     window.scrollTo(0,0)
     const classes = useStyles();
@@ -62,6 +63,7 @@ const News = (props) => {
                 : history.push(ADM_RM.Main.path)
         })
     }
+
 
     return (
         <div className={classes.root}>

@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction, toJS} from "mobx";
 import AdminOtherService from "../services/admin/admin-other-service";
 
 
@@ -10,8 +10,42 @@ class Store {
     width = window.outerWidth
     referenceBooks = null
 
+    mediaDelTmp = []
+
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setMediaDelTmp(item) {
+        if(localStorage.getItem('mediaDelTmp')){
+            this.mediaDelTmp = JSON.parse(localStorage.getItem('mediaDelTmp'))
+            this.mediaDelTmp.push(item)
+        }else{
+            this.mediaDelTmp.push(item)
+        }
+        localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(this.mediaDelTmp)));
+    }
+
+    sendMediaDelTmp = async () => {
+        if(localStorage.getItem('mediaDelTmp')){
+            runInAction(() => {this.isLoading = true})
+            try {
+                const arr = JSON.parse(localStorage.getItem('mediaDelTmp'))
+                const response = await AdminOtherService.mediaDelTmp({mediaDelTmp: arr});
+
+                if(response.data.status === 200){
+                    localStorage.removeItem('mediaDelTmp')
+                    this.mediaDelTmp = []
+                }
+            } catch (e) {
+                console.log(e)
+            } finally {
+                runInAction(() => {
+                    this.isInit = true
+                    this.isLoading = false
+                })
+            }
+        }
     }
 
     referenceBookGet = async () => {

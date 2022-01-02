@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction, toJS} from "mobx";
 import Store from "../store"
 import AdminNewsService from "../../services/admin/admin-news-service";
 
@@ -9,6 +9,7 @@ class AdminNewsStore {
     tmpNewsId = null
     newsOne = null
     mediaDel = []
+
 
 
     constructor() {
@@ -63,7 +64,10 @@ class AdminNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminNewsService.newsAvatarCreate(avatar);
-            runInAction(() => {this.newsOne.avatar = response.data.name})
+            runInAction(() => {
+                this.newsOne.avatar = response.data.name
+                Store.setMediaDelTmp(response.data.name)
+            })
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -82,6 +86,7 @@ class AdminNewsStore {
         try {
             const response = await AdminNewsService.newsImageCreate(image);
             runInAction(() => {this.newsOne.images.push(response.data.name)})
+            Store.setMediaDelTmp(response.data.name)
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -100,6 +105,7 @@ class AdminNewsStore {
         try {
             const response = await AdminNewsService.newsDocsCreate(doc);
             runInAction(() => {this.newsOne.docs.push({title:originName,doc:response.data.doc})})
+            Store.setMediaDelTmp(response.data.doc)
         } catch (e) {
             runInAction(() => {this.news_tmp_errors =
                 <div>
@@ -116,10 +122,25 @@ class AdminNewsStore {
     newsUpdate = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
+            const actualMediaArr = []
+            if(this.newsOne.avatar){actualMediaArr.push(this.newsOne.avatar)}
+            if(this.newsOne?.images && this.newsOne.images.length > 0){this.newsOne.images.map((i)=> actualMediaArr.push(i))}
+            if(this.newsOne?.docs && this.newsOne.docs.length > 0){this.newsOne.docs.map((i)=> actualMediaArr.push(i.doc))}
+
+            const mediaDelTmp = toJS(Store.mediaDelTmp)
+
+            const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+            Store.mediaDelTmp = diff
+            localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
+
+
             const response = await AdminNewsService.newsUpdate({data:this.newsOne,mediaDel: this.mediaDel});
             if(response.data?.error){
-                runInAction(() => {this.news_tmp_errors =
-                    <div>{response.data.error}</div>})
+                runInAction(() => {
+                    this.news_tmp_errors = <div>{response.data.error}</div>
+                    actualMediaArr.map((i)=>Store.mediaDelTmp.push(i))
+                    localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(Store.mediaDelTmp)));
+                })
             }else{
                 runInAction(() => {this.clearData()})
                 return 200
