@@ -15,6 +15,7 @@ import {CompAlertDialog} from "./comp-alert";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import CompCheckbox from "./comp-checkbox";
 import CompResult from "./comp-result";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -87,12 +88,20 @@ const CompEdit = (props) => {
     const { id } = useParams();
 
     useEffect(()=>{
-        runInAction(() => {
-            AdminCompStore.getCompId(id)
-            Store.referenceBookGet()
+        runInAction(async () => {
+            if(localStorage.getItem('mediaDelTmp')){
+                await Store.sendMediaDelTmp()
+            }
+            await AdminCompStore.getCompId(id)
+            await Store.referenceBookGet()
         })
         return ()=> {
-            runInAction(() => {AdminCompStore.clearData()})
+            runInAction(async () => {
+                if(localStorage.getItem('mediaDelTmp')){
+                    await Store.sendMediaDelTmp()
+                }
+            })
+            runInAction(() => {AdminNewsStore.clearData()})
         }
     },[id])
 
