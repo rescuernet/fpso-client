@@ -2,18 +2,14 @@ import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
 import {runInAction, toJS} from "mobx";
 import {useParams} from "react-router-dom";
-import UiNewsStore from "../../../bll/ui/ui-news-store";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
+import UiNewsStore from "../../../../bll/ui/ui-news-store";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {Box, Container, Divider} from "@material-ui/core";
-import pdfIcon from "../../../common/assets/image/icons/pdf.png";
-import docIcon from "../../../common/assets/image/icons/doc.png";
-import docxIcon from "../../../common/assets/image/icons/docx.png";
-import xlsIcon from "../../../common/assets/image/icons/xls.png";
-import xlsxIcon from "../../../common/assets/image/icons/xlsx.png";
 import {makeStyles} from "@material-ui/core/styles";
-import {useGridPoint} from "../../../utils/breakpoints";
-import Header from "../header/header";
+import {useGridPoint} from "../../../../utils/breakpoints";
+import Header from "../../header/header";
 import s from "./news-view.module.css"
+import NewsViewItemDoc from "./news-view-item-doc";
 
 const useStyles = makeStyles({
     root: {
@@ -103,30 +99,17 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
     },
-    docsItem: {
-        display: "flex",
-        alignItems: "center",
-        margin: '5px 0',
-        '& a': {
-            margin: '3px 0',
-            padding: '3px 0'
-        },
-        '& a:hover': {
-            color: '#ff6200!important'
-        },
-        '& img': {
-            height: 30,
-            width: 'auto',
-            marginRight: 10
-        },
-    }
+
 })
+
 
 
 const NewsView = () => {
     const classes = useStyles();
 
     const news = toJS(UiNewsStore.newsOne)
+
+
 
     const { id } = useParams();
 
@@ -172,25 +155,8 @@ const NewsView = () => {
 
                             {news.docs.length > 0 &&
                             <div className={classes.docs}>
-                                {news.docs.map((i) => (
-                                    <div className={classes.docsItem}>
-                                        {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'pdf' &&
-                                        <img src={pdfIcon} alt="" width={40}/>
-                                        }
-                                        {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'doc' &&
-                                        <img src={docIcon} alt="" width={40}/>
-                                        }
-                                        {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'docx' &&
-                                        <img src={docxIcon} alt="" width={40}/>
-                                        }
-                                        {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xls' &&
-                                        <img src={xlsIcon} alt="" width={40}/>
-                                        }
-                                        {i.doc.slice(i.doc.lastIndexOf(".")+1) === 'xlsx' &&
-                                        <img src={xlsxIcon} alt="" width={40}/>
-                                        }
-                                        <a href={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${i.doc}`} target={'_blank'} rel="noreferrer">{i.title}</a>
-                                    </div>
+                                {news.docs.map((item,index) => (
+                                    <NewsViewItemDoc key={'docs' + index} item={item}/>
                                 ))}
                             </div>
                             }
@@ -199,8 +165,8 @@ const NewsView = () => {
 
                             {news.images.length > 0 &&
                             <div className={classes.images}>
-                                {news.images.map((i) => (
-                                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${i}`} alt=""/>
+                                {news.images.map((item,index) => (
+                                    <img key={'images' + index} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${item}`} alt=""/>
                                 ))}
                             </div>
                             }

@@ -3,7 +3,7 @@ import CompetitionsView from "../ui/client/comp/comp-view/comp-view";
 import LoginForm from "../ui/client/login/login-form";
 import Main from "../ui/client/main/main";
 import News from "../ui/client/news/news";
-import NewsView from "../ui/client/news/news-view";
+import NewsView from "../ui/client/news/news-view/news-view";
 
 
 export const MenuTypes = {

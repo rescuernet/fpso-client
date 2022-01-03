@@ -86,7 +86,7 @@ const Menu = (props) => {
         >
             <List>
                 <ListItem
-                    button key={1}
+                    button key={'main' + 1}
                     className={location === '/' ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
                     onClick={()=> setLink('/')}
                 >
@@ -103,7 +103,7 @@ const Menu = (props) => {
                     </ListItem>)
                 )}
                 <ListItem
-                    button key={1}
+                    button key={'admin' + 1}
                     onClick={()=> setLink('/5070/admin/')}
                 >
                     {'admin'}
