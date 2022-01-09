@@ -106,32 +106,54 @@ class AdminCompetitionsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const actualMediaArr = []
-            if(this.compOne.avatar){actualMediaArr.push(this.compOne.avatar)}
+            if(localStorage.getItem('mediaDelTmp')){
+                if(this.compOne.avatar){actualMediaArr.push(this.compOne.avatar)}
 
-            /*if(this.compOne?.images && this.compOne.images.length > 0){this.compOne.images.map((i)=> actualMediaArr.push(i))}*/
+                /*if(this.compOne?.images && this.compOne.images.length > 0){this.compOne.images.map((i)=> actualMediaArr.push(i))}*/
 
-            if(this.compOne.docs.length > 0){this.compOne.docs.map((i)=> actualMediaArr.push(i.doc))}
-            if(this.compOne.results.length > 0){
-                // eslint-disable-next-line array-callback-return
-                this.compOne.results.map((i)=> {
-                    if(i.docs.length > 0){
-                        i.docs.map((ii)=> actualMediaArr.push(ii.doc))
-                    }
-                })
+                if(this.compOne.docs.length > 0){this.compOne.docs.map((i)=> actualMediaArr.push(i.doc))}
+                if(this.compOne.results.length > 0){
+                    // eslint-disable-next-line array-callback-return
+                    this.compOne.results.map((i)=> {
+                        if(i.docs.length > 0){
+                            i.docs.map((ii)=> actualMediaArr.push(ii.doc))
+                        }
+                    })
+                }
+                const mediaDelTmp = toJS(Store.mediaDelTmp)
+                const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+                Store.mediaDelTmp = diff
+                localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
             }
-            const mediaDelTmp = toJS(Store.mediaDelTmp)
-            const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
-            Store.mediaDelTmp = diff
-            localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
-
 
             const response = await AdminCompetitionsService.compUpdate({data: this.compOne,mediaDel: this.mediaDel});
             if(response.data?.error){
                 runInAction(() => {
                     this.tmp_errors = <div>{response.data.error}</div>
-                    actualMediaArr.map((i)=>Store.mediaDelTmp.push(i))
-                    localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(Store.mediaDelTmp)));
+                    if(localStorage.getItem('mediaDelTmp')){
+                        actualMediaArr.map((i)=>Store.mediaDelTmp.push(i))
+                        localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(Store.mediaDelTmp)));
+                    }
                 })
+            }else{
+                this.clearData()
+                return 200
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    compDelete = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminCompetitionsService.compDelete(id);
+            if(response.data?.error){
+                runInAction(() => {this.tmp_errors =
+                    <div>{response.data.error}</div>})
             }else{
                 runInAction(() => {this.clearData()})
                 return 200

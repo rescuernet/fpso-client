@@ -89,18 +89,13 @@ const NewsCreateEdit = () => {
 
     useEffect(()=>{
         runInAction(async () => {
-            if(localStorage.getItem('mediaDelTmp')){
-                await Store.sendMediaDelTmp()
-            }
+            await Store.sendMediaDelTmp()
             await AdminNewsStore.getNewsId(id)
         })
         return ()=> {
             runInAction(async () => {
-                if(localStorage.getItem('mediaDelTmp')){
-                    await Store.sendMediaDelTmp()
-                }
-            })
-            runInAction(() => {AdminNewsStore.clearData()})
+                await Store.sendMediaDelTmp()
+                AdminNewsStore.clearData()})
         }
     },[id])
 

@@ -2,13 +2,15 @@ import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Divider, Typography} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
-import Store from "../../../bll/store";
-import AdminMenu from "../menu/admin-menu";
-import AdminHeader from "../header/admin-header";
+import AdminMenu from "../../menu/admin-menu";
+import AdminHeader from "../../header/admin-header";
 import {runInAction, toJS} from "mobx";
-import ReferenceBooksPoolItem from "./reference-books-pool-item";
+import PoolsItem from "./pools-item";
 import {useHistory} from "react-router-dom";
-import {ADM_RM} from "../../../routes/admin-routes";
+import {ADM_RM} from "../../../../routes/admin-routes";
+import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
+import Store from "../../../../bll/store";
+import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,34 +41,45 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     pool: {
-        margin: 20
+        margin: 20,
+        '@media (max-width: 600px)' : {
+            margin: 0,
+            marginBottom: 20
+        },
     },
     control: {
         maxWidth: 650,
         display: "flex",
         justifyContent: "space-between",
-        margin: '0 20px'
+        margin: 20,
+        marginTop: 0,
+        '@media (max-width: 600px)' : {
+            margin: 0,
+            marginBottom: 20
+        },
     },
 }))
 
-const ReferenceBooksPool = (props) => {
+const Pools = (props) => {
     const classes = useStyles();
     const history = useHistory()
 
     useEffect(()=>{
         runInAction(async ()=>{
-            await Store.referenceBookGet()
+            await AdminReferenceBooksStore.poolsGet()
         })
     },[])
 
-    const pool = toJS(Store.referenceBooks?.pool)
-
-    const UpdateReference = ()=> {
+    const create = () => {
         runInAction(async ()=>{
-            await Store.referenceBookUpdate()
-            history.push(ADM_RM.Reference__Books.path)
+            const response = await AdminReferenceBooksStore.poolsCreate()
+            response === 'OK'
+                ? history.push(ADM_RM.Reference__Books__Pool_Edit.getUrl(AdminReferenceBooksStore.referenceBooks.pools.id))
+                : history.push(ADM_RM.Reference__Books__Pool.path)
         })
     }
+
+    const pool = toJS(AdminReferenceBooksStore.referenceBooks.pools.list)
 
     return (
         <div className={classes.root}>
@@ -75,24 +88,21 @@ const ReferenceBooksPool = (props) => {
                 {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Бассейны</Typography></div>}
                 <Divider/>
                 <div className={classes.content}>
+                    <div className={classes.control}>
+                        <Button variant={"contained"} color={"primary"} onClick={()=>{create()}}>Добавить новый</Button>
+                    </div>
                     <div className={classes.pool}>
                         {pool &&
                         pool.map((item,index)=>(
-                            <ReferenceBooksPoolItem key={'referenceItem'+index} item={item} index={index}/>
+                            <PoolsItem key={'referenceItem'+index} item={item} index={index}/>
                         ))
                         }
 
                     </div>
-                    {pool &&
-                        <div className={classes.control}>
-                            <Button variant={"contained"} color={"primary"} onClick={()=>{runInAction(()=>{Store.referenceBooks.pool.push({poolName:'',poolAddress:''})})}}>Добавить новый</Button>
-                            <Button variant={"contained"} color={"secondary"} onClick={()=>{UpdateReference()}}>Сохранить</Button>
-                        </div>
-                    }
                 </div>
             </div>
         </div>
     );
 };
 
-export default observer(ReferenceBooksPool);
+export default observer(Pools);

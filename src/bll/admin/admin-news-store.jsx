@@ -123,26 +123,29 @@ class AdminNewsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const actualMediaArr = []
-            if(this.newsOne.avatar){actualMediaArr.push(this.newsOne.avatar)}
-            if(this.newsOne?.images && this.newsOne.images.length > 0){this.newsOne.images.map((i)=> actualMediaArr.push(i))}
-            if(this.newsOne?.docs && this.newsOne.docs.length > 0){this.newsOne.docs.map((i)=> actualMediaArr.push(i.doc))}
+            if(localStorage.getItem('mediaDelTmp')){
+                if(this.newsOne.avatar){actualMediaArr.push(this.newsOne.avatar)}
+                if(this.newsOne?.images && this.newsOne.images.length > 0){this.newsOne.images.map((i)=> actualMediaArr.push(i))}
+                if(this.newsOne?.docs && this.newsOne.docs.length > 0){this.newsOne.docs.map((i)=> actualMediaArr.push(i.doc))}
 
-            const mediaDelTmp = toJS(Store.mediaDelTmp)
+                const mediaDelTmp = toJS(Store.mediaDelTmp)
 
-            const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
-            Store.mediaDelTmp = diff
-            localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
-
+                const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+                Store.mediaDelTmp = diff
+                localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
+            }
 
             const response = await AdminNewsService.newsUpdate({data:this.newsOne,mediaDel: this.mediaDel});
             if(response.data?.error){
                 runInAction(() => {
                     this.news_tmp_errors = <div>{response.data.error}</div>
-                    actualMediaArr.map((i)=>Store.mediaDelTmp.push(i))
-                    localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(Store.mediaDelTmp)));
+                    if(localStorage.getItem('mediaDelTmp')){
+                        actualMediaArr.map((i)=>Store.mediaDelTmp.push(i))
+                        localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(Store.mediaDelTmp)));
+                    }
                 })
             }else{
-                runInAction(() => {this.clearData()})
+                this.clearData()
                 return 200
             }
         } catch (e) {

@@ -4,7 +4,8 @@ import AdminNewsEdit from "../ui/admin/news/news-create-edit/news-create-edit";
 import AdminCompetitions from "../ui/admin/comp/comp";
 import AdminCompetitionsEdit from "../ui/admin/comp/comp-edit/comp-edit";
 import AdminReferenceBooks from "../ui/admin/reference-books/reference-books";
-import AdminReferenceBooksPool from "../ui/admin/reference-books/reference-books-pool";
+import AdminReferenceBooksPools from "../ui/admin/reference-books/pool/pools";
+import AdminReferenceBooksPoolsEdit from "../ui/admin/reference-books/pool/pools-edit";
 
 
 export const MenuTypes = {
@@ -84,9 +85,18 @@ const AdminRouterManager = {
         }
     },
     Reference__Books__Pool: {
-        path:`${PrefixPath.admin}/reference-books/pool`,
-        Component: AdminReferenceBooksPool,
-        getUrl() {return `${PrefixPath.admin}/reference-books/pool`},
+        path:`${PrefixPath.admin}/reference-books/pools`,
+        Component: AdminReferenceBooksPools,
+        getUrl() {return `${PrefixPath.admin}/reference-books/pools`},
+        auth: true,
+        header: {
+            view: false
+        }
+    },
+    Reference__Books__Pool_Edit: {
+        path:`${PrefixPath.admin}/reference-books/pools/edit/:id`,
+        Component: AdminReferenceBooksPoolsEdit,
+        getUrl(id) {return `${PrefixPath.admin}/reference-books/pools/edit/${id}`},
         auth: true,
         header: {
             view: false

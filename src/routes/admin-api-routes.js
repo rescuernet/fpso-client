@@ -12,6 +12,10 @@ const AdminAPIRouterManager = {
         path: `${PrefixPath.admin}/mediadeltmp`,
         getUrl() {return `${PrefixPath.admin}/mediadeltmp`},
     },
+    mediaDelTmpBlocking: {
+        path: `${PrefixPath.admin}/mediadeltmpblocking`,
+        getUrl() {return `${PrefixPath.admin}/mediadeltmpblocking`},
+    },
     News__Create: {
         path: `${PrefixPath.admin}/news/create`,
         getUrl() {return `${PrefixPath.admin}/news/create`},
@@ -56,9 +60,17 @@ const AdminAPIRouterManager = {
         path: `${PrefixPath.admin}/competitions/image-create`,
         getUrl() {return `${PrefixPath.admin}/competitions/image-create`},
     },
-    Reference__Books__update: {
-        path:`${PrefixPath.admin}/reference-books/update`,
-        getUrl() {return `${PrefixPath.admin}/reference-books/update`},
+    Competitions__Delete: {
+        path: `${PrefixPath.admin}/competitions/delete`,
+        getUrl() {return `${PrefixPath.admin}/competitions/delete`},
+    },
+    Reference__Books__Pools_Get: {
+        path:`${PrefixPath.admin}/reference-books/pools/get`,
+        getUrl() {return `${PrefixPath.admin}/reference-books/pools/get`},
+    },
+    Reference__Books__Pools_Create: {
+        path:`${PrefixPath.admin}/reference-books/pools/create`,
+        getUrl() {return `${PrefixPath.admin}/reference-books/pools/create`},
     },
 }
 

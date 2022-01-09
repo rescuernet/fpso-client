@@ -89,19 +89,15 @@ const CompEdit = (props) => {
 
     useEffect(()=>{
         runInAction(async () => {
-            if(localStorage.getItem('mediaDelTmp')){
-                await Store.sendMediaDelTmp()
-            }
+            await Store.sendMediaDelTmp()
             await AdminCompStore.getCompId(id)
             await Store.referenceBookGet()
         })
         return ()=> {
             runInAction(async () => {
-                if(localStorage.getItem('mediaDelTmp')){
-                    await Store.sendMediaDelTmp()
-                }
+                await Store.sendMediaDelTmp()
+                AdminNewsStore.clearData()
             })
-            runInAction(() => {AdminNewsStore.clearData()})
         }
     },[id])
 
