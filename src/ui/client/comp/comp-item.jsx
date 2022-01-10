@@ -28,10 +28,29 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         fontSize: 0,
-        '& img': {
-            width: 300,
-            height: 300,
-        }
+        overflow: "hidden"
+    },
+    img: {
+        width: 300,
+        height: 300,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative"
+    },
+    imgOrig: {
+        zIndex: 1000,
+        border: '1px solid #fff'
+    },
+    imgBackWrapper: {
+        position: 'absolute',
+        width: 300,
+        height: 300,
+        overflow: 'hidden'
+    },
+    imgBack: {
+        filter: 'blur(50px)',
+        height: 450
     },
     date: {
         height: 30,
@@ -48,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
         fontFamily: 'Roboto',
         fontSize: '85%',
         padding: '0 20px',
@@ -79,6 +97,8 @@ const CompItem = ({comp,index}) => {
     const curDate = dateFns.format(new Date(), 'yyyy-MM-dd')
     const compDateEnd = dateFns.format(new Date(comp.dateEnd), 'yyyy-MM-dd')
 
+    const avatarIMG = `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
+
     return (
         <Box className={classes.root}>
             {curDate > compDateEnd &&
@@ -87,18 +107,22 @@ const CompItem = ({comp,index}) => {
                 </div>
             }
             <div className={classes.avatar}>
-                <img src={
-                    comp.avatar
-                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
-                        : "http://khvnews.ru/wp-content/uploads/2020/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-42.jpg"
-                } alt=""/>
+                <div className={classes.img}>
+                    <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                    <div className={classes.imgBackWrapper}>
+                        <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                    </div>
+                </div>
             </div>
             <div className={classes.date}>
                 {comp.dateStart === comp.dateEnd
                 ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
                 : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
             </div>
-            <div className={classes.location}>{comp.location}</div>
+            <div className={classes.location}>
+                <div>{comp.location.name}</div>
+                <div>{comp.location.address}</div>
+            </div>
             <Divider/>
             <div className={classes.text}>
                 <div className={s.text}>{comp.headerFirst}</div>

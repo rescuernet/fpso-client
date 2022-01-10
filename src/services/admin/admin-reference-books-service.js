@@ -17,4 +17,7 @@ export default class AdminReferenceBooksService {
         return $api.get(ADM_RM.Reference__Books__Pool_Edit.getUrl(id))
     }
 
+    static async pools_save(arr) {
+        return $api.post(ADM_API_RM.Reference__Books__Pools_Save.path,arr)
+    }
 }

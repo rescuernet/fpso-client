@@ -38,7 +38,7 @@ const CompResult = ({compId}) => {
     return (
         <>
             <div className={classes.results}>
-                {results.length > 0 && results.map((item,index)=> (
+                {results.map((item,index)=> (
                     <CompResultDay key={index} index={index} compId={compId} item={item}/>
                 ))}
                 {(!results || results.length < countCompDay) &&

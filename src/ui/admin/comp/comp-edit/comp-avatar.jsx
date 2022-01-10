@@ -2,13 +2,36 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
         padding: '20px 0'
+    },
+    img: {
+        width: 300,
+        height: 300,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20,
+        position: "relative"
+    },
+    imgOrig: {
+        zIndex: 1000,
+        border: '1px solid #fff'
+    },
+    imgBackWrapper: {
+        position: 'absolute',
+        width: 300,
+        height: 300,
+        overflow: 'hidden'
+    },
+    imgBack: {
+        filter: 'blur(30px)',
+        height: 450
     },
     avatarAdd: {
         display: "flex",
@@ -30,17 +53,13 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        '& img': {
-            display: 'block',
-            marginBottom: 20
-        }
     },
     avatarError: {
         color: '#ff0000',
     },
 }))
 
-const CompAvatar = ({compId}) => {
+const CompAvatar = () => {
     const classes = useStyles();
 
     // загрузка аватар
@@ -61,13 +80,20 @@ const CompAvatar = ({compId}) => {
         })
     };
 
+    const avatarIMG = `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${AdminCompStore.compOne.avatar}`
+
 
     return (
         <div className={classes.avatar} id={'avatar'}>
             <div className={classes.avatarControl}>
                 {AdminCompStore.compOne.avatar &&
                 <>
-                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${AdminCompStore.compOne.avatar}`} alt=""/>
+                    <div className={classes.img}>
+                        <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                        <div className={classes.imgBackWrapper}>
+                            <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                        </div>
+                    </div>
                     <Button
                         variant={"outlined"}
                         color={"primary"}

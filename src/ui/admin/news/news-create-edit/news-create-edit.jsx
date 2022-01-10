@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import AdminMenu from "../../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Divider, Typography} from "@material-ui/core";
+import {Button, Divider} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction, toJS} from "mobx";
-import AdminHeader from "../../header/admin-header";
+import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 import {NewsAlertDialog} from "./news-alert";
 import {useHistory, useParams} from "react-router-dom";
@@ -15,41 +13,13 @@ import NewsFields from "./news-fields";
 import NewsCheckbox from "./news-checkbox";
 import NewsDocs from "./news-docs";
 import {ADM_RM} from "../../../../routes/admin-routes";
+import AdminPageWrapper from "../../common/admin-page-wrapper";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        minHeight: '100%',
-        position: "relative"
-    },
     wrapper: {
-        flexGrow: 1,
-        [theme.breakpoints.between('sm', 'md')]: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-        },
+        maxWidth: 600
     },
-    header: {
-        display: "flex",
-        justifyContent: "space-between",
-        padding: 20
-    },
-    content: {
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: 600,
-        margin: '20px 40px',
-        '@media (max-width: 1050px)' : {
-            marginTop: 45,
-            margin: '20px 10px',
-        },
-        [theme.breakpoints.between('sm', 'md')]: {
-            width: 600
-        },
-    },
-
     control: {
         display: "flex",
         flexDirection: "column",
@@ -131,87 +101,80 @@ const NewsCreateEdit = () => {
     }
 
     return (
-        <div className={classes.root}>
-            {Store.width > 1050 ? <AdminMenu open={true} variant={'permanent'} menuIconView={false}/> : <AdminHeader header={'Новости'}/>}
-            <div className={classes.wrapper}>
-                {Store.width > 1050 && <div className={classes.header}><Typography variant={'h5'}>Новости</Typography></div>}
-                <Divider/>
-                <div className={classes.content}>
-                    {AdminNewsStore.newsOne &&
-                        <>
-                            <NewsAvatar newsId={id}/>
+        <AdminPageWrapper title={'Новости'}>
+            {AdminNewsStore.newsOne &&
+                <div className={classes.wrapper}>
+                    <NewsAvatar newsId={id}/>
 
-                            <Divider/>
+                    <Divider/>
 
-                            <NewsFields/>
+                    <NewsFields/>
 
-                            <Divider/>
+                    <Divider/>
 
-                            <NewsImages newsId={id}/>
+                    <NewsImages newsId={id}/>
 
-                            <Divider/>
+                    <Divider/>
 
-                            <NewsDocs newsId={id}/>
+                    <NewsDocs newsId={id}/>
 
-                            <Divider/>
+                    <Divider/>
 
-                            <div className={classes.control}>
+                    <div className={classes.control}>
 
-                                <NewsCheckbox />
+                        <NewsCheckbox />
 
-                                <Divider/>
-                                <div className={classes.controlButton}>
-                                    <Button
-                                        className={classes.Button}
-                                        variant={"outlined"}
-                                        color={"primary"}
-                                        onClick={()=>{Cancel()}}
-                                    >
-                                        Отмена
-                                    </Button>
-                                    <Button
-                                        className={classes.Button}
-                                        variant="contained"
-                                        color={"primary"}
-                                        onClick={()=>{UpdateArr()}}
-                                    >
-                                        Сохранить
-                                    </Button>
-                                    {!AdminNewsStore.newsOne.tmpNews &&
-                                    <Button
-                                        className={classes.Button}
-                                        variant="contained"
-                                        color={"secondary"}
-                                        onClick={()=>{newsDelete()}}
-                                    >
-                                        удалить
-                                    </Button>
-                                    }
-                                    {deleteNews &&
-                                    <NewsAlertDialog
-                                        alertType={'confirm'}
-                                        open={true}
-                                        header={'Внимание!'}
-                                        text={'Подтвердите удаление новости'}
-                                        delete={()=>{newsDeleteConfirm(id)}}
-                                        close={()=>{setDeleteNews(false)}}
-                                    />
-                                    }
+                        <Divider/>
+                        <div className={classes.controlButton}>
+                            <Button
+                                className={classes.Button}
+                                variant={"outlined"}
+                                color={"primary"}
+                                onClick={()=>{Cancel()}}
+                            >
+                                Отмена
+                            </Button>
+                            <Button
+                                className={classes.Button}
+                                variant="contained"
+                                color={"primary"}
+                                onClick={()=>{UpdateArr()}}
+                            >
+                                Сохранить
+                            </Button>
+                            {!AdminNewsStore.newsOne.tmpNews &&
+                                <Button
+                                    className={classes.Button}
+                                    variant="contained"
+                                    color={"secondary"}
+                                    onClick={()=>{newsDelete()}}
+                                >
+                                    удалить
+                                </Button>
+                            }
+                            {deleteNews &&
+                                <NewsAlertDialog
+                                    alertType={'confirm'}
+                                    open={true}
+                                    header={'Внимание!'}
+                                    text={'Подтвердите удаление новости'}
+                                    delete={()=>{newsDeleteConfirm(id)}}
+                                    close={()=>{setDeleteNews(false)}}
+                                />
+                            }
 
-                                </div>
-                            </div>
-                        </>
+                        </div>
+                    </div>
+                    {AdminNewsStore.news_tmp_errors &&
+                        <NewsAlertDialog
+                            open={true}
+                            header={'Ошибка!'}
+                            text={AdminNewsStore.news_tmp_errors}
+                        />
                     }
                 </div>
-            </div>
-            {AdminNewsStore.news_tmp_errors &&
-                <NewsAlertDialog
-                    open={true}
-                    header={'Ошибка!'}
-                    text={AdminNewsStore.news_tmp_errors}
-                />
             }
-        </div>
+        </AdminPageWrapper>
     );
 };
 

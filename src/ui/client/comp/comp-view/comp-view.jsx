@@ -40,21 +40,44 @@ const useStyles = makeStyles({
     header: {
         display: "flex",
         marginBottom: 20,
+        height: 300,
         [useGridPoint.breakpoints.down('xs')]: {
             flexDirection: 'column',
+            height: 'auto',
         },
     },
     avatar: {
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         margin: '0 20px 0 0',
         fontSize: 0,
-        '& img': {
-            borderRadius: 10,
-        },
         [useGridPoint.breakpoints.down('xs')]: {
             margin: '0 0 20px 0',
         },
+    },
+    img: {
+        width: 300,
+        height: 300,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+        overflow: "hidden"
+    },
+    imgOrig: {
+        zIndex: 1000,
+        border: '1px solid #fff'
+    },
+    imgBackWrapper: {
+        position: 'absolute',
+        width: 300,
+        height: 300,
+        overflow: 'hidden',
+    },
+    imgBack: {
+        filter: 'blur(20px)',
+        height: 450
     },
     dateWrap: {
         flexGrow: 1,
@@ -119,6 +142,7 @@ const CompView = (props) => {
     },[id])
 
 
+
     return (
         <>
             <Header title={'Соревнования'}/>
@@ -128,11 +152,12 @@ const CompView = (props) => {
                     <Box className={classes.comp}>
                         <div className={classes.header}>
                             <div className={classes.avatar}>
-                                <img src={
-                                    comp.avatar
-                                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
-                                        : null
-                                } alt=""/>
+                                <div className={classes.img}>
+                                    <img className={classes.imgOrig} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
+                                    <div className={classes.imgBackWrapper}>
+                                        <img className={classes.imgBack} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
+                                    </div>
+                                </div>
                             </div>
                             <div className={classes.dateWrap}>
                                 <div className={classes.date}>
@@ -140,7 +165,10 @@ const CompView = (props) => {
                                         ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
                                         : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
                                 </div>
-                                <div className={classes.location}>{comp.location}</div>
+                                <div className={classes.location}>
+                                    <div>{comp.location.name}</div>
+                                    <div>{comp.location.address}</div>
+                                </div>
                                 <div className={classes.headerFirstWrap}>
                                     <div className={`${classes.headerFirst} ${s.headerText}`}>
                                         {comp.headerFirst}

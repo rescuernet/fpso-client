@@ -8,6 +8,7 @@ class AdminCompetitionsStore {
     tmpCompId = null
     compOne = null
     mediaDel = []
+    pools = null
 
 
     constructor() {
@@ -19,6 +20,7 @@ class AdminCompetitionsStore {
             this.tmp_errors = null
             this.tmpCompId = null
             this.compOne = null
+            this.pools = null
         })
     }
 
@@ -48,7 +50,10 @@ class AdminCompetitionsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminCompetitionsService.getCompId(id);
-            runInAction(() => {this.compOne = response.data})
+            runInAction(() => {
+                this.compOne = response.data.comp
+                this.pools = response.data.pools
+            })
         } catch (e) {
             console.log(e)
         } finally {

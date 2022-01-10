@@ -49,7 +49,7 @@ const CompFields = (props) => {
 
     const compOne = toJS(AdminCompStore.compOne)
 
-    const locationPool = Store.referenceBooks?.pool || []
+    const locationPool = AdminCompStore.pools
 
     return (
         <>
@@ -93,7 +93,7 @@ const CompFields = (props) => {
                             <Select
                                 labelId="location-select-label"
                                 id="locationSelect"
-                                value={compOne.location || ''}
+                                value={compOne.location}
                                 onChange={(e)=>{
                                     runInAction(()=>{
                                         AdminCompStore.compOne.location = e.target.value
@@ -109,7 +109,7 @@ const CompFields = (props) => {
                                 </MenuItem>
                                 {locationPool.length > 0 &&
                                     locationPool.map((item)=>(
-                                        <MenuItem key={item.poolName} classes={{root: classes.selectMenuItem}} value={`${item.poolName}, ${item.poolAddress}`}>{`${item.poolName}, ${item.poolAddress}`}</MenuItem>
+                                        <MenuItem key={item._id} classes={{root: classes.selectMenuItem}} value={item._id}>{`${item.name}, ${item.address}`}</MenuItem>
                                     ))}
                             </Select>
                         </FormControl>

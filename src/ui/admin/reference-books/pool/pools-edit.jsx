@@ -1,25 +1,63 @@
 import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import {TextField} from "@material-ui/core";
+import {Button, Divider, FormControlLabel, Switch, TextField} from "@material-ui/core";
 import {runInAction, toJS} from "mobx";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
 import {useHistory, useParams} from "react-router-dom";
-import Store from "../../../../bll/store";
+import {ADM_RM} from "../../../../routes/admin-routes";
+import AdminPageWrapper from "../../common/admin-page-wrapper";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 
 const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        maxWidth: 600
+    },
     item: {
-        maxWidth: 650,
         display: "flex",
+        flexDirection: "column",
         justifyContent: "space-between",
         flexWrap: "wrap",
         marginBottom: 20,
-        borderBottom: '1px solid #ccc',
         '& .MuiTextField-root': {
             marginBottom: 20,
             minWidth: 300
         }
+    },
+    control: {
+        display: "flex",
+        flexDirection: "column",
+        marginBottom: 20,
+        '@media (max-width: 430px)' : {
+            marginTop: 20,
+        },
+    },
+    controlCheckBox: {
+        display: "flex",
+        flexDirection: 'column',
+        flexWrap: "wrap",
+        padding: 10
+    },
+    controlButton: {
+        display: "flex",
+        justifyContent: "space-evenly",
+        flexWrap: "wrap",
+        padding: 20,
+        '@media (max-width: 750px)' : {
+            flexDirection: 'column',
+            alignItems: "center",
+        },
+    },
+    checkBox: {
+        '@media (max-width: 430px)' : {
+            marginBottom: 20,
+        },
+    },
+    Button: {
+        width: 120,
+        '@media (max-width: 430px)' : {
+            marginBottom: 20,
+        },
     }
 }))
 
@@ -34,42 +72,109 @@ const PoolsEdit = (props) => {
         runInAction(async () => {
             await AdminReferenceBooksStore.poolsId(id)
         })
-        /*return ()=> {
-            runInAction(async () => {
-                await Store.sendMediaDelTmp()
-                AdminNewsStore.clearData()})
-        }*/
     },[id])
 
     const pool = AdminReferenceBooksStore.referenceBooks.pools.one
 
+    console.log(toJS(pool))
+
+    //отмена
+    const Cancel = () => {
+        history.push(ADM_RM.Reference__Books__Pool.path)
+    };
+
+    //сохранить
+    const Save = async () => {
+        const result = await AdminReferenceBooksStore.poolSave()
+        if(result === 200){
+            history.push(ADM_RM.Reference__Books__Pool.path)
+        }
+    };
+
     return (
-        <div className={classes.item}>
-            <TextField
-                label="Бассейн"
-                value={pool?.name || ''}
-                onChange={(e)=>{
-                    runInAction(()=>{
-                        AdminReferenceBooksStore.referenceBooks.pools.one.name = e.target.value
-                    })
-                }}
-                variant="outlined"
-                error={AdminReferenceBooksStore.referenceBooks.pools.one?.name && AdminReferenceBooksStore.referenceBooks.pools.one?.name.length > 50}
-                helperText={AdminReferenceBooksStore.referenceBooks.pools.one?.name && AdminReferenceBooksStore.referenceBooks.pools.one?.name.length > 50 && 'максимум 50 символов'}
-            />
-            <TextField
-                label="Адрес"
-                value={pool?.address || ''}
-                onChange={(e)=>{
-                    runInAction(()=>{
-                        AdminReferenceBooksStore.referenceBooks.pools.one.address = e.target.value
-                    })
-                }}
-                variant="outlined"
-                error={AdminReferenceBooksStore.referenceBooks.pools.one?.address && AdminReferenceBooksStore.referenceBooks.pools.one?.address.length > 50}
-                helperText={AdminReferenceBooksStore.referenceBooks.pools.one?.address && AdminReferenceBooksStore.referenceBooks.pools.one?.address.length > 50 && 'максимум 50 символов'}
-            />
-        </div>
+        <AdminPageWrapper title={'Бассейны'}>
+            <div className={classes.wrapper}>
+                <h4>{pool?.name ? 'Редактирование' : 'Новый бассейн'}</h4>
+                <h6 style={{color: '#ff0000',textAlign: 'center'}}>Внимание! Внесенные изменения будут отображаться везде, где используется данный бассейн!</h6>
+                <div className={classes.item}>
+                    <TextField
+                        label="Бассейн"
+                        value={pool?.name || ''}
+                        onChange={(e)=>{
+                            runInAction(()=>{
+                                pool.name = e.target.value
+                            })
+                        }}
+                        variant="outlined"
+                        error={pool?.name && pool?.name.length > 50}
+                        helperText={pool?.name && pool?.name.length > 50 && 'максимум 50 символов'}
+                    />
+                    <TextField
+                        label="Адрес"
+                        value={pool?.address || ''}
+                        onChange={(e)=>{
+                            runInAction(()=>{
+                                pool.address = e.target.value
+                            })
+                        }}
+                        variant="outlined"
+                        error={pool?.address && pool?.address.length > 50}
+                        helperText={pool?.address && pool?.address.length > 50 && 'максимум 50 символов'}
+                    />
+                </div>
+                <div className={classes.control}>
+
+                    <Divider/>
+                    <div className={classes.controlButton}>
+                        <FormControlLabel className={classes.checkBox}
+                            control={
+                                <Switch
+                                    checked={pool?.view || false}
+                                    onChange={(e)=>{runInAction(()=>{pool.view = e.target.checked})}}
+                                    name="fixedNews"
+                                    color="secondary"
+                                />
+                            }
+                            label={pool?.view && pool.view ? 'отображать в списках' : 'не отображать в списках'}
+                        />
+                        <Button
+                            className={classes.Button}
+                            variant={"outlined"}
+                            color={"primary"}
+                            onClick={()=>{Cancel()}}
+                        >
+                            Отмена
+                        </Button>
+                        <Button
+                            className={classes.Button}
+                            variant="contained"
+                            color={"primary"}
+                            onClick={()=>{Save()}}
+                        >
+                            Сохранить
+                        </Button>
+
+                        {/*{deleteNews &&
+                                <NewsAlertDialog
+                                    alertType={'confirm'}
+                                    open={true}
+                                    header={'Внимание!'}
+                                    text={'Подтвердите удаление новости'}
+                                    delete={()=>{newsDeleteConfirm(id)}}
+                                    close={()=>{setDeleteNews(false)}}
+                                />
+                            }*/}
+                        {/*{AdminNewsStore.news_tmp_errors &&
+                                <NewsAlertDialog
+                                    open={true}
+                                    header={'Ошибка!'}
+                                    text={AdminNewsStore.news_tmp_errors}
+                                />
+                            }*/}
+                    </div>
+                </div>
+            </div>
+        </AdminPageWrapper>
     );
 };
 

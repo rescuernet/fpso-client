@@ -1,10 +1,11 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
 import AdminReferenceBooksService from "../../services/admin/admin-reference-books-service";
+import Store from "../store";
 
 
 
 class AdminReferenceBooksStore {
-
+    tmp_errors = null
     referenceBooks = {
         pools: {
             list: [],
@@ -18,14 +19,14 @@ class AdminReferenceBooksStore {
         makeAutoObservable(this);
     }
 
-    /*clearData() {
+    clearData() {
         runInAction(() => {
-            this.news_tmp_errors = null
-            this.tmpNewsId = null
-            this.newsOne = null
-            this.mediaDel = []
+            this.tmp_errors = null
+            this.referenceBooks.pools.one = null
+            this.referenceBooks.pools.id = null
+            this.referenceBooks.pools.list = null
         })
-    }*/
+    }
 
     poolsGet = async () => {
         runInAction(() => {this.isLoading = true})
@@ -80,14 +81,18 @@ class AdminReferenceBooksStore {
         }
     }
 
-    /*referenceBookGet = async () => {
+    poolSave = async () => {
         runInAction(() => {this.isLoading = true})
         try {
-            const response = await AdminOtherService.referenceBookGet();
-            const ref = response.data
-            delete ref._id
-            delete ref.__v
-            runInAction(() => {this.referenceBooks = ref})
+            const response = await AdminReferenceBooksService.pools_save(this.referenceBooks.pools.one)
+            if(response.data?.error){
+                runInAction(() => {
+                    this.tmp_errors = <div>{response.data.error}</div>
+                })
+            }else{
+                this.clearData()
+                return 200
+            }
         } catch (e) {
             console.log(e)
         } finally {
@@ -97,26 +102,6 @@ class AdminReferenceBooksStore {
             })
         }
     }
-
-    referenceBookUpdate = async () => {
-        runInAction(() => {this.isLoading = true})
-        try {
-            const clearNullPool = this.referenceBooks.pool.filter((i)=> {
-                let item = null
-                if(i.poolName && i.poolAddress){
-                    item = {poolName:i.poolName,poolAddress:i.poolAddress}
-                }
-                return item
-            });
-            await runInAction(() => {this.referenceBooks.pool = clearNullPool})
-            await AdminOtherService.referenceBookUpdate(this.referenceBooks);
-        } catch (e) {
-            console.log(e)
-        } finally {
-            runInAction(() => {this.isInit = true})
-            runInAction(() => {this.isLoading = false})
-        }
-    }*/
 
 
 }
