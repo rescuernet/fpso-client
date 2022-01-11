@@ -1,37 +1,27 @@
 import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Container, Divider} from "@material-ui/core";
+import {Divider} from "@material-ui/core";
 import {runInAction, toJS} from "mobx";
 import UiCompStore from "../../../../bll/ui/ui-comp-store";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import Header from "../../header/header";
 import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
-import {useGridPoint} from "../../../../utils/breakpoints";
 import s from "./comp-view.module.css"
 import * as dateFns from "date-fns";
 import CompViewDocs from "./comp-view-docs";
 import CompViewResults from "./comp-view-results/comp-view-results";
+import UiPageWrapper from "../../ui-page-wrapper";
+import UiContainer from "../../../bp-container/bp-container";
 
 const useStyles = makeStyles({
     root: {
-        height: '100%',
-        paddingTop: 50,
-        '& .MuiDivider-root': {
-            marginBottom: 20
-        }
-    },
-    container: {
-        minHeight: '100%',
         display: "flex",
         justifyContent: "center",
+        minHeight: '100%'
     },
     comp: {
-        width: 760,
-        [useGridPoint.breakpoints.down('md')]: {
-            width: 700,
-        },
-        [useGridPoint.breakpoints.down('xs')]: {
+        width: 720,
+        '@media (max-width: 750px)': {
             width: 340,
         },
         backgroundColor: '#fff',
@@ -41,7 +31,7 @@ const useStyles = makeStyles({
         display: "flex",
         marginBottom: 20,
         height: 300,
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             flexDirection: 'column',
             height: 'auto',
         },
@@ -52,7 +42,7 @@ const useStyles = makeStyles({
         alignItems: "center",
         margin: '0 20px 0 0',
         fontSize: 0,
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             margin: '0 0 20px 0',
         },
     },
@@ -106,12 +96,11 @@ const useStyles = makeStyles({
         fontSize: '130%',
         fontWeight: 700,
         lineHeight: '1.5',
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             margin: 0,
             lineHeight: 'normal',
         },
     },
-
     text: {
         fontSize: '110%',
         lineHeight: '1.8',
@@ -144,65 +133,62 @@ const CompView = (props) => {
 
 
     return (
-        <>
-            <Header title={'Соревнования'}/>
-            {comp &&
-            <Box className={classes.root}>
-                <Container className={classes.container} fixed>
-                    <Box className={classes.comp}>
-                        <div className={classes.header}>
-                            <div className={classes.avatar}>
-                                <div className={classes.img}>
-                                    <img className={classes.imgOrig} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
-                                    <div className={classes.imgBackWrapper}>
-                                        <img className={classes.imgBack} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
+        <UiPageWrapper header={'Соревнования'}>
+            <UiContainer>
+                {comp && (
+                    <div className={classes.root}>
+                        <div className={classes.comp}>
+                            <div className={classes.header}>
+                                <div className={classes.avatar}>
+                                    <div className={classes.img}>
+                                        <img className={classes.imgOrig} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
+                                        <div className={classes.imgBackWrapper}>
+                                            <img className={classes.imgBack} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className={classes.dateWrap}>
-                                <div className={classes.date}>
-                                    {comp.dateStart === comp.dateEnd
-                                        ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
-                                        : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
-                                </div>
-                                <div className={classes.location}>
-                                    <div>{comp.location.name}</div>
-                                    <div>{comp.location.address}</div>
-                                </div>
-                                <div className={classes.headerFirstWrap}>
-                                    <div className={`${classes.headerFirst} ${s.headerText}`}>
-                                        {comp.headerFirst}
+                                <div className={classes.dateWrap}>
+                                    <div className={classes.date}>
+                                        {comp.dateStart === comp.dateEnd
+                                            ? dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')
+                                            : `${dateFns.format(new Date(comp.dateStart), 'dd.MM.yyyy')} - ${dateFns.format(new Date(comp.dateEnd), 'dd.MM.yyyy')}`}
                                     </div>
-                                </div>
+                                    <div className={classes.location}>
+                                        <div>{comp.location.name}</div>
+                                        <div>{comp.location.address}</div>
+                                    </div>
+                                    <div className={classes.headerFirstWrap}>
+                                        <div className={`${classes.headerFirst} ${s.headerText}`}>
+                                            {comp.headerFirst}
+                                        </div>
+                                    </div>
 
+                                </div>
                             </div>
+                            <Divider/>
+                            <div className={classes.text}>{comp.textMain}</div>
+                            <Divider/>
+
+                            {comp.docs.length > 0 &&
+                                <>
+                                    <div className={classes.docs}>
+                                        <div className={classes.docsHeader}>Документы соревнования</div>
+                                        {comp.docs.map((item,index)=>(
+                                            <CompViewDocs key={index} index={index} item={item} compId={id}/>
+                                        ))}
+                                    </div>
+                                    <Divider/>
+                                </>
+                            }
+
+                            {comp.results.length > 0 &&
+                                <CompViewResults/>
+                            }
                         </div>
-                        <Divider/>
-                        <div className={classes.text}>{comp.textMain}</div>
-                        <Divider/>
-
-                        {comp.docs.length > 0 &&
-                            <>
-                                <div className={classes.docs}>
-                                    <div className={classes.docsHeader}>Документы соревнования</div>
-                                    {comp.docs.map((item,index)=>(
-                                        <CompViewDocs key={index} index={index} item={item} compId={id}/>
-                                    ))}
-                                </div>
-                                <Divider/>
-                            </>
-                        }
-
-                        {comp.results.length > 0 &&
-                            <CompViewResults/>
-                        }
-                    </Box>
-                </Container>
-            </Box>
-            }
-
-        </>
-
+                    </div>
+                )}
+            </UiContainer>
+        </UiPageWrapper>
     );
 };
 

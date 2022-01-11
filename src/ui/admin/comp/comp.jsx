@@ -7,18 +7,12 @@ import {runInAction} from "mobx";
 import AdminCompetitionsStore from "../../../bll/admin/admin-competitions-store";
 import {ADM_RM} from "../../../routes/admin-routes";
 import CompItem from "./comp-item";
-import AdminPageWrapper from "../common/admin-page-wrapper";
+import AdminPageWrapper from "../admin-page-wrapper";
 
 
 const useStyles = makeStyles((theme) => ({
     control: {
-        marginBottom: 20,
-        '@media (max-width: 430px)': {
-            margin: '20px 0',
-        },
-    },
-    newsList: {
-        margin: '20px 0'
+        margin: '20px 0',
     },
 }));
 
@@ -48,9 +42,7 @@ const Comp = (props) => {
                     Создать соревнование
                 </Button>
             </div>
-            <div className={classes.newsList}>
-                <CompItem />
-            </div>
+            <CompItem />
         </AdminPageWrapper>
     );
 };

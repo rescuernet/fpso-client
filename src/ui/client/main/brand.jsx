@@ -7,6 +7,8 @@ import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
     brand: {
+        marginBottom: 20,
+        fontSize: 0,
         '& img': {
             width: '100%'
         }
@@ -21,7 +23,7 @@ const Brand = () => {
 
     return (
         <div className={classes.brand}>
-            <img src={width >= 960 ? brand : brandMob} alt=""/>
+            <img src={width >= 1281 ? brand : brandMob} alt=""/>
         </div>
     );
 };

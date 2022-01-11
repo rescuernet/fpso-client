@@ -2,34 +2,33 @@ import React, {useEffect} from 'react';
 import {runInAction, toJS} from "mobx";
 import UiCompStore from '../../../bll/ui/ui-comp-store'
 import {observer} from "mobx-react-lite";
-import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Store from "../../../bll/store";
 import {Pagination} from "@material-ui/lab";
-import {useGridPoint} from "../../../utils/breakpoints";
-import Header from "../../client/header/header";
 import {useHistory, useParams} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import CompItem from "./comp-item";
+import UiPageWrapper from "../ui-page-wrapper";
+import UiContainer from "../../bp-container/bp-container";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: 50,
-    },
-    item: {
+    wrapper: {
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
+        '@media (max-width: 1280px)': {
+            justifyContent: "space-around",
+        },
         flexWrap: "wrap",
-        marginTop: 40
+        marginTop: 20,
     },
     paginationTop: {
         display: "flex",
         justifyContent: "center",
         margin: '40px 0',
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             margin: '20px 0',
-        }
+        },
     },
     paginationBottom: {
         display: "flex",
@@ -60,44 +59,39 @@ const Comp = () => {
     };
 
     return (
-        <>
-            <Header title={'Соревнования'}/>
-            <Box className={classes.root}>
-                <Container fixed>
-                    {compItem &&
+        <UiPageWrapper header={'Соревнования'}>
+            <UiContainer>
+                {compItem &&
                     <>
                         {pagesCount > 1 &&
-                        <div className={classes.paginationTop}>
-                            <Pagination
-                                count={pagesCount}
-                                page={pageCur}
-                                color={"primary"}
-                                size={Store.width < 750 ? 'small' : 'medium'}
-                                onChange={ChangePage}
-                            />
-                        </div>
+                            <div className={classes.paginationTop}>
+                                <Pagination
+                                    count={pagesCount}
+                                    page={pageCur}
+                                    color={"primary"}
+                                    size={Store.width < 750 ? 'small' : 'medium'}
+                                    onChange={ChangePage}
+                                />
+                            </div>
                         }
-                        <Box className={classes.item}>
+                        <div className={classes.wrapper}>
                             {compItem.map((i,index)=> <CompItem key={index} comp={i} index={index} />)}
-                        </Box>
-                        {pagesCount > 1 &&
-                        <div className={classes.paginationBottom}>
-                            <Pagination
-                                count={pagesCount}
-                                page={pageCur}
-                                color={"primary"}
-                                size={Store.width < 750 ? 'small' : 'medium'}
-                                onChange={ChangePage}
-                            />
                         </div>
+                        {pagesCount > 1 &&
+                            <div className={classes.paginationBottom}>
+                                <Pagination
+                                    count={pagesCount}
+                                    page={pageCur}
+                                    color={"primary"}
+                                    size={Store.width < 750 ? 'small' : 'medium'}
+                                    onChange={ChangePage}
+                                />
+                            </div>
                         }
                     </>
-                    }
-                </Container>
-            </Box>
-        </>
-
-
+                }
+            </UiContainer>
+        </UiPageWrapper>
     );
 };
 

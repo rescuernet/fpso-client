@@ -7,15 +7,12 @@ import NewsItem from "./news-item";
 import {runInAction} from "mobx";
 import AdminNewsStore from "../../../bll/admin/admin-news-store";
 import {ADM_RM} from "../../../routes/admin-routes";
-import AdminPageWrapper from "../common/admin-page-wrapper";
+import AdminPageWrapper from "../admin-page-wrapper";
 
 
 const useStyles = makeStyles((theme) => ({
     control: {
-        marginBottom: 20,
-    },
-    newsList: {
-        margin: '20px 0'
+        margin: '20px 0',
     },
 }));
 
@@ -46,11 +43,9 @@ const News = (props) => {
                     Создать новость
                 </Button>
             </div>
-            <div className={classes.newsList}>
 
-                <NewsItem />
+            <NewsItem />
 
-            </div>
         </AdminPageWrapper>
     );
 };

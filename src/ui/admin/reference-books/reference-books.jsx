@@ -5,7 +5,7 @@ import PoolIcon from '@material-ui/icons/Pool';
 import {NavLink} from "react-router-dom";
 
 import {ADM_RM} from "../../../routes/admin-routes";
-import AdminPageWrapper from "../common/admin-page-wrapper";
+import AdminPageWrapper from "../admin-page-wrapper";
 
 const useStyles = makeStyles((theme) => ({
     reference: {

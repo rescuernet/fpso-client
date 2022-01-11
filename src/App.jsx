@@ -5,7 +5,7 @@ import AuthStore from "./bll/auth-store";
 import Store from "./bll/store";
 import {runInAction} from "mobx";
 import {UI_RM} from "./routes/ui-routes"
-import {useGridPoint} from "./utils/breakpoints";
+import {useTheme} from "./utils/useTheme";
 import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
 import {Backdrop, CircularProgress} from "@material-ui/core";
 import {ADM_RM} from "./routes/admin-routes";
@@ -60,7 +60,7 @@ const App = () => {
     }, [isLoading]);
 
     return (
-        <ThemeProvider theme={useGridPoint}>
+        <ThemeProvider theme={useTheme}>
             <div className="App">
                 <Backdrop className={classes.backdrop} open={backdrop}>
                     <CircularProgress color="inherit" />

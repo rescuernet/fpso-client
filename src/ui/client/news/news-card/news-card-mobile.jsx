@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_CRM_BUCKET, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {Divider} from "@material-ui/core";
 import {UI_RM} from "../../../../routes/ui-routes";
 import {NavLink} from "react-router-dom";
@@ -19,15 +19,37 @@ const useStyles = makeStyles({
         borderRadius: 10,
         overflow: 'hidden'
     },
-    image: {
+    avatar: {
         display: "flex",
         justifyContent: "center",
         flex: '0 0 auto',
         fontSize: 0,
         padding: 20,
-        '& img': {
-            borderRadius: 10
-        }
+    },
+    img: {
+        width: 300,
+        height: 300,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+    },
+    imgOrig: {
+        zIndex: 1000,
+        border: '1px solid #fff',
+        maxWidth: 300,
+        maxHeight: 300,
+        boxSizing: "content-box"
+    },
+    imgBackWrapper: {
+        position: 'absolute',
+        width: 300,
+        height: 300,
+        overflow: 'hidden'
+    },
+    imgBack: {
+        filter: 'blur(50px)',
+        height: 450
     },
     header: {
         display: "flex",
@@ -58,16 +80,22 @@ const useStyles = makeStyles({
 export const NewsCardMobile = ({news, index})=> {
     const classes = useStyles();
 
+    const avatarIMG = `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
+
     return (
         <div className={classes.root}>
-            <div className={classes.image}>
-                <img src={
-                    news.avatar
-                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
-                        : index || index === 0
-                            ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${index}.jpg`
-                            : `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
-                } alt=""/>
+            <div className={classes.avatar}>
+                {news.avatar
+                    ? <div className={classes.img}>
+                        <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                        <div className={classes.imgBackWrapper}>
+                            <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                        </div>
+                    </div>
+                    : index || index === 0
+                        ? <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nonewsavatar/${index}.jpg`} alt=""/>
+                        : <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`} alt=""/>
+                }
             </div>
             <div className={classes.header}>
                 <div className={s.headerText}>

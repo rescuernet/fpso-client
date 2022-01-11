@@ -2,7 +2,6 @@ import React from 'react';
 import {AppBar} from "@material-ui/core";
 import AdminMenu from "../menu/admin-menu";
 import {makeStyles} from "@material-ui/core/styles";
-import {useGridPoint} from "../../../utils/breakpoints";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -10,9 +9,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'row',
         alignItems: "center",
         position: "fixed",
-        [useGridPoint.breakpoints.down('xs')]: {
-            marginBottom: 5,
-        },
     }
 }))
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import {AppBar, Container, Toolbar} from "@material-ui/core";
+import {AppBar, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../../bll/auth-store";
-import {useGridPoint} from "../../../utils/breakpoints";
+import UiContainer from "../../bp-container/bp-container";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -13,16 +13,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         position: "fixed",
         borderBottom: '2px solid #ff6200',
-        height: 50
+        height: 50,
     },
-    container: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        [useGridPoint.breakpoints.down('xs')]: {
-            paddingLeft: 0
-        }
-    },
+
     toolBar: {
         display: "flex",
         flexDirection: "row",
@@ -37,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Roboto',
         letterSpacing: 10,
         textShadow: '1px 1px 3px #000',
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             textAlign: 'right',
             fontSize: 10,
             letterSpacing: 5,
             width: 100,
-        }
+        },
     },
     title: {
         textTransform: "uppercase",
@@ -61,12 +54,12 @@ const Header = (props) => {
     return (
         <AppBar className={classes.appBar}>
             <Menu isAuth={isAuth} logout={AuthStore.logout}/>
-            <Container className={classes.container} fixed>
+            <UiContainer>
                 <Toolbar className={classes.toolBar}>
                     <div className={classes.title}>{props.title}</div>
                     <div className={classes.fpso}>samara swimming</div>
                 </Toolbar>
-            </Container>
+            </UiContainer>
         </AppBar>
     );
 };

@@ -5,7 +5,6 @@ import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {runInAction, toJS} from "mobx";
 import {observer} from "mobx-react-lite";
 import * as dateFns from "date-fns";
-import Store from "../../../../bll/store";
 
 const useStyles = makeStyles((theme) => ({
     fieldsDates: {

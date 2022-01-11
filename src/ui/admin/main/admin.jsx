@@ -1,7 +1,8 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
-import AdminPageWrapper from "../common/admin-page-wrapper";
+import AdminPageWrapper from "../admin-page-wrapper";
+import BpContainer from "../../bp-container/bp-container";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -11,7 +12,9 @@ const Admin = () => {
 
     return (
         <AdminPageWrapper title={'Главная'}>
-            Главная
+            <BpContainer>
+                Главная
+            </BpContainer>
         </AdminPageWrapper>
     );
 }

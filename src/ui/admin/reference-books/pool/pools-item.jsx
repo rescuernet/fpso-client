@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid #ccc',
         borderRadius: 5,
         padding: 10,
-    }
+    },
+    name: {},
 }))
 
 const PoolsItem = ({item,index}) => {

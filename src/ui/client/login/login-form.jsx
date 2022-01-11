@@ -1,21 +1,17 @@
 import React, {useState} from 'react';
-import {Box, Button, Container, TextField} from "@material-ui/core";
+import {Box, Button, TextField} from "@material-ui/core";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../../bll/auth-store";
 import {Redirect} from "react-router-dom";
 import {runInAction} from "mobx";
 import {makeStyles} from "@material-ui/core/styles";
 import {ADM_RM} from "../../../routes/admin-routes";
-import Header from "../header/header";
+import UiPageWrapper from "../ui-page-wrapper";
+import UiContainer from "../../bp-container/bp-container";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        flexGrow: 1
-    },
-    container: {
+    login: {
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -57,10 +53,9 @@ const LoginForm = () => {
 
 
     return (
-        <>
-            <Header title={'Авторизация'}/>
-            <Container className={classes.root}>
-                <Box className={classes.container}>
+        <UiPageWrapper header={'Авторизация'}>
+            <UiContainer>
+                <div className={classes.login}>
                     <Box
                         component="form"
                         noValidate
@@ -103,12 +98,11 @@ const LoginForm = () => {
                         Войти
                     </Button>
                     {authError &&
-                    <div className={classes.authError}>{authError}</div>
+                        <div className={classes.authError}>{authError}</div>
                     }
-                </Box>
-            </Container>
-        </>
-
+                </div>
+            </UiContainer>
+        </UiPageWrapper>
     );
 };
 

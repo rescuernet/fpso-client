@@ -15,19 +15,26 @@ class AuthStore {
     }
 
     login = async (email,password) => {
-        runInAction(() => {this.authError = {}})
-        runInAction(() => {Store.isInit = false})
-        runInAction(() => {Store.isLoading = true})
+        runInAction(() => {
+            this.authError = {}
+            Store.isInit = false
+            Store.isLoading = true
+        })
         try {
             const response = await AuthService.login(email,password);
             localStorage.setItem('token',response.data.accessToken);
-            runInAction(() => {this.user = response.data.user})
-            runInAction(() => {this.isAuth = true})
+            runInAction(() => {
+                this.user = response.data.user
+                this.isAuth = true
+            })
         } catch (e) {
             runInAction(() => {this.authError = e.response})
         } finally {
-            runInAction(() => {Store.isInit = true})
-            runInAction(() => {Store.isLoading = false})
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+
         }
     }
 

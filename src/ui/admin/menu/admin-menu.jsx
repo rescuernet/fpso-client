@@ -20,15 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
     menuIcon: {
         fontSize: 35,
-        [theme.breakpoints.down('md')]: {
-            fontSize: 30
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 25
-        },
-        [theme.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             fontSize: 20
-        }
+        },
     },
     drawer: {
         width: drawerWidth,

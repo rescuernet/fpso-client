@@ -7,7 +7,7 @@ import PoolsItem from "./pools-item";
 import {useHistory} from "react-router-dom";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
-import AdminPageWrapper from "../../common/admin-page-wrapper";
+import AdminPageWrapper from "../../admin-page-wrapper";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {

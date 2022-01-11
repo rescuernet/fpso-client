@@ -13,16 +13,14 @@ import {observer} from "mobx-react-lite";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        minHeight: '100%',
-        '@media (max-width: 750px)' : {
-            justifyContent: 'center'
-        },
-        position: "relative"
-    },
     table: {
-        width: '100%',
+        width: 1000,
+        '@media (max-width: 1280px)' : {
+            width: 700
+        },
+        '@media (max-width: 750px)' : {
+            width: 340
+        },
         borderCollapse: "collapse",
         fontFamily: 'Roboto',
         color: '#545454',
@@ -37,18 +35,15 @@ const useStyles = makeStyles((theme) => ({
         },
         '& td': {
             padding: '20px 10px',
-            [theme.breakpoints.down('xs')]: {
+            '@media (max-width: 750px)' : {
                 padding: '10px 5px',
-            }
+            },
         }
     },
     min: {
-        width: 100,
+        width: 50,
         textAlign: "center",
         padding: '0 5px',
-        '@media (max-width: 1050px)' : {
-            width: 50,
-        },
     },
     notPublished: {
         color: '#ff0000'
@@ -77,7 +72,7 @@ const CompItem = () => {
             <tbody>
             {Store.width > 750 && comp &&
                 <>
-                    {Store.width > 1000 &&
+                    {Store.width > 1280 &&
                         <th className={classes.min}>создано</th>
                     }
 
@@ -89,7 +84,7 @@ const CompItem = () => {
             }
             {comp && comp.length > 0 && comp.map((i) => (
                 <tr key={i._id} onClick={()=>{compEdit(i._id)}} id={i._id} className={!i.published ? classes.notPublished : null}>
-                    {Store.width > 1000 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
+                    {Store.width > 1280 && <td className={classes.min}>{dateFns.format(new Date(i.createdAt), 'dd.MM.yyyy')}</td>}
                     <td className={classes.min}>{i.published ? <VisibilityOutlinedIcon color={"primary"}/> : <VisibilityOffOutlinedIcon color={"secondary"}/>}</td>
                     <td>{i.headerFirst}</td>
                     {Store.width > 750 &&

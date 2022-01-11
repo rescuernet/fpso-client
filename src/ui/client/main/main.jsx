@@ -1,26 +1,21 @@
 import React, {useEffect} from 'react';
 import {observer} from "mobx-react-lite";
-import {Box, Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Brand from "./brand";
 import {runInAction, toJS} from "mobx";
 import UiNewsStore from '../../../bll/ui/ui-news-store'
 import NewsCardDesktop from "../news/news-card/news-card-desktop";
 import Store from "../../../bll/store";
 import {NewsCardMobile} from "../news/news-card/news-card-mobile";
-import {useGridPoint} from "../../../utils/breakpoints";
-import Header from "../header/header";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
+import CompItem from "../comp/comp-item";
+import UiCompStore from "../../../bll/ui/ui-comp-store";
+import UiPageWrapper from "../ui-page-wrapper";
+import UiContainer from "../../bp-container/bp-container";
+import Brand from "./brand";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: 50,
-    },
-    container: {
-        marginTop: 30
-    },
     headerSection: {
         fontFamily: 'Roboto',
         fontSize: '1rem',
@@ -31,16 +26,25 @@ const useStyles = makeStyles((theme) => ({
         padding: '0 30px 5px 0'
     },
     lastNews: {
-
+        marginBottom: 20
     },
     lastNewsItems: {
         marginTop: 10,
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        [useGridPoint.breakpoints.down('md')]: {
+        '@media (max-width: 1280px)': {
             justifyContent: "center",
-        }
+        },
+    },
+    lastComp: {
+        marginBottom: 40
+    },
+    lastCompItems: {
+        marginTop: 10,
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
     }
 }))
 
@@ -49,46 +53,57 @@ const Main = () => {
     const classes = useStyles();
 
     const lastNews = toJS(UiNewsStore.news_for_main)
+    const lastComp = toJS(UiCompStore.comp_for_main)
 
     useEffect(()=>{
-        runInAction(()=>{UiNewsStore.getNewsForMain(2)})
+        runInAction(async ()=>{
+            await UiNewsStore.getNewsForMain(2)
+            await UiCompStore.getCompForMain(Store.width < 1280 ? 2 : 3)
+        })
         return ()=> {
             runInAction(()=>{
                 UiNewsStore.news_for_main= []
+                UiCompStore.comp_for_main= []
             })
         }
     },[])
 
     return (
-        <>
-            <Header title={'Главная'}/>
-            <Box className={classes.root}>
-                <Brand/>
-                <Container className={classes.container} fixed>
-                    <div className={classes.lastNews}>
-                        <NavLink to={UI_RM.News.path}>
-                            <div className={classes.headerSection}>Последние новости</div>
-                        </NavLink>
-                        <div className={classes.lastNewsItems}>
-                            {Store.width < 750 &&
+        <UiPageWrapper header={'Главная'}>
+            <Brand/>
+            <UiContainer>
+                {/*<ReusadaMain/>*/}
+                <div className={classes.lastNews}>
+                    <NavLink to={UI_RM.News.path}>
+                        <div className={classes.headerSection}>Свежие новости</div>
+                    </NavLink>
+                    <div className={classes.lastNewsItems}>
+                        {Store.width <= 750 &&
                             lastNews.map((i,index)=>(
                                 <NewsCardMobile key={index} news={i} />
                             ))
-                            }
+                        }
 
-                            {Store.width >= 750 &&
+                        {Store.width > 750 &&
                             lastNews.map((i,index)=>(
                                 <NewsCardDesktop key={index} news={i} />
                             ))
-                            }
-                        </div>
+                        }
                     </div>
+                </div>
 
-                </Container>
-            </Box>
-        </>
-
-
+                <div className={classes.lastComp}>
+                    <NavLink to={UI_RM.Competitions.path}>
+                        <div className={classes.headerSection}>Новые соревнования</div>
+                    </NavLink>
+                    <div className={classes.lastCompItems}>
+                        {lastComp.map((i,index)=>(
+                            <CompItem key={index} comp={i}/>
+                        ))}
+                    </div>
+                </div>
+            </UiContainer>
+        </UiPageWrapper>
     );
 };
 

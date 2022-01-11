@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import s from '../news.module.css'
 import * as dateFns from "date-fns";
-import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_CRM_BUCKET, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../../routes/ui-routes";
 import {observer} from "mobx-react-lite";
@@ -18,12 +18,35 @@ const useStyles = makeStyles({
         borderRadius: 5,
         overflow: 'hidden'
     },
-    image: {
+    avatar: {
         flex: '0 0 auto',
         fontSize: 0,
-        '& img': {
-            width: 150,
-        },
+        overflow: "hidden"
+    },
+    img: {
+        width: 200,
+        height: 200,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+    },
+    imgOrig: {
+        zIndex: 1000,
+        border: '1px solid #fff',
+        maxWidth: 200,
+        maxHeight: 200,
+        boxSizing: "content-box"
+    },
+    imgBackWrapper: {
+        position: 'absolute',
+        width: 200,
+        height: 200,
+        overflow: 'hidden'
+    },
+    imgBack: {
+        filter: 'blur(50px)',
+        height: 450
     },
     data: {
         flexGrow: 1,
@@ -57,16 +80,23 @@ const useStyles = makeStyles({
 
 const NewsCardDesktop = ({news,index}) => {
     const classes = useStyles();
+
+    const avatarIMG = `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
+
     return (
         <div className={`${classes.root} ${news.importantNews && classes.importantNews}`}>
-            <div className={classes.image}>
-                <img src={
-                    news.avatar
-                        ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${news.avatar}`
-                        : index || index === 0
-                            ? `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${index}.jpg`
-                            : `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`
-                } alt=""/>
+            <div className={classes.avatar}>
+                {news.avatar
+                    ? <div className={classes.img}>
+                        <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                        <div className={classes.imgBackWrapper}>
+                            <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                        </div>
+                    </div>
+                    : index || index === 0
+                        ? <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nonewsavatar/${index}.jpg`} alt=""/>
+                        : <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nonewsavatar/${Math.floor(Math.random() * 10)}.jpg`} alt=""/>
+                }
             </div>
             <div className={classes.data}>
                 <div className={classes.date}>{dateFns.format(new Date(news.dateStart), 'dd.MM.yyyy')}</div>

@@ -13,18 +13,24 @@ import NewsFields from "./news-fields";
 import NewsCheckbox from "./news-checkbox";
 import NewsDocs from "./news-docs";
 import {ADM_RM} from "../../../../routes/admin-routes";
-import AdminPageWrapper from "../../common/admin-page-wrapper";
+import AdminPageWrapper from "../../admin-page-wrapper";
 
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
-        maxWidth: 600
+        width: 600,
+        '@media (max-width: 750px)' : {
+            width: 340,
+        },
+        '@media (max-width: 1280px)' : {
+            margin: '0 auto'
+        },
     },
     control: {
         display: "flex",
         flexDirection: "column",
         marginBottom: 20,
-        '@media (max-width: 430px)' : {
+        '@media (max-width: 750px)' : {
             marginTop: 20,
         },
     },
@@ -46,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     Button: {
         width: 120,
-        '@media (max-width: 430px)' : {
+        '@media (max-width: 750px)' : {
             marginBottom: 20,
         },
     }

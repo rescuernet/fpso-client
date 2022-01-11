@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Box, Divider} from "@material-ui/core";
 import s from './comp.module.css'
 import * as dateFns from "date-fns";
-import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
+import {HTTPS_PROTOCOL, YA_CRM_BUCKET, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../const/const";
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import Button from "@material-ui/core/Button";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         height: 510,
         backgroundColor: '#fff',
         boxShadow: '4px 4px 10px rgba(0,0,0,0.2)',
-        margin: '0 10px 40px 10px',
+        marginBottom: 40,
         borderRadius: 5,
         overflow: "hidden",
         position: "relative"
@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     compEndMedal: {
         position: "absolute",
         width: '100%',
-        textAlign: "center"
+        textAlign: "center",
+        zIndex: 2000
     },
     avatar: {
         fontSize: 0,
@@ -103,7 +104,7 @@ const CompItem = ({comp,index}) => {
         <Box className={classes.root}>
             {curDate > compDateEnd &&
                 <div className={classes.compEndMedal}>
-                    <img src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/crm/medalsCompCard.png`} alt=""/>
+                    <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/medalsCompCard.png`} alt=""/>
                 </div>
             }
             <div className={classes.avatar}>

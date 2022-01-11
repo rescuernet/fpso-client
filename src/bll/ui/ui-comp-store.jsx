@@ -40,18 +40,18 @@ class UiCompStore {
         }
     }
 
-    /*getNewsForMain = async (limit) => {
+    getCompForMain = async (limit) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await uiNewsService.getNews(1,limit);
-            runInAction(() => {this.news_for_main = response.data.docs})
+            const response = await uiCompService.getComp(1,limit);
+            runInAction(() => {this.comp_for_main = response.data.docs})
         } catch (e) {
             console.log(e)
         } finally {
             runInAction(() => {Store.isInit = true})
             runInAction(() => {Store.isLoading = false})
         }
-    }*/
+    }
 
 }
 

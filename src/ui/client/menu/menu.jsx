@@ -1,11 +1,10 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import {Box, Drawer, IconButton, List, ListItem} from "@material-ui/core";
 import {useHistory, useLocation} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {UI_RM} from "../../../routes/ui-routes";
 import MenuIcon from '@material-ui/icons/Menu';
-import {useEffect} from "react";
-import {useGridPoint} from "../../../utils/breakpoints";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -38,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
     },
     menuIcon: {
         fontSize: 40,
-        [useGridPoint.breakpoints.down('xs')]: {
+        '@media (max-width: 750px)': {
             fontSize: 30,
-        }
+        },
     },
     divider: {
         backgroundColor: "#ff6200"

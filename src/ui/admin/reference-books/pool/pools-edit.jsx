@@ -6,7 +6,7 @@ import {runInAction, toJS} from "mobx";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
 import {useHistory, useParams} from "react-router-dom";
 import {ADM_RM} from "../../../../routes/admin-routes";
-import AdminPageWrapper from "../../common/admin-page-wrapper";
+import AdminPageWrapper from "../../admin-page-wrapper";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,10 +76,9 @@ const PoolsEdit = (props) => {
 
     const pool = AdminReferenceBooksStore.referenceBooks.pools.one
 
-    console.log(toJS(pool))
-
     //отмена
     const Cancel = () => {
+        AdminReferenceBooksStore.referenceBooks.pools.one = null
         history.push(ADM_RM.Reference__Books__Pool.path)
     };
 
@@ -93,87 +92,82 @@ const PoolsEdit = (props) => {
 
     return (
         <AdminPageWrapper title={'Бассейны'}>
-            <div className={classes.wrapper}>
-                <h4>{pool?.name ? 'Редактирование' : 'Новый бассейн'}</h4>
-                <h6 style={{color: '#ff0000',textAlign: 'center'}}>Внимание! Внесенные изменения будут отображаться везде, где используется данный бассейн!</h6>
-                <div className={classes.item}>
-                    <TextField
-                        label="Бассейн"
-                        value={pool?.name || ''}
-                        onChange={(e)=>{
-                            runInAction(()=>{
-                                pool.name = e.target.value
-                            })
-                        }}
-                        variant="outlined"
-                        error={pool?.name && pool?.name.length > 50}
-                        helperText={pool?.name && pool?.name.length > 50 && 'максимум 50 символов'}
-                    />
-                    <TextField
-                        label="Адрес"
-                        value={pool?.address || ''}
-                        onChange={(e)=>{
-                            runInAction(()=>{
-                                pool.address = e.target.value
-                            })
-                        }}
-                        variant="outlined"
-                        error={pool?.address && pool?.address.length > 50}
-                        helperText={pool?.address && pool?.address.length > 50 && 'максимум 50 символов'}
-                    />
-                </div>
-                <div className={classes.control}>
-
-                    <Divider/>
-                    <div className={classes.controlButton}>
-                        <FormControlLabel className={classes.checkBox}
-                            control={
-                                <Switch
-                                    checked={pool?.view || false}
-                                    onChange={(e)=>{runInAction(()=>{pool.view = e.target.checked})}}
-                                    name="fixedNews"
-                                    color="secondary"
-                                />
-                            }
-                            label={pool?.view && pool.view ? 'отображать в списках' : 'не отображать в списках'}
+            {pool && (
+                <div className={classes.wrapper}>
+                    <h4>{pool?.name ? 'Редактирование' : 'Новый бассейн'}</h4>
+                    <h6 style={{color: '#ff0000',textAlign: 'center'}}>Внимание! Внесенные изменения будут отображаться везде, где используется данный бассейн!</h6>
+                    <div className={classes.item}>
+                        <TextField
+                            label="Бассейн"
+                            value={pool?.name || ''}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    pool.name = e.target.value
+                                })
+                            }}
+                            variant="outlined"
+                            error={pool?.name && pool?.name.length > 50}
+                            helperText={pool?.name && pool?.name.length > 50 && 'максимум 50 символов'}
                         />
-                        <Button
-                            className={classes.Button}
-                            variant={"outlined"}
-                            color={"primary"}
-                            onClick={()=>{Cancel()}}
-                        >
-                            Отмена
-                        </Button>
-                        <Button
-                            className={classes.Button}
-                            variant="contained"
-                            color={"primary"}
-                            onClick={()=>{Save()}}
-                        >
-                            Сохранить
-                        </Button>
+                        <TextField
+                            label="Адрес"
+                            value={pool?.address || ''}
+                            onChange={(e)=>{
+                                runInAction(()=>{
+                                    pool.address = e.target.value
+                                })
+                            }}
+                            variant="outlined"
+                            error={pool?.address && pool?.address.length > 50}
+                            helperText={pool?.address && pool?.address.length > 50 && 'максимум 50 символов'}
+                        />
+                    </div>
+                    <div className={classes.control}>
 
-                        {/*{deleteNews &&
-                                <NewsAlertDialog
-                                    alertType={'confirm'}
-                                    open={true}
-                                    header={'Внимание!'}
-                                    text={'Подтвердите удаление новости'}
-                                    delete={()=>{newsDeleteConfirm(id)}}
-                                    close={()=>{setDeleteNews(false)}}
-                                />
-                            }*/}
-                        {/*{AdminNewsStore.news_tmp_errors &&
+                        <Divider/>
+                        <div className={classes.controlButton}>
+                            <FormControlLabel className={classes.checkBox}
+                                              control={
+                                                  <Switch
+                                                      checked={pool?.view || false}
+                                                      onChange={(e)=>{runInAction(()=>{pool.view = e.target.checked})}}
+                                                      name="fixedNews"
+                                                      color="secondary"
+                                                  />
+                                              }
+                                              label={pool?.view && pool.view ? 'отображать в списках' : 'не отображать в списках'}
+                            />
+                            <Button
+                                className={classes.Button}
+                                variant={"outlined"}
+                                color={"primary"}
+                                onClick={()=>{Cancel()}}
+                            >
+                                Отмена
+                            </Button>
+                            <Button
+                                className={classes.Button}
+                                variant="contained"
+                                color={"primary"}
+                                onClick={()=>{Save()}}
+                            >
+                                Сохранить
+                            </Button>
+
+                            {/*{AdminNewsStore.news_tmp_errors &&
                                 <NewsAlertDialog
                                     open={true}
                                     header={'Ошибка!'}
                                     text={AdminNewsStore.news_tmp_errors}
                                 />
                             }*/}
+                        </div>
+                        {!pool.view && (
+                            <h6 style={{color: '#ff0000',textAlign: 'center'}}>Внимание! Выключение показа в списках - полностью скрывает выбранный бассейн.</h6>
+                        )}
                     </div>
                 </div>
-            </div>
+            )}
         </AdminPageWrapper>
     );
 };
