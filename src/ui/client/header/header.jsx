@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Menu from "../menu/menu";
 import {observer} from "mobx-react-lite";
 import AuthStore from "../../../bll/auth-store";
-import UiContainer from "../../bp-container/bp-container";
+import BpContainer from "../bp-container";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -54,12 +54,12 @@ const Header = (props) => {
     return (
         <AppBar className={classes.appBar}>
             <Menu isAuth={isAuth} logout={AuthStore.logout}/>
-            <UiContainer>
+            <BpContainer>
                 <Toolbar className={classes.toolBar}>
                     <div className={classes.title}>{props.title}</div>
                     <div className={classes.fpso}>samara swimming</div>
                 </Toolbar>
-            </UiContainer>
+            </BpContainer>
         </AppBar>
     );
 };

@@ -4,6 +4,7 @@ import LoginForm from "../ui/client/login/login-form";
 import Main from "../ui/client/main/main";
 import News from "../ui/client/news/news";
 import NewsView from "../ui/client/news/news-view/news-view";
+import Rusada from "../ui/client/rusada/rusada";
 
 
 export const MenuTypes = {
@@ -91,6 +92,20 @@ const UIRouterManager = {
         header: {
             view: true,
             title: 'Новости'
+        }
+    },
+    Rusada: {
+        path:'/rusada',
+        Component: Rusada,
+        getUrl(id) {return `/rusada`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Антидопинг'
+        },
+        menu: {
+            type: MenuTypes.main,
+            title: 'Антидопинг'
         }
     },
     Login: {

@@ -11,8 +11,9 @@ import {UI_RM} from "../../../routes/ui-routes";
 import CompItem from "../comp/comp-item";
 import UiCompStore from "../../../bll/ui/ui-comp-store";
 import UiPageWrapper from "../ui-page-wrapper";
-import UiContainer from "../../bp-container/bp-container";
+import BpContainer from "../bp-container";
 import Brand from "./brand";
+import RusadaMain from "../rusada/rusada-main";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,8 +72,8 @@ const Main = () => {
     return (
         <UiPageWrapper header={'Главная'}>
             <Brand/>
-            <UiContainer>
-                {/*<ReusadaMain/>*/}
+            <BpContainer>
+                <RusadaMain/>
                 <div className={classes.lastNews}>
                     <NavLink to={UI_RM.News.path}>
                         <div className={classes.headerSection}>Свежие новости</div>
@@ -102,7 +103,7 @@ const Main = () => {
                         ))}
                     </div>
                 </div>
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };

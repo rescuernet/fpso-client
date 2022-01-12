@@ -9,7 +9,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import s from "./news-view.module.css"
 import NewsViewItemDoc from "./news-view-item-doc";
 import UiPageWrapper from "../../ui-page-wrapper";
-import UiContainer from "../../../bp-container/bp-container";
+import BpContainer from "../../bp-container";
 
 const useStyles = makeStyles({
     root: {
@@ -135,7 +135,7 @@ const NewsView = () => {
 
     return (
         <UiPageWrapper header={'Новости'}>
-            <UiContainer>
+            <BpContainer>
                 {news &&
                     <div className={classes.root}>
                         <div className={classes.news}>
@@ -184,7 +184,7 @@ const NewsView = () => {
                         </div>
                     </div>
                 }
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };

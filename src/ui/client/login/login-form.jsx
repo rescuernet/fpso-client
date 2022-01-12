@@ -7,7 +7,7 @@ import {runInAction} from "mobx";
 import {makeStyles} from "@material-ui/core/styles";
 import {ADM_RM} from "../../../routes/admin-routes";
 import UiPageWrapper from "../ui-page-wrapper";
-import UiContainer from "../../bp-container/bp-container";
+import BpContainer from "../bp-container";
 
 const useStyles = makeStyles((theme) => ({
     login: {
@@ -54,7 +54,7 @@ const LoginForm = () => {
 
     return (
         <UiPageWrapper header={'Авторизация'}>
-            <UiContainer>
+            <BpContainer>
                 <div className={classes.login}>
                     <Box
                         component="form"
@@ -101,7 +101,7 @@ const LoginForm = () => {
                         <div className={classes.authError}>{authError}</div>
                     }
                 </div>
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };

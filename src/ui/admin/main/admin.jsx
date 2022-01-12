@@ -2,7 +2,7 @@ import React from 'react';
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
 import AdminPageWrapper from "../admin-page-wrapper";
-import BpContainer from "../../bp-container/bp-container";
+import BpContainer from "../../client/bp-container";
 
 const useStyles = makeStyles((theme) => ({}));
 

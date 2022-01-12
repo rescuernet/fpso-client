@@ -11,7 +11,7 @@ import NewsCardDesktop from "./news-card/news-card-desktop";
 import {useHistory, useParams} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import UiPageWrapper from "../ui-page-wrapper";
-import UiContainer from "../../bp-container/bp-container";
+import BpContainer from "../bp-container";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ const News = () => {
 
     return (
         <UiPageWrapper header={'Новости'}>
-            <UiContainer>
+            <BpContainer>
                 {newsItem &&
                     <>
                         {pagesCount > 1 &&
@@ -105,7 +105,7 @@ const News = () => {
                         }
                     </>
                 }
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };

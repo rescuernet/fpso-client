@@ -11,7 +11,7 @@ import * as dateFns from "date-fns";
 import CompViewDocs from "./comp-view-docs";
 import CompViewResults from "./comp-view-results/comp-view-results";
 import UiPageWrapper from "../../ui-page-wrapper";
-import UiContainer from "../../../bp-container/bp-container";
+import BpContainer from "../../bp-container";
 
 const useStyles = makeStyles({
     root: {
@@ -134,7 +134,7 @@ const CompView = (props) => {
 
     return (
         <UiPageWrapper header={'Соревнования'}>
-            <UiContainer>
+            <BpContainer>
                 {comp && (
                     <div className={classes.root}>
                         <div className={classes.comp}>
@@ -187,7 +187,7 @@ const CompView = (props) => {
                         </div>
                     </div>
                 )}
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };

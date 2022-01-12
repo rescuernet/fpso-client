@@ -7,7 +7,7 @@ import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
     brand: {
-        marginBottom: 20,
+        marginBottom: 10,
         fontSize: 0,
         '& img': {
             width: '100%'

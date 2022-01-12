@@ -9,7 +9,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import CompItem from "./comp-item";
 import UiPageWrapper from "../ui-page-wrapper";
-import UiContainer from "../../bp-container/bp-container";
+import BpContainer from "../bp-container";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +60,7 @@ const Comp = () => {
 
     return (
         <UiPageWrapper header={'Соревнования'}>
-            <UiContainer>
+            <BpContainer>
                 {compItem &&
                     <>
                         {pagesCount > 1 &&
@@ -90,7 +90,7 @@ const Comp = () => {
                         }
                     </>
                 }
-            </UiContainer>
+            </BpContainer>
         </UiPageWrapper>
     );
 };
