@@ -65,10 +65,7 @@ const RusadaMain = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.img}>
-                {Store.width <1280
-                    ? <img src={RUSADA} alt="" width={'200'}/>
-                    : <img src={RUSADA} alt="" width={'400'}/>
-                }
+                <img src={RUSADA} alt="" width={Store.width <1280 ? '200' : '400'}/>
                 <div className={classes.slogan}>за честный и здоровый спорт!</div>
             </div>
             <div className={classes.content}>
