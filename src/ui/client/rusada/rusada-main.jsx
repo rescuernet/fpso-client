@@ -1,8 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import RUSADA from '../../../common/assets/image/RUSADA.png'
-import RUSADA_mob from '../../../common/assets/image/RUSADA_mob.png'
+import RUSADA from '../../../common/assets/image/RUSADA.jpg'
 import Store from '../../../bll/store'
 import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
@@ -12,17 +11,51 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#fff',
         overflow: "hidden",
         marginBottom: 40,
-        padding: '0 20px 10px 20px',
     },
     img: {
         display: "flex",
-        justifyContent: "center",
-        marginBottom: 10
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginBottom: 20,
+        '@media (max-width: 750px)': {
+            flexDirection: 'column',
+            alignItems: "center",
+        },
+        '& img': {
+            margin: '20px 0'
+        }
+    },
+    slogan: {
+        fontFamily: 'Roboto',
+        fontWeight: "bold",
+        textTransform: 'uppercase',
+        fontSize: '200%',
+        '@media (max-width: 1280px)': {
+            fontSize: '120%'
+        },
+        '@media (max-width: 750px)': {
+            fontSize: '100%'
+        },
     },
     content: {
         display: "flex",
         justifyContent: "center",
-        color: '#005580'
+        marginBottom: 20,
+        "& a": {
+            border: '1px solid #005580',
+            borderRadius: 5,
+            padding: '5px 10px',
+            '@media (max-width: 750px)': {
+                padding: '2px 5px',
+                fontSize: '90%'
+            },
+            color: '#005580!important',
+            transition: '0.2s'
+        },
+        "& a:hover": {
+            borderColor: '#ff6200',
+            color: '#ff6200!important',
+        }
     }
 }))
 
@@ -32,10 +65,17 @@ const RusadaMain = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.img}>
-                {Store.width <750 && (<img src={RUSADA_mob} alt=""/>)}
-                {Store.width >= 750 && (<img src={RUSADA} alt=""/>)}
+                {Store.width <1280
+                    ? <img src={RUSADA} alt="" width={'200'}/>
+                    : <img src={RUSADA} alt="" width={'400'}/>
+                }
+                <div className={classes.slogan}>за честный и здоровый спорт!</div>
             </div>
-            <div className={classes.content}><NavLink to={UI_RM.Rusada.path}>перейти в раздел</NavLink></div>
+            <div className={classes.content}>
+                <NavLink to={UI_RM.Rusada.path}>
+                    перейти в раздел антидопинг
+                </NavLink>
+            </div>
         </div>
     );
 };

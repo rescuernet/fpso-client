@@ -15,7 +15,7 @@ import BpContainer from "../bp-container";
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         '@media (max-width: 1280px)': {
             justifyContent: "space-around",
         },

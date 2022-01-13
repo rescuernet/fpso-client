@@ -106,7 +106,9 @@ const useStyles = makeStyles({
         lineHeight: '1.8',
         marginBottom: 20
     },
-    docs: {},
+    docs: {
+        marginTop: 10
+    },
     docsHeader: {
         fontWeight: 'bold',
         textAlign: "center"

@@ -68,7 +68,7 @@ const News = () => {
             <BpContainer>
                 {newsItem &&
                     <>
-                        {pagesCount > 1 &&
+                        {pagesCount === 1 &&
                             <div className={classes.paginationTop}>
                                 <Pagination
                                     count={pagesCount}

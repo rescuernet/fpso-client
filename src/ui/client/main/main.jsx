@@ -24,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 10,
         display: 'inline-block',
         borderBottom: '1px solid #005580',
-        padding: '0 30px 5px 0'
+        padding: '0 30px 5px 0',
+        transition: '0.2s',
+        '&:hover': {
+            borderColor: '#ff6200',
+            color: '#ff6200'
+        }
     },
     lastNews: {
         marginBottom: 20
@@ -48,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-around",
     }
 }))
+
+const w = window.screen.width
+const h = window.screen.height
 
 
 const Main = () => {
@@ -74,35 +82,40 @@ const Main = () => {
             <Brand/>
             <BpContainer>
                 <RusadaMain/>
-                <div className={classes.lastNews}>
-                    <NavLink to={UI_RM.News.path}>
-                        <div className={classes.headerSection}>Свежие новости</div>
-                    </NavLink>
-                    <div className={classes.lastNewsItems}>
-                        {Store.width <= 750 &&
-                            lastNews.map((i,index)=>(
-                                <NewsCardMobile key={index} news={i} />
-                            ))
-                        }
+                {lastNews && (
+                    <div className={classes.lastNews}>
+                        <NavLink to={UI_RM.News.path}>
+                            <div className={classes.headerSection}>Свежие новости</div>
+                        </NavLink>
+                        <div className={classes.lastNewsItems}>
+                            {Store.width <= 750 &&
+                                lastNews.map((i,index)=>(
+                                    <NewsCardMobile key={index} news={i} />
+                                ))
+                            }
 
-                        {Store.width > 750 &&
-                            lastNews.map((i,index)=>(
-                                <NewsCardDesktop key={index} news={i} />
-                            ))
-                        }
+                            {Store.width > 750 &&
+                                lastNews.map((i,index)=>(
+                                    <NewsCardDesktop key={index} news={i} />
+                                ))
+                            }
+                        </div>
                     </div>
-                </div>
+                )}
 
-                <div className={classes.lastComp}>
-                    <NavLink to={UI_RM.Competitions.path}>
-                        <div className={classes.headerSection}>Новые соревнования</div>
-                    </NavLink>
-                    <div className={classes.lastCompItems}>
-                        {lastComp.map((i,index)=>(
-                            <CompItem key={index} comp={i}/>
-                        ))}
+                {lastComp && (
+                    <div className={classes.lastComp}>
+                        <NavLink to={UI_RM.Competitions.path}>
+                            <div className={classes.headerSection}>Новые соревнования</div>
+                        </NavLink>
+                        <div className={classes.lastCompItems}>
+                            {lastComp.map((i,index)=>(
+                                <CompItem key={index} comp={i}/>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
+
             </BpContainer>
         </UiPageWrapper>
     );
