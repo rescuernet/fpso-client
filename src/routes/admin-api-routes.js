@@ -76,6 +76,14 @@ const AdminAPIRouterManager = {
         path:`${PrefixPath.admin}/reference-books/pools/save`,
         getUrl() {return `${PrefixPath.admin}/reference-books/pools/save`},
     },
+    Reference__Books__People_Create: {
+        path:`${PrefixPath.admin}/reference-books/people/create`,
+        getUrl() {return `${PrefixPath.admin}/reference-books/people/create`},
+    },
+    Reference__Books__People_Avatar_Create: {
+        path: `${PrefixPath.admin}/reference-books/people/avatar-create`,
+        getUrl() {return `${PrefixPath.admin}/reference-books/people/avatar-create`},
+    },
 }
 
 export const ADM_API_RM = AdminAPIRouterManager;

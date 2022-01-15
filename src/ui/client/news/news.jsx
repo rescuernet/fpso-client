@@ -12,6 +12,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
+import Rusada from "../rusada/rusada";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,9 +67,10 @@ const News = () => {
     return (
         <UiPageWrapper header={'Новости'}>
             <BpContainer>
+                <Rusada/>
                 {newsItem &&
                     <>
-                        {pagesCount === 1 &&
+                        {pagesCount > 1 &&
                             <div className={classes.paginationTop}>
                                 <Pagination
                                     count={pagesCount}

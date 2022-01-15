@@ -13,7 +13,7 @@ import UiCompStore from "../../../bll/ui/ui-comp-store";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
 import Brand from "./brand";
-import RusadaMain from "../rusada/rusada-main";
+import RusadaMain from "../rusada/rusada";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ const Main = () => {
             <Brand/>
             <BpContainer>
                 <RusadaMain/>
-                {lastNews && (
+                {lastNews.length > 0 && (
                     <div className={classes.lastNews}>
                         <NavLink to={UI_RM.News.path}>
                             <div className={classes.headerSection}>Свежие новости</div>
@@ -103,7 +103,7 @@ const Main = () => {
                     </div>
                 )}
 
-                {lastComp && (
+                {lastComp.length > 0 && (
                     <div className={classes.lastComp}>
                         <NavLink to={UI_RM.Competitions.path}>
                             <div className={classes.headerSection}>Новые соревнования</div>

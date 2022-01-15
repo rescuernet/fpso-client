@@ -12,7 +12,7 @@ import AdminPageWrapper from "../admin-page-wrapper";
 
 const useStyles = makeStyles((theme) => ({
     control: {
-        margin: '20px 0',
+        marginBottom: 20,
     },
 }));
 

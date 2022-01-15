@@ -1,54 +1,61 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import UiPageWrapper from "../ui-page-wrapper";
-import BpContainer from "../bp-container";
-import Antidoping from '../../../common/assets/image/antidoping.png'
+import RUSADA from '../../../common/assets/image/RUSADA.jpg'
+import Store from '../../../bll/store'
+import {NavLink} from "react-router-dom";
+import {UI_RM} from "../../../routes/ui-routes";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
-        minHeight: '100%',
         backgroundColor: '#fff',
-        overflow: "hidden"
+        overflow: "hidden",
+        marginBottom: 40,
     },
-    header: {
+    img: {
         display: "flex",
-        marginTop: 20,
         justifyContent: "space-evenly",
-        borderBottom: '1px solid #ccc',
-        '@media (max-width: 1280px)': {
-            alignItems: 'center',
-            '& img': {
-                width: 200,
-                height: 'auto',
-                '@media (max-width: 750px)': {
-                    flexDirection: 'column',
-                    marginBottom: 10,
-                },
-            }
-        },
+        alignItems: "center",
+        marginBottom: 20,
         '@media (max-width: 750px)': {
             flexDirection: 'column',
-            marginTop: 10,
+            alignItems: "center",
         },
+        '& img': {
+            margin: '20px 0'
+        }
     },
     slogan: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
         fontFamily: 'Roboto',
+        fontWeight: "bold",
+        textTransform: 'uppercase',
         fontSize: '200%',
-        '& span': {
-            color: '#ff0000',
-            fontWeight: 'bold'
-        },
         '@media (max-width: 1280px)': {
-            fontSize: '150%',
+            fontSize: '120%'
         },
         '@media (max-width: 750px)': {
-            fontSize: '120%',
-            marginBottom: 15
+            fontSize: '100%'
         },
+    },
+    content: {
+        display: "flex",
+        justifyContent: "center",
+        marginBottom: 20,
+        "& a": {
+            border: '1px solid #005580',
+            borderRadius: 5,
+            padding: '5px 10px',
+            '@media (max-width: 750px)': {
+                padding: '2px 5px',
+                fontSize: '90%'
+            },
+            color: '#005580!important',
+            transition: '0.2s'
+        },
+        "& a:hover": {
+            borderColor: '#ff6200',
+            color: '#ff6200!important',
+        }
     }
 }))
 
@@ -56,21 +63,17 @@ const Rusada = (props) => {
     const classes = useStyles();
 
     return (
-        <UiPageWrapper header={'Антидопинг'}>
-            <BpContainer>
-                <div className={classes.root}>
-                    <div className={classes.header}>
-                        <img src={Antidoping} alt=""/>
-                        <div className={classes.slogan}>
-                            <div><span>ДОПИНГ — </span></div>
-                            <div>СОВЕРШЕНИЕ ОДНОГО ИЛИ</div>
-                            <div>НЕСКОЛЬКИХ НАРУШЕНИЙ</div>
-                            <div>АНТИДОПИНГОВЫХ ПРАВИЛ!</div>
-                        </div>
-                    </div>
-                </div>
-            </BpContainer>
-        </UiPageWrapper>
+        <div className={classes.root}>
+            <div className={classes.img}>
+                <img src={RUSADA} alt="" width={Store.width <1280 ? '200' : '400'}/>
+                <div className={classes.slogan}>за честный и здоровый спорт!</div>
+            </div>
+            <div className={classes.content}>
+                <NavLink to={UI_RM.Rusada.path}>
+                    перейти в раздел антидопинг
+                </NavLink>
+            </div>
+        </div>
     );
 };
 

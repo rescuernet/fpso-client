@@ -1,19 +1,24 @@
-import {makeAutoObservable, runInAction, toJS} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import AdminReferenceBooksService from "../../services/admin/admin-reference-books-service";
 import Store from "../store";
 
 
-
 class AdminReferenceBooksStore {
     tmp_errors = null
+    mediaDel = []
     referenceBooks = {
         pools: {
             list: [],
             id: null,
             one: null,
         },
-
+        people: {
+            list: [],
+            id: null,
+            one: null,
+        },
     }
+
 
     constructor() {
         makeAutoObservable(this);
@@ -22,14 +27,23 @@ class AdminReferenceBooksStore {
     clearData() {
         runInAction(() => {
             this.tmp_errors = null
-            this.referenceBooks.pools.one = null
-            this.referenceBooks.pools.id = null
-            this.referenceBooks.pools.list = null
+            this.referenceBooks = {
+                pools: {
+                    list: [],
+                    id: null,
+                    one: null,
+                },
+                people: {
+                    list: [],
+                    id: null,
+                    one: null,
+                },
+            }
         })
     }
 
     poolsGet = async () => {
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminReferenceBooksService.pools_get()
             runInAction(() => {this.referenceBooks.pools.list = response.data})
@@ -37,14 +51,14 @@ class AdminReferenceBooksStore {
             console.log(e)
         } finally {
             runInAction(() => {
-                this.isInit = true
-                this.isLoading = false
+                Store.isInit = true
+                Store.isLoading = false
             })
         }
     }
 
     poolsCreate = async () => {
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminReferenceBooksService.pools_create()
             if(response.data?.error){
@@ -60,14 +74,14 @@ class AdminReferenceBooksStore {
             console.log(e)
         } finally {
             runInAction(() => {
-                this.isInit = true
-                this.isLoading = false
+                Store.isInit = true
+                Store.isLoading = false
             })
         }
     }
 
     poolsId = async (id) => {
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminReferenceBooksService.pools_id(id)
             runInAction(() => {this.referenceBooks.pools.one = response.data})
@@ -75,14 +89,14 @@ class AdminReferenceBooksStore {
             console.log(e)
         } finally {
             runInAction(() => {
-                this.isInit = true
-                this.isLoading = false
+                Store.isInit = true
+                Store.isLoading = false
             })
         }
     }
 
     poolSave = async () => {
-        runInAction(() => {this.isLoading = true})
+        runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminReferenceBooksService.pools_save(this.referenceBooks.pools.one)
             if(response.data?.error){
@@ -97,9 +111,68 @@ class AdminReferenceBooksStore {
             console.log(e)
         } finally {
             runInAction(() => {
-                this.isInit = true
-                this.isLoading = false
+                Store.isInit = true
+                Store.isLoading = false
             })
+        }
+    }
+
+    peopleCreate = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminReferenceBooksService.people_create()
+            if(response.data?.error){
+                console.log(response.data.error)
+                return 'ERROR'
+            }else{
+                runInAction(() => {
+                    this.referenceBooks.people.id = response.data
+                })
+                return 'OK'
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+        }
+    }
+
+    peopleId = async (id) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminReferenceBooksService.people_id(id)
+            runInAction(() => {this.referenceBooks.people.one = response.data})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+        }
+    }
+
+    peopleAvatarCreate = async (avatar) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminReferenceBooksService.people_avatar_create(avatar);
+            runInAction(() => {
+                this.referenceBooks.people.one.avatar = response.data.name
+                Store.setMediaDelTmp(response.data.name)
+            })
+        } catch (e) {
+            runInAction(() => {this.tmp_errors =
+                <div>
+                    <div>Изображение не загрузилось!</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
         }
     }
 

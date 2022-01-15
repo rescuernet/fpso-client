@@ -6,6 +6,9 @@ import AdminCompetitionsEdit from "../ui/admin/comp/comp-edit/comp-edit";
 import AdminReferenceBooks from "../ui/admin/reference-books/reference-books";
 import AdminReferenceBooksPools from "../ui/admin/reference-books/pool/pools";
 import AdminReferenceBooksPoolsEdit from "../ui/admin/reference-books/pool/pools-edit";
+import AdminReferenceBooksJudges from '../ui/admin/reference-books/judges/judges'
+import AdminReferenceBooksPeople from '../ui/admin/reference-books/people/people'
+import AdminReferenceBooksPeopleEdit from '../ui/admin/reference-books/people/edit/people-edit'
 
 
 export const MenuTypes = {
@@ -97,6 +100,33 @@ const AdminRouterManager = {
         path:`${PrefixPath.admin}/reference-books/pools/edit/:id`,
         Component: AdminReferenceBooksPoolsEdit,
         getUrl(id) {return `${PrefixPath.admin}/reference-books/pools/edit/${id}`},
+        auth: true,
+        header: {
+            view: false
+        }
+    },
+    Reference__Books__People: {
+        path:`${PrefixPath.admin}/reference-books/people`,
+        Component: AdminReferenceBooksPeople,
+        getUrl() {return `${PrefixPath.admin}/reference-books/people`},
+        auth: true,
+        header: {
+            view: false
+        }
+    },
+    Reference__Books__People_Edit: {
+        path:`${PrefixPath.admin}/reference-books/people/edit/:id`,
+        Component: AdminReferenceBooksPeopleEdit,
+        getUrl(id) {return `${PrefixPath.admin}/reference-books/people/edit/${id}`},
+        auth: true,
+        header: {
+            view: false
+        }
+    },
+    Reference__Books__Judges: {
+        path:`${PrefixPath.admin}/reference-books/judges`,
+        Component: AdminReferenceBooksJudges,
+        getUrl() {return `${PrefixPath.admin}/reference-books/judges`},
         auth: true,
         header: {
             view: false

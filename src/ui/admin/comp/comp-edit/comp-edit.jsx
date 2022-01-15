@@ -35,12 +35,6 @@ const useStyles = makeStyles((theme) => ({
             marginTop: 20,
         },
     },
-    controlCheckBox: {
-        display: "flex",
-        flexDirection: 'column',
-        flexWrap: "wrap",
-        padding: 10
-    },
     controlButton: {
         display: "flex",
         justifyContent: "space-evenly",
@@ -67,7 +61,6 @@ const CompEdit = (props) => {
         runInAction(async () => {
             await Store.sendMediaDelTmp()
             await AdminCompStore.getCompId(id)
-            /*await Store.referenceBookGet()*/
         })
         return () => {
             runInAction(async () => {

@@ -17,7 +17,8 @@ const useStyles = makeStyles({
         backgroundColor: '#fff',
         border: 'solid 1px #e6e6e6',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        boxShadow: '4px 4px 10px rgba(0,0,0,0.2)',
     },
     avatar: {
         display: "flex",

@@ -26,40 +26,6 @@ const UIRouterManager = {
             title: 'Главная'
         }
     },
-    Competitions: {
-        path:'/competitions',
-        Component: Competitions,
-        getUrl() {return `/competitions`},
-        auth: false,
-        header: {
-            view: true,
-            title: 'Соревнования'
-        },
-        menu: {
-            type: MenuTypes.main,
-            title: 'Соревнования'
-        }
-    },
-    Competitions__Page: {
-        path:'/competitions/:page',
-        Component: Competitions,
-        getUrl(page) {return `/competitions/${page}`},
-        auth: false,
-        header: {
-            view: true,
-            title: 'Соревнования'
-        }
-    },
-    Competitions__Id: {
-        path:'/competitions/view/:id',
-        Component: CompetitionsView,
-        getUrl(id) {return `/competitions/view/${id}`},
-        auth: false,
-        header: {
-            view: true,
-            title: 'Соревнования'
-        }
-    },
     News: {
         path:'/news',
         Component: News,
@@ -92,6 +58,40 @@ const UIRouterManager = {
         header: {
             view: true,
             title: 'Новости'
+        }
+    },
+    Competitions: {
+        path:'/competitions',
+        Component: Competitions,
+        getUrl() {return `/competitions`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Соревнования'
+        },
+        menu: {
+            type: MenuTypes.main,
+            title: 'Соревнования'
+        }
+    },
+    Competitions__Page: {
+        path:'/competitions/:page',
+        Component: Competitions,
+        getUrl(page) {return `/competitions/${page}`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Соревнования'
+        }
+    },
+    Competitions__Id: {
+        path:'/competitions/view/:id',
+        Component: CompetitionsView,
+        getUrl(id) {return `/competitions/view/${id}`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Соревнования'
         }
     },
     Rusada: {

@@ -10,6 +10,7 @@ import {UI_RM} from "../../../routes/ui-routes";
 import CompItem from "./comp-item";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
+import Rusada from "../rusada/rusada";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,7 @@ const Comp = () => {
     return (
         <UiPageWrapper header={'Соревнования'}>
             <BpContainer>
+                <Rusada/>
                 {compItem &&
                     <>
                         {pagesCount > 1 &&

@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         padding: 20,
-        borderBottom: '1px solid #ccc'
+        borderBottom: '1px solid #ccc',
+        marginBottom: 20
     },
 }))
 
