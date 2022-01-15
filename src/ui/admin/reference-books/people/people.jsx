@@ -7,7 +7,7 @@ import {runInAction, toJS} from "mobx";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import {useHistory} from "react-router-dom";
-import PeopleAvatar from "./edit/people-edit-avatar";
+import PeopleItem from "./people-item";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -34,17 +34,13 @@ const People = (props) => {
         })
     }
 
-    console.log(toJS(AdminReferenceBooksStore.referenceBooks))
-
     return (
-        <AdminPageWrapper title={'Люди'}>
+        <AdminPageWrapper title={'Персонажи'}>
             <div className={classes.wrapper}>
                 <div className={classes.control}>
                     <Button variant={"contained"} color={"primary"} onClick={()=>{create()}}>Добавить</Button>
                 </div>
-                <div className={classes.people}>
-
-                </div>
+                <PeopleItem/>
             </div>
         </AdminPageWrapper>
     );

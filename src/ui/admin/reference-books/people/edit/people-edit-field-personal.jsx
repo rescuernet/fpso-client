@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#ccc',
         padding: '3px 10px',
     },
-    gender:{
+    /*gender:{
         display: "flex",
         justifyContent: "center",
         '& .MuiFormGroup-root': {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center"
         },
         marginBottom: 20
-    },
+    },*/
     fio: {
         display: "flex",
         flexDirection: "column",
@@ -50,7 +50,7 @@ const PeopleEditFieldPersonal = ({gender,surname,name,patronymic,date_birth}) =>
     return (
         <div className={classes.wrap}>
             <div className={classes.description}>личные данные</div>
-            <div className={classes.gender}>
+            {/*<div className={classes.gender}>
                 <FormControl component="fieldset">
                     <FormLabel component="legend">пол</FormLabel>
                     <RadioGroup value={gender} onChange={(event)=> {people.gender = event.target.value}}>
@@ -59,7 +59,7 @@ const PeopleEditFieldPersonal = ({gender,surname,name,patronymic,date_birth}) =>
                         ))}
                     </RadioGroup>
                 </FormControl>
-            </div>
+            </div>*/}
             <div className={classes.fio}>
                 <TextField
                     className={classes.fieldFio}

@@ -67,7 +67,7 @@ const ReferenceBooks = (props) => {
                     <div className={classes.referenceItem}>
                         <PeopleAltIcon />
                         <div className={classes.referenceTitle}>
-                            <span>люди</span>
+                            <span>персонажи</span>
                         </div>
                     </div>
                 </NavLink>

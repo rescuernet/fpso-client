@@ -17,7 +17,7 @@ const PeopleEditField = ({people}) => {
     return (
         <div className={classes.fields}>
             <PeopleEditFieldPersonal
-                gender={people.gender}
+                /*gender={people.gender}*/
                 surname={people.surname}
                 name={people.name}
                 patronymic={people.patronymic}

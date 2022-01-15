@@ -7,6 +7,7 @@ import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-book
 import {useHistory, useParams} from "react-router-dom";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import AdminPageWrapper from "../../admin-page-wrapper";
+import {PoolsAlertDialog} from "./pools-alert";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -48,13 +49,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     checkBox: {
-        '@media (max-width: 430px)' : {
+        '@media (max-width: 750px)' : {
             marginBottom: 20,
         },
     },
     Button: {
         width: 120,
-        '@media (max-width: 430px)' : {
+        '@media (max-width: 750px)' : {
             marginBottom: 20,
         },
     }
@@ -71,13 +72,13 @@ const PoolsEdit = (props) => {
         runInAction(async () => {
             await AdminReferenceBooksStore.poolsId(id)
         })
+        return ()=> {AdminReferenceBooksStore.clearData()}
     },[id])
 
     const pool = AdminReferenceBooksStore.referenceBooks.pools.one
 
     //отмена
     const Cancel = () => {
-        AdminReferenceBooksStore.referenceBooks.pools.one = null
         history.push(ADM_RM.Reference__Books__Pool.path)
     };
 
@@ -122,7 +123,6 @@ const PoolsEdit = (props) => {
                         />
                     </div>
                     <div className={classes.control}>
-
                         <Divider/>
                         <div className={classes.controlButton}>
                             <FormControlLabel className={classes.checkBox}
@@ -153,13 +153,13 @@ const PoolsEdit = (props) => {
                                 Сохранить
                             </Button>
 
-                            {/*{AdminNewsStore.news_tmp_errors &&
-                                <NewsAlertDialog
+                            {AdminReferenceBooksStore.tmp_errors &&
+                                <PoolsAlertDialog
                                     open={true}
                                     header={'Ошибка!'}
-                                    text={AdminNewsStore.news_tmp_errors}
+                                    text={AdminReferenceBooksStore.tmp_errors}
                                 />
-                            }*/}
+                            }
                         </div>
                         {!pool.view && (
                             <h6 style={{color: '#ff0000',textAlign: 'center'}}>Внимание! Выключение показа в списках - полностью скрывает выбранный бассейн.</h6>

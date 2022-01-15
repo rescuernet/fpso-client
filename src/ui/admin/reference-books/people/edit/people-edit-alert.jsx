@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
-import AdminNewsStore from "../../../../bll/admin/admin-news-store";
+import AdminReferenceBooksStore from "../../../../../bll/admin/admin-reference-books-store";
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const NewsAlertDialog = (props) => {
+export const PeopleAlertDialog = (props) => {
 
     const classes = useStyles();
 
@@ -26,7 +26,7 @@ export const NewsAlertDialog = (props) => {
             setOpen(false)
             setTimeout(props.close,500)
         }else{
-            AdminNewsStore.news_tmp_errors = null
+            AdminReferenceBooksStore.tmp_errors = null
             setOpen(false);
         }
 

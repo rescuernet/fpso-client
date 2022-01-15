@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction, toJS} from "mobx";
 import AdminReferenceBooksService from "../../services/admin/admin-reference-books-service";
 import Store from "../store";
 
@@ -173,6 +173,51 @@ class AdminReferenceBooksStore {
         } finally {
             runInAction(() => {Store.isInit = true})
             runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    peopleSave = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const actualMediaArr = []
+            if(localStorage.getItem('mediaDelTmp')){
+                if(this.referenceBooks.people.one.avatar){actualMediaArr.push(this.referenceBooks.people.one.avatar)}
+                const mediaDelTmp = toJS(Store.mediaDelTmp)
+                const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+                Store.mediaDelTmp = diff
+                localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
+            }
+            const response = await AdminReferenceBooksService.people_save(this.referenceBooks.people.one)
+            if(response.data?.error){
+                runInAction(() => {
+                    this.tmp_errors = <div>{response.data.error}</div>
+                })
+            }else{
+                this.clearData()
+                return 200
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+        }
+    }
+
+    peopleGet = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminReferenceBooksService.people_get()
+            runInAction(() => {this.referenceBooks.people.list = response.data})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
         }
     }
 

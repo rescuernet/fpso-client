@@ -10,6 +10,7 @@ import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
+        minWidth: 300,
         boxShadow: '0px 0px 5px 1px rgb(255 0 0 / 100%)'
     },
 }));
