@@ -10,7 +10,7 @@ import {UI_RM} from "../../../routes/ui-routes";
 import CompItem from "./comp-item";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
-import Rusada from "../rusada/rusada";
+import Rusada from "../rusada/rusada-poster";
 
 
 const useStyles = makeStyles((theme) => ({

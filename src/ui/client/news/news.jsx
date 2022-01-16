@@ -12,7 +12,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
-import Rusada from "../rusada/rusada";
+import Rusada from "../rusada/rusada-poster";
 
 
 const useStyles = makeStyles((theme) => ({

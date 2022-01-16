@@ -13,7 +13,7 @@ import UiCompStore from "../../../bll/ui/ui-comp-store";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
 import Brand from "./brand";
-import RusadaMain from "../rusada/rusada";
+import RusadaPoster from "../rusada/rusada-poster";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +81,7 @@ const Main = () => {
         <UiPageWrapper header={'Главная'}>
             <Brand/>
             <BpContainer>
-                <RusadaMain/>
+                <RusadaPoster/>
                 {lastNews.length > 0 && (
                     <div className={classes.lastNews}>
                         <NavLink to={UI_RM.News.path}>
