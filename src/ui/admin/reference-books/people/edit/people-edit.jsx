@@ -78,7 +78,6 @@ const PeopleEdit = (props) => {
     };
 
     const people = AdminReferenceBooksStore.referenceBooks.people.one
-    console.log('people',toJS(people))
 
     return (
         <AdminPageWrapper title={people?.tmp ? 'Новый персонаж' : 'Персонажи'}>

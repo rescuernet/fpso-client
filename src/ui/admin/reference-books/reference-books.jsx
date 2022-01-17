@@ -2,10 +2,8 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import PoolIcon from '@material-ui/icons/Pool';
-import AlarmIcon from '@material-ui/icons/Alarm';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import {NavLink} from "react-router-dom";
-
 import {ADM_RM} from "../../../routes/admin-routes";
 import AdminPageWrapper from "../admin-page-wrapper";
 
@@ -68,15 +66,6 @@ const ReferenceBooks = (props) => {
                         <PeopleAltIcon />
                         <div className={classes.referenceTitle}>
                             <span>персонажи</span>
-                        </div>
-                    </div>
-                </NavLink>
-
-                <NavLink to={ADM_RM.Reference__Books__Judges.path}>
-                    <div className={classes.referenceItem}>
-                        <AlarmIcon />
-                        <div className={classes.referenceTitle}>
-                            <span>судьи</span>
                         </div>
                     </div>
                 </NavLink>
