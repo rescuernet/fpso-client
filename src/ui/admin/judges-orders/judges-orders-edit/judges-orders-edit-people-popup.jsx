@@ -12,14 +12,25 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width: 750px)' : {
             width: 300,
         },
-        height: 500,
+        height: 545,
         padding: 10
     },
     sort: {
         marginBottom: 10
     },
+    wrapper: {
+        overflow: "hidden",
+        paddingBottom: 10,
+    },
     list: {
+        height: '100%',
+        overflowY: "auto",
         margin: '10px 0',
+        marginRight: -15,
+        '@media (max-width: 750px)' : {
+            marginRight: -7,
+            paddingRight: 7
+        },
     },
     item: {
         border: '1px solid #ccc',
@@ -33,18 +44,21 @@ const useStyles = makeStyles((theme) => ({
     },
     rank: {
         textTransform: "lowercase",
+        fontWeight: "bold"
+    },
+    rankRed: {
+        textTransform: "lowercase",
         color: '#ff0000'
     }
 }));
 
-export const JudgesOrdersEditPeoplePopup = ({open,setOpen}) => {
+export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
 
     const classes = useStyles();
 
     useEffect(() => {
         runInAction(async () => {
             await AdminJudgesOrdersStore.judgesOrdersPeopleGet()
-            console.log('people',toJS(AdminJudgesOrdersStore.judgesOrders.people))
         })
     }, [])
 
@@ -53,8 +67,20 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen}) => {
     let people = AdminJudgesOrdersStore.judgesOrders.people.filter(
         el => (el.surname+el.name+el.patronymic).toLowerCase().indexOf(filterStr.toLowerCase()) !== -1)
 
+
     const filter = (event)=> {
         setFilterStr(event)
+    }
+
+    const addPeople = (peopleId,peopleName) => {
+        console.log(98989)
+        let res = AdminJudgesOrdersStore.judgesOrders.one.judges.find(item => item === peopleId)
+        if(!res){
+            AdminJudgesOrdersStore.judgesOrders.one.tmpName.push({peopleId,peopleName:peopleName})
+        }else{
+            AdminJudgesOrdersStore.tmp_errors = 'Выбранный судья уже добавлен в список приказа'
+        }
+        handleClose()
     }
 
     const handleClose = () => {
@@ -85,16 +111,18 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen}) => {
                 />
             </div>
             <Divider/>
-            <div className={classes.list}>
-                {people.map((i)=>{
-                    let res = Judges_rank.find((item => item.value === i.rank_judges))
-                    return (
-                    <div key={i._id} id={i._id} className={classes.item} onDoubleClick={()=> {alert(i._id)}}>
-                        <div className={classes.name}>{`${i.surname} ${i.name} ${i.patronymic}`}</div>
-                        <div className={classes.rank}>{res?.title || 'Без категории'}</div>
-                    </div>
-                    )
-                })}
+            <div className={classes.wrapper}>
+                <div className={classes.list}>
+                    {people.map((i)=>{
+                        let res = Judges_rank.find((item => item.value === i.rank_judges))
+                        return (
+                            <div key={i._id} id={i._id} className={classes.item} onDoubleClick={()=> {addPeople(i._id,`${i.surname} ${i.name} ${i.patronymic}`)}}>
+                                <div className={classes.name}>{`${i.surname} ${i.name} ${i.patronymic}`}</div>
+                                <div className={res ? classes.rank : classes.rankRed}>{res?.abbreviation || 'Без категории'}</div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </Dialog>
     );

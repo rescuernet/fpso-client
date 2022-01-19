@@ -1,5 +1,4 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx";
-import AdminReferenceBooksService from "../../services/admin/admin-reference-books-service";
 import Store from "../store";
 import AdminJudgesOrdersService from "../../services/admin/admin-judges-orders-service";
 
@@ -26,6 +25,7 @@ class AdminJudgesOrdersStore {
                 list: [],
                 id: null,
                 one: null,
+                people: []
             }
         })
     }
@@ -54,7 +54,14 @@ class AdminJudgesOrdersStore {
     judgesOrdersId = async (id) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminJudgesOrdersService.judges_orders_id(id)
+            let response = await AdminJudgesOrdersService.judges_orders_id(id)
+            let tmp = []
+            if(response.data.judges.length > 0){
+                response.data.judges.map((i)=>{
+                    tmp.push({peopleId: i._id,peopleName: `${i.surname} ${i.name} ${i.patronymic}`})
+                })
+            }
+            response.data.tmpName = tmp
             runInAction(() => {this.judgesOrders.one = response.data})
         } catch (e) {
             console.log(e)
@@ -71,6 +78,54 @@ class AdminJudgesOrdersStore {
         try {
             const response = await AdminJudgesOrdersService.judges_orders_people_get()
             runInAction(() => {this.judgesOrders.people = response.data})
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+        }
+    }
+
+    judgesOrdersDocsCreate = async (doc,originName) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminJudgesOrdersService.judges_orders_docs_create(doc);
+            runInAction(() => {this.judgesOrders.one.docs.push({title:originName,doc:response.data.doc})})
+            Store.setMediaDelTmp(response.data.doc)
+        } catch (e) {
+            runInAction(() => {this.news_tmp_errors =
+                <div>
+                    <div>Документ не загрузился!</div>
+                    <div>Максимальный размер 10 мб</div>
+                    <div>Типы файлов .doc, .docx, .pdf, .xls, .xlsx</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+
+    judgesOrdersSave = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            let tmp = this.judgesOrders.one
+            tmp.judges = []
+            tmp.tmpName.map((i) => {
+                tmp.judges.push(i.peopleId)
+            })
+            const response = await AdminJudgesOrdersService.judges_orders_save(tmp)
+            console.log('res',response)
+            if(response.data?.error){
+                runInAction(() => {
+                    this.tmp_errors = <div>{response.data.error}</div>
+                })
+            }else{
+                this.clearData()
+                return 200
+            }
         } catch (e) {
             console.log(e)
         } finally {
@@ -100,27 +155,7 @@ class AdminJudgesOrdersStore {
 
 
 
-    poolSave = async () => {
-        runInAction(() => {Store.isLoading = true})
-        try {
-            const response = await AdminReferenceBooksService.pools_save(this.referenceBooks.pools.one)
-            if(response.data?.error){
-                runInAction(() => {
-                    this.tmp_errors = <div>{response.data.error}</div>
-                })
-            }else{
-                this.clearData()
-                return 200
-            }
-        } catch (e) {
-            console.log(e)
-        } finally {
-            runInAction(() => {
-                Store.isInit = true
-                Store.isLoading = false
-            })
-        }
-    }
+
 
     peopleCreate = async () => {
         runInAction(() => {Store.isLoading = true})

@@ -72,6 +72,14 @@ const AdminAPIRouterManager = {
         path:`${PrefixPath.admin}/judges-orders/people/get`,
         getUrl() {return `${PrefixPath.admin}/judges-orders/people/get`},
     },
+    Judges_Orders__Docs__Create: {
+        path: `${PrefixPath.admin}/judges-orders/docs-create`,
+        getUrl() {return `${PrefixPath.admin}/judges-orders/docs-create`},
+    },
+    Judges_Orders__Save: {
+        path:`${PrefixPath.admin}/judges-orders/save`,
+        getUrl() {return `${PrefixPath.admin}/judges-orders/save`},
+    },
     Reference__Books__Pools_Get: {
         path:`${PrefixPath.admin}/reference-books/pools/get`,
         getUrl() {return `${PrefixPath.admin}/reference-books/pools/get`},

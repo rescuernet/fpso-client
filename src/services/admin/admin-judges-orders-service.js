@@ -17,6 +17,14 @@ export default class AdminJudgesOrdersService {
         return $api.get(ADM_API_RM.Judges_Orders__People__Get.path)
     }
 
+    static async judges_orders_docs_create(doc) {
+        return $api.post(ADM_API_RM.Judges_Orders__Docs__Create.path,doc)
+    }
+
+    static async judges_orders_save(arr) {
+        return $api.post(ADM_API_RM.Judges_Orders__Save.path,arr)
+    }
+
     /*
 
     static async pools_save(arr) {

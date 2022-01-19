@@ -9,8 +9,12 @@ import Store from "../../../../bll/store";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import {Judges_rank_doc} from "../../../../types/types";
 import * as dateFns from "date-fns";
-import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {JudgesOrdersEditPeoplePopup} from "./judges-orders-edit-people-popup";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import {JudgesAlertDialog} from "./judges-orders-edit-alert";
+import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
+import JudgesOrdersDocs from "./judges-orders-edit-docs";
+import {ADM_RM} from "../../../../routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -26,7 +30,29 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     selectType: {
-        maxWidth: 400
+        marginBottom: 20
+    },
+    judges: {
+    },
+    header: {
+        fontSize: '110%',
+        fontWeight: "bold",
+        marginBottom: 20
+    },
+    judgesList: {
+        marginBottom: 20
+    },
+    judgesItem: {
+        border: '1px solid #ccc',
+        borderRadius: 5,
+        padding: 10,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    deleteJudges: {
+        fontSize: 0,
+        marginLeft: 5
     }
 }))
 
@@ -52,11 +78,21 @@ const JudgesOrdersEdit = (props) => {
 
     const order = AdminJudgesOrdersStore.judgesOrders.one
 
+    console.log(toJS(order))
+
     const addJudges = () => {
-        runInAction(()=> {
-            AdminJudgesOrdersStore.judgesOrders.people = []
-            setOpen(true)
-        })
+        setOpen(true)
+    }
+
+    const deleteJudge = (index) => {
+        order.tmpName.splice(index,1)
+    }
+
+    const saveJudgesOrder = async () => {
+        const result = await AdminJudgesOrdersStore.judgesOrdersSave()
+        if (result === 200) {
+            history.push(ADM_RM.Judges_Orders.path)
+        }
     }
 
     return (
@@ -84,12 +120,12 @@ const JudgesOrdersEdit = (props) => {
                             <Select
                                 labelId="orders-type-select-label"
                                 id="orders-type-select"
-                                value={''}
-                                /*onChange={(e)=>{
+                                value={order?.orderType || ''}
+                                onChange={(e)=>{
                                     runInAction(()=>{
-                                        AdminCompStore.compOne.location = e.target.value
+                                        AdminJudgesOrdersStore.judgesOrders.one.orderType = e.target.value
                                     })
-                                }}*/
+                                }}
                                 label="Выберите тип приказа"
                             >
                                 <MenuItem value=''>
@@ -101,16 +137,56 @@ const JudgesOrdersEdit = (props) => {
                             </Select>
                         </FormControl>
                     </div>
-                    <Button onClick={()=>{addJudges()}}>Добавить судью</Button>
+
+                    {order.orderType && (
+                        <>
+                            <div className={classes.judges}>
+                                <div className={classes.header}>Судьи</div>
+                                {order.judges.length > 0 && (
+                                    <div className={classes.judgesList}>
+                                        {
+                                            order.tmpName.map((item,index)=> (
+                                                <div key={index} className={classes.judgesItem}>
+                                                    <div className={classes.judgesName}>{item.peopleName}</div>
+                                                    <div className={classes.deleteJudges}>
+                                                        <HighlightOffIcon
+                                                            color={'secondary'}
+                                                            onClick={()=>{deleteJudge(index)}}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                )}
+                                <Button variant={'outlined'} color={"primary"} onClick={()=>{addJudges()}}>Добавить судью</Button>
+                            </div>
+                            <JudgesOrdersDocs/>
+                            <div className={classes.control}>
+                                <Button onClick={()=>{saveJudgesOrder()}}>Сохранить</Button>
+                            </div>
+                        </>
+
+
+                    )}
+
                     {open && (
                         <JudgesOrdersEditPeoplePopup
                             open={open}
                             setOpen={setOpen}
+                            orderId={id}
                         />
                     )}
 
+                    {AdminJudgesOrdersStore.tmp_errors && (
+                        <JudgesAlertDialog
+                            open={true}
+                            header={'Ошибка!'}
+                            text={AdminJudgesOrdersStore.tmp_errors}
+                        />
+                        )
+                    }
                 </div>
-
             )}
         </AdminPageWrapper>
     );
