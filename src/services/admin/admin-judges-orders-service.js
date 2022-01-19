@@ -25,6 +25,10 @@ export default class AdminJudgesOrdersService {
         return $api.post(ADM_API_RM.Judges_Orders__Save.path,arr)
     }
 
+    static async judges_orders_get(orderType) {
+        return $api.get(`${ADM_RM.Judges_Orders.path}?ordertype=${orderType}`)
+    }
+
     /*
 
     static async pools_save(arr) {

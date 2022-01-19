@@ -18,6 +18,7 @@ import {ADM_RM} from "../../../../routes/admin-routes";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
+        paddingBottom: 20,
         width: 600,
         '@media (max-width: 750px)' : {
             width: 340,
@@ -53,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
     deleteJudges: {
         fontSize: 0,
         marginLeft: 5
+    },
+    control: {
+        display: "flex",
+        justifyContent: "space-evenly",
+        paddingTop: 20,
+        borderTop: '1px solid #ccc'
     }
 }))
 
@@ -88,15 +95,34 @@ const JudgesOrdersEdit = (props) => {
         order.tmpName.splice(index,1)
     }
 
-    const saveJudgesOrder = async () => {
+    const saveOrder = async () => {
         const result = await AdminJudgesOrdersStore.judgesOrdersSave()
         if (result === 200) {
             history.push(ADM_RM.Judges_Orders.path)
         }
     }
 
+    /*const deleteOrder = async () => {
+        const result = await AdminJudgesOrdersStore.judgesOrdersSave()
+        if (result === 200) {
+            history.push(ADM_RM.Judges_Orders.path)
+        }
+    }*/
+
+    const cancel = async () => {
+        history.push(ADM_RM.Judges_Orders.path)
+    }
+
     return (
-        <AdminPageWrapper title={'Судьи. Новый приказ'}>
+        <AdminPageWrapper
+            title={
+            order
+                ? order.tmp
+                    ? `Новый приказ`
+                    : `Редактирование приказа`
+                : null
+        }
+        >
             {order && (
                 <div className={classes.wrapper}>
                     <div className={classes.date}>
@@ -142,7 +168,7 @@ const JudgesOrdersEdit = (props) => {
                         <>
                             <div className={classes.judges}>
                                 <div className={classes.header}>Судьи</div>
-                                {order.judges.length > 0 && (
+                                {order.tmpName.length > 0 && (
                                     <div className={classes.judgesList}>
                                         {
                                             order.tmpName.map((item,index)=> (
@@ -162,13 +188,17 @@ const JudgesOrdersEdit = (props) => {
                                 <Button variant={'outlined'} color={"primary"} onClick={()=>{addJudges()}}>Добавить судью</Button>
                             </div>
                             <JudgesOrdersDocs/>
-                            <div className={classes.control}>
-                                <Button onClick={()=>{saveJudgesOrder()}}>Сохранить</Button>
-                            </div>
                         </>
-
-
                     )}
+                    <div className={classes.control}>
+                        {order.orderType && (
+                            <>
+                                <Button variant={"contained"} color={"primary"} onClick={()=>{saveOrder()}}>Сохранить</Button>
+                                {/*<Button variant={"contained"} color={"secondary"} onClick={()=>{deleteOrder()}}>Удалить</Button>*/}
+                            </>
+                        )}
+                        <Button variant={"outlined"} color={"primary"} onClick={()=>{cancel()}}>Отмена</Button>
+                    </div>
 
                     {open && (
                         <JudgesOrdersEditPeoplePopup

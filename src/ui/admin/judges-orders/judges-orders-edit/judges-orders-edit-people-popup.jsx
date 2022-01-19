@@ -73,8 +73,7 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
     }
 
     const addPeople = (peopleId,peopleName) => {
-        console.log(98989)
-        let res = AdminJudgesOrdersStore.judgesOrders.one.judges.find(item => item === peopleId)
+        let res = AdminJudgesOrdersStore.judgesOrders.one.tmpName.find(item => item.peopleId === peopleId)
         if(!res){
             AdminJudgesOrdersStore.judgesOrders.one.tmpName.push({peopleId,peopleName:peopleName})
         }else{
@@ -116,7 +115,7 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
                     {people.map((i)=>{
                         let res = Judges_rank.find((item => item.value === i.rank_judges))
                         return (
-                            <div key={i._id} id={i._id} className={classes.item} onDoubleClick={()=> {addPeople(i._id,`${i.surname} ${i.name} ${i.patronymic}`)}}>
+                            <div key={i._id} id={i._id} className={classes.item} onClick={()=> {addPeople(i._id,`${i.surname} ${i.name} ${i.patronymic}`)}}>
                                 <div className={classes.name}>{`${i.surname} ${i.name} ${i.patronymic}`}</div>
                                 <div className={res ? classes.rank : classes.rankRed}>{res?.abbreviation || 'Без категории'}</div>
                             </div>

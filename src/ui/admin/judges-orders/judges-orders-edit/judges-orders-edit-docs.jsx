@@ -62,7 +62,6 @@ const JudgesOrdersDocs = ({compId}) => {
                     />
                     <Button
                         color="primary"
-                        size="small"
                         variant={"outlined"}
                         component={'span'}
                     >

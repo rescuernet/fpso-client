@@ -116,6 +116,7 @@ class AdminJudgesOrdersStore {
             tmp.tmpName.map((i) => {
                 tmp.judges.push(i.peopleId)
             })
+            tmp.tmp = false
             const response = await AdminJudgesOrdersService.judges_orders_save(tmp)
             console.log('res',response)
             if(response.data?.error){
@@ -136,11 +137,11 @@ class AdminJudgesOrdersStore {
         }
     }
 
-    /*poolsGet = async () => {
+    judgesOrdersGet = async (orderType) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminReferenceBooksService.pools_get()
-            runInAction(() => {this.referenceBooks.pools.list = response.data})
+            const response = await AdminJudgesOrdersService.judges_orders_get(orderType)
+            runInAction(() => {this.judgesOrders.list = response.data})
         } catch (e) {
             console.log(e)
         } finally {
@@ -151,12 +152,7 @@ class AdminJudgesOrdersStore {
         }
     }
 
-
-
-
-
-
-
+    /*
     peopleCreate = async () => {
         runInAction(() => {Store.isLoading = true})
         try {

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import AdminPageWrapper from "../admin-page-wrapper";
 import {Button, Divider, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import {Judges_rank_doc} from '../../../types/types'
 import {ADM_RM} from "../../../routes/admin-routes";
 import AdminJudgesOrdersStore from "../../../bll/admin/admin-judges-orders-store";
+import JudgesOrdersItem from "./judges-orders-item";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -32,6 +33,16 @@ const JudgesOrders = (props) => {
     const classes = useStyles();
     const history = useHistory()
 
+    const [orderType,setOrderType] = useState('')
+
+    useEffect(()=>{
+        runInAction(async () => {
+            await AdminJudgesOrdersStore.judgesOrdersGet(orderType)
+        })
+    },[orderType])
+
+    const orders = AdminJudgesOrdersStore.judgesOrders.list
+
     const create = () => {
         runInAction(async ()=>{
             const response = await AdminJudgesOrdersStore.judgesOrdersCreate()
@@ -53,12 +64,10 @@ const JudgesOrders = (props) => {
                             <Select
                                 labelId="orders-type-select-label"
                                 id="orders-type-select"
-                                value={''}
-                                /*onChange={(e)=>{
-                                    runInAction(()=>{
-                                        AdminCompStore.compOne.location = e.target.value
-                                    })
-                                }}*/
+                                value={orderType}
+                                onChange={(e)=>{
+                                    setOrderType(e.target.value)
+                                }}
                                 label="Выберите тип приказа"
                             >
                                 <MenuItem value=''>
@@ -71,7 +80,11 @@ const JudgesOrders = (props) => {
                         </FormControl>
                     </div>
                 </div>
-                Судьи
+                <div className={classes.orders}>
+                    {orders.map((item,index)=>(
+                        <JudgesOrdersItem key={index} item={item}/>
+                    ))}
+                </div>
             </div>
         </AdminPageWrapper>
     );
