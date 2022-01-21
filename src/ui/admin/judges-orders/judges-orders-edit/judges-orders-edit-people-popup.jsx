@@ -5,6 +5,8 @@ import {runInAction, toJS} from "mobx";
 import AdminJudgesOrdersStore from "../../../../bll/admin/admin-judges-orders-store";
 import {Judges_rank} from "../../../../types/types";
 import {Divider, TextField} from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
+import Store from "../../../../bll/store";
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -13,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
             width: 300,
         },
         height: 545,
-        padding: 10
+        padding: 10,
+        overflow: "inherit"
     },
     sort: {
         marginBottom: 10
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         height: '100%',
-        overflowY: "auto",
+        overflowY: "scroll",
         margin: '10px 0',
         marginRight: -15,
         '@media (max-width: 750px)' : {
@@ -49,6 +52,15 @@ const useStyles = makeStyles((theme) => ({
     rankRed: {
         textTransform: "lowercase",
         color: '#ff0000'
+    },
+    close: {
+        zIndex: 9000,
+        position: "absolute",
+        border: '1px solid #ccc',
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        top: -10,
+        right: -10
     }
 }));
 
@@ -58,7 +70,7 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
 
     useEffect(() => {
         runInAction(async () => {
-            await AdminJudgesOrdersStore.judgesOrdersPeopleGet()
+            await AdminJudgesOrdersStore.judgesOrdersPeopleGet(AdminJudgesOrdersStore.judgesOrders.one.orderType)
         })
     }, [])
 
@@ -97,6 +109,9 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
             aria-describedby="alert-dialog-description"
             classes={{paper: classes.dialogPaper}}
         >
+            {Store.width < 750 && (
+                <CloseIcon className={classes.close} fontSize={"medium"} onClick={()=>{handleClose()}}/>
+            )}
             <div className={classes.sort}>
                 <TextField
                     id="sortPeople"

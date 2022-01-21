@@ -58,7 +58,7 @@ class AdminJudgesOrdersStore {
             let tmp = []
             if(response.data.judges.length > 0){
                 response.data.judges.map((i)=>{
-                    tmp.push({peopleId: i._id,peopleName: `${i.surname} ${i.name} ${i.patronymic}`})
+                    tmp.push({peopleId: i._id,peopleName: `${i.surname} ${i.name} ${i.patronymic}`,view:i.view})
                 })
             }
             response.data.tmpName = tmp
@@ -73,10 +73,10 @@ class AdminJudgesOrdersStore {
         }
     }
 
-    judgesOrdersPeopleGet = async () => {
+    judgesOrdersPeopleGet = async (orderType) => {
         runInAction(() => {Store.isLoading = true})
         try {
-            const response = await AdminJudgesOrdersService.judges_orders_people_get()
+            const response = await AdminJudgesOrdersService.judges_orders_people_get(orderType)
             runInAction(() => {this.judgesOrders.people = response.data})
         } catch (e) {
             console.log(e)
@@ -111,14 +111,21 @@ class AdminJudgesOrdersStore {
     judgesOrdersSave = async () => {
         runInAction(() => {Store.isLoading = true})
         try {
+            const actualMediaArr = []
+            if(localStorage.getItem('mediaDelTmp')){
+                if(this.judgesOrders.one.docs.length > 0){this.judgesOrders.one.docs.map((i)=> actualMediaArr.push(i.doc))}
+                const mediaDelTmp = toJS(Store.mediaDelTmp)
+                const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+                Store.mediaDelTmp = diff
+                localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
+            }
             let tmp = this.judgesOrders.one
             tmp.judges = []
             tmp.tmpName.map((i) => {
                 tmp.judges.push(i.peopleId)
             })
             tmp.tmp = false
-            const response = await AdminJudgesOrdersService.judges_orders_save(tmp)
-            console.log('res',response)
+            const response = await AdminJudgesOrdersService.judges_orders_save({data: tmp,mediaDel: this.mediaDel})
             if(response.data?.error){
                 runInAction(() => {
                     this.tmp_errors = <div>{response.data.error}</div>

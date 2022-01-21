@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
     selectType: {
         marginBottom: 20
     },
+    selectRoot: {
+        '& .Mui-disabled': {
+            color: '#333'
+        }
+    },
     judges: {
     },
     header: {
@@ -44,12 +49,17 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20
     },
     judgesItem: {
-        border: '1px solid #ccc',
+        border: '1px solid #bcbcbc',
         borderRadius: 5,
         padding: 10,
+        marginBottom: 3,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
+    },
+    judgesName: {},
+    judgesNameRed: {
+        color: '#ff0000'
     },
     deleteJudges: {
         fontSize: 0,
@@ -60,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-evenly",
         paddingTop: 20,
         borderTop: '1px solid #ccc'
-    }
+    },
 }))
 
 const JudgesOrdersEdit = (props) => {
@@ -85,7 +95,6 @@ const JudgesOrdersEdit = (props) => {
 
     const order = AdminJudgesOrdersStore.judgesOrders.one
 
-    console.log(toJS(order))
 
     const addJudges = () => {
         setOpen(true)
@@ -141,7 +150,12 @@ const JudgesOrdersEdit = (props) => {
                         />
                     </div>
                     <div className={classes.selectType}>
-                        <FormControl variant="outlined" fullWidth>
+                        <FormControl
+                            variant="outlined"
+                            fullWidth
+                            disabled={!order.tmp}
+                            classes={{root: classes.selectRoot}}
+                        >
                             <InputLabel id="orders-type-select-label">Выберите тип приказа</InputLabel>
                             <Select
                                 labelId="orders-type-select-label"
@@ -173,7 +187,7 @@ const JudgesOrdersEdit = (props) => {
                                         {
                                             order.tmpName.map((item,index)=> (
                                                 <div key={index} className={classes.judgesItem}>
-                                                    <div className={classes.judgesName}>{item.peopleName}</div>
+                                                    <div className={classes.judgesName + ' ' + (item.view === false ? classes.judgesNameRed : '')}>{item.peopleName}</div>
                                                     <div className={classes.deleteJudges}>
                                                         <HighlightOffIcon
                                                             color={'secondary'}

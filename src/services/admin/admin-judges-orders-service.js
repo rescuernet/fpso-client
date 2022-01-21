@@ -13,8 +13,8 @@ export default class AdminJudgesOrdersService {
         return $api.get(ADM_RM.Judges_Orders_Edit.getUrl(id))
     }
 
-    static async judges_orders_people_get() {
-        return $api.get(ADM_API_RM.Judges_Orders__People__Get.path)
+    static async judges_orders_people_get(orderType) {
+        return $api.get(`${ADM_API_RM.Judges_Orders__People__Get.path}?ordertype=${orderType}`)
     }
 
     static async judges_orders_docs_create(doc) {

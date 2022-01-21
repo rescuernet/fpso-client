@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     },
     judgesItem: {
         paddingBottom: 10
+    },
+    judgesItemRed: {
+        color: '#ff0000'
     }
 }))
 
@@ -69,7 +72,7 @@ const JudgesOrdersItem = ({item}) => {
             <div className={classes.orderHeaders}>{orderType.title}</div>
             <div className={classes.judges}>
                 {item.judges.map((i,index)=>(
-                    <div key={index} className={classes.judgesItem}>{`${index +1}. ${i.surname} ${i.name} ${i.patronymic}`}</div>
+                    <div key={index} className={classes.judgesItem + ' ' + (i.view === false ? classes.judgesItemRed : '')}>{`${index +1}. ${i.surname} ${i.name} ${i.patronymic}`}</div>
                 ))}
             </div>
             <div className={classes.docs}>

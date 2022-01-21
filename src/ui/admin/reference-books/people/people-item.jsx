@@ -76,8 +76,6 @@ const PeopleItem = () => {
     }
 
     const people = toJS(AdminReferenceBooksStore.referenceBooks.people.list)
-    console.log(people)
-
 
     return (
         <>
