@@ -4,9 +4,8 @@ import {observer} from "mobx-react-lite";
 import {Judges_rank_doc} from "../../../types/types";
 import JudgesOrdersItemDocs from "./judges-orders-item-docs";
 import * as dateFns from "date-fns"
-import {NavLink, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {ADM_RM} from "../../../routes/admin-routes";
-import AdminJudgesOrdersStore from "../../../bll/admin/admin-judges-orders-store";
 
 const useStyles = makeStyles((theme) => ({
     order: {
@@ -47,7 +46,11 @@ const useStyles = makeStyles((theme) => ({
     },
     judgesItemRed: {
         color: '#ff0000'
-    }
+    },
+    Red: {
+        borderColor: '#ff0000',
+        color: '#ff0000'
+    },
 }))
 
 const JudgesOrdersItem = ({item}) => {
@@ -63,7 +66,7 @@ const JudgesOrdersItem = ({item}) => {
 
 
     return (
-        <div className={classes.order}>
+        <div className={classes.order + ' ' + (item.view === false && classes.Red)}>
             <div className={classes.header}>
                 <div>{dateFns.format(new Date(item.dateOrder), 'dd.MM.yyyy')}</div>
                 <div onClick={()=>{openOrder()}} className={classes.openOrder}>открыть приказ >></div>

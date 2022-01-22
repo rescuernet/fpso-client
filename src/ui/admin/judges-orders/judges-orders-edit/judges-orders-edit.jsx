@@ -6,7 +6,16 @@ import {useHistory, useParams} from "react-router-dom";
 import AdminJudgesOrdersStore from "../../../../bll/admin/admin-judges-orders-store";
 import {runInAction, toJS} from "mobx";
 import Store from "../../../../bll/store";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    Switch,
+    TextField
+} from "@material-ui/core";
 import {Judges_rank_doc} from "../../../../types/types";
 import * as dateFns from "date-fns";
 import {JudgesOrdersEditPeoplePopup} from "./judges-orders-edit-people-popup";
@@ -111,12 +120,6 @@ const JudgesOrdersEdit = (props) => {
         }
     }
 
-    /*const deleteOrder = async () => {
-        const result = await AdminJudgesOrdersStore.judgesOrdersSave()
-        if (result === 200) {
-            history.push(ADM_RM.Judges_Orders.path)
-        }
-    }*/
 
     const cancel = async () => {
         history.push(ADM_RM.Judges_Orders.path)
@@ -207,8 +210,19 @@ const JudgesOrdersEdit = (props) => {
                     <div className={classes.control}>
                         {order.orderType && (
                             <>
+                                <FormControlLabel
+                                    className={classes.checkBox}
+                                    control={
+                                        <Switch
+                                            checked={order?.view || false}
+                                            onChange={(e)=>{order.view = e.target.checked}}
+                                            name="fixedNews"
+                                            color="secondary"
+                                        />
+                                    }
+                                    label={order?.view && order.view ? 'отображать в системе' : 'не отображать в системе'}
+                                />
                                 <Button variant={"contained"} color={"primary"} onClick={()=>{saveOrder()}}>Сохранить</Button>
-                                {/*<Button variant={"contained"} color={"secondary"} onClick={()=>{deleteOrder()}}>Удалить</Button>*/}
                             </>
                         )}
                         <Button variant={"outlined"} color={"primary"} onClick={()=>{cancel()}}>Отмена</Button>
