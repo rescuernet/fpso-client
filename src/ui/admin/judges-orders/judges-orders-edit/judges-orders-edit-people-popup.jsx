@@ -80,6 +80,7 @@ export const JudgesOrdersEditPeoplePopup = ({open,setOpen,orderId}) => {
         el => (el.surname+el.name+el.patronymic).toLowerCase().indexOf(filterStr.toLowerCase()) !== -1)
 
 
+
     const filter = (event)=> {
         setFilterStr(event)
     }

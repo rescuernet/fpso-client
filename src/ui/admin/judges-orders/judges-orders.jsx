@@ -43,8 +43,6 @@ const JudgesOrders = (props) => {
 
     const orders = AdminJudgesOrdersStore.judgesOrders.list
 
-    console.log(toJS(orders))
-
     const create = () => {
         runInAction(async ()=>{
             const response = await AdminJudgesOrdersStore.judgesOrdersCreate()

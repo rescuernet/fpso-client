@@ -153,7 +153,7 @@ const JudgesOrdersEdit = (props) => {
                         <FormControl
                             variant="outlined"
                             fullWidth
-                            disabled={!order.tmp}
+                            /*disabled={!order.tmp}*/
                             classes={{root: classes.selectRoot}}
                         >
                             <InputLabel id="orders-type-select-label">Выберите тип приказа</InputLabel>
