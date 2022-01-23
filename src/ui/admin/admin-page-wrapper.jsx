@@ -15,11 +15,8 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         margin: '10px 30px',
         '@media (max-width: 1280px)': {
-            margin: '60px 10px 10px 10px',
-        },
-        '@media (max-width: 750px)': {
-            marginTop: 45
-        },
+            margin: '70px 10px 10px 10px',
+        }
     },
     header: {
         display: "flex",

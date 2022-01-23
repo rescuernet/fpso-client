@@ -2,9 +2,11 @@ import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import AdminPageWrapper from "../admin-page-wrapper";
-import {Button} from "@material-ui/core";
 import AdminAboutUsStore from "../../../bll/admin/admin-about-us-store";
 import {runInAction, toJS} from "mobx";
+import Store from "../../../bll/store";
+import AdminAboutUsFields from "./about-us-fields";
+import AdminAboutUsDocs from "./about-us-docs";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -25,16 +27,19 @@ const AdminAboutUs = (props) => {
         runInAction( async () => {
             await AdminAboutUsStore.aboutUsGet()
         })
+        return () => {
+            runInAction(async () => {
+                await Store.sendMediaDelTmp()
+                AdminAboutUsStore.clearData()
+            })
+        }
     },[])
-
-    const aboutUs = toJS(AdminAboutUsStore.aboutUs)
-
-    console.log(aboutUs)
 
     return (
         <AdminPageWrapper title={'О нас'}>
             <div className={classes.wrapper}>
-
+                <AdminAboutUsFields/>
+                <AdminAboutUsDocs/>
             </div>
         </AdminPageWrapper>
     );

@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {Divider, TextField} from "@material-ui/core";
 import AdminCompStore from "../../../../bll/admin/admin-competitions-store";
 import {runInAction} from "mobx";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import pdf from "../../../../common/assets/image/icons/pdf.png";
 import doc from "../../../../common/assets/image/icons/doc.png";
 import docx from "../../../../common/assets/image/icons/docx.png";
@@ -21,16 +21,16 @@ const useStyles = makeStyles((theme) => ({
         '& svg': {
             margin: '0 10px',
             fontSize: '200%',
-            [theme.breakpoints.down('sm')]: {
+            '@media (max-width: 750px)' : {
                 fontSize: '150%',
-            },
+            }
         },
         '& svg:hover': {
             cursor: 'pointer'
         },
         '& img': {
             width: 40,
-            [theme.breakpoints.down('sm')]: {
+            '@media (max-width: 750px)' : {
                 width: 30
             },
         },

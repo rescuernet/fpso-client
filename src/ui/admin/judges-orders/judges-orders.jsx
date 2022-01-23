@@ -13,12 +13,12 @@ import JudgesOrdersItem from "./judges-orders-item";
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         maxWidth: 600,
+        '@media (max-width: 1280px)': {
+            margin: '0 auto',
+        }
     },
     control: {
         marginBottom: 20,
-        '@media (max-width: 600px)' : {
-            marginTop: 20
-        },
     },
     newOrder: {
         marginBottom: 20

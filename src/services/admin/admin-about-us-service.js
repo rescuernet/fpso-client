@@ -9,6 +9,10 @@ export default class AdminAboutUsService {
         return $api.get(ADM_RM.AboutUs.path)
     }
 
+    static async about_us_docs_create(doc) {
+        return $api.post(ADM_API_RM.AboutUs__Docs__Create.path,doc)
+    }
+
     /*static async judges_orders_id(id) {
         return $api.get(ADM_RM.Judges_Orders_Edit.getUrl(id))
     }

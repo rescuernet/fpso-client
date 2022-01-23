@@ -21,16 +21,16 @@ const useStyles = makeStyles((theme) => ({
         '& svg': {
             margin: '0 10px',
             fontSize: '200%',
-            [theme.breakpoints.down('sm')]: {
+            '@media (max-width: 750px)' : {
                 fontSize: '150%',
-            },
+            }
         },
         '& svg:hover': {
             cursor: 'pointer'
         },
         '& img': {
             width: 40,
-            [theme.breakpoints.down('sm')]: {
+            '@media (max-width: 750px)' : {
                 width: 30
             },
         },

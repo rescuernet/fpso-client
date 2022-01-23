@@ -108,6 +108,10 @@ const AdminAPIRouterManager = {
         path:`${PrefixPath.admin}/reference-books/people/get`,
         getUrl() {return `${PrefixPath.admin}/reference-books/people/get`},
     },
+    AboutUs__Docs__Create: {
+        path: `${PrefixPath.admin}/about-us/docs-create`,
+        getUrl() {return `${PrefixPath.admin}/about-us/docs-create`},
+    },
 }
 
 export const ADM_API_RM = AdminAPIRouterManager;

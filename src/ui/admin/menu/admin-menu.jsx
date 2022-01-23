@@ -19,10 +19,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     menuIcon: {
-        fontSize: 35,
-        '@media (max-width: 750px)': {
-            fontSize: 20
-        },
+        fontSize: 25
     },
     drawer: {
         width: drawerWidth,

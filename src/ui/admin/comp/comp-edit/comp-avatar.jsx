@@ -8,7 +8,7 @@ import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
-        padding: '20px 0'
+        paddingBottom: 20
     },
     img: {
         width: 300,

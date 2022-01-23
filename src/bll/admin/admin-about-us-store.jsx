@@ -36,6 +36,25 @@ class AdminAboutUsStore {
         }
     }
 
+    aboutUsDocsCreate = async (doc,originName) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminAboutUsService.about_us_docs_create(doc);
+            runInAction(() => {this.aboutUs.docs.push({title:originName,doc:response.data.doc})})
+            Store.setMediaDelTmp(response.data.doc)
+        } catch (e) {
+            runInAction(() => {this.news_tmp_errors =
+                <div>
+                    <div>Документ не загрузился!</div>
+                    <div>Максимальный размер 10 мб</div>
+                    <div>Типы файлов .doc, .docx, .pdf, .xls, .xlsx</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
 
     /*judgesOrdersId = async (id) => {
         runInAction(() => {Store.isLoading = true})
