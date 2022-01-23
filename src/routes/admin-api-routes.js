@@ -112,6 +112,14 @@ const AdminAPIRouterManager = {
         path: `${PrefixPath.admin}/about-us/docs-create`,
         getUrl() {return `${PrefixPath.admin}/about-us/docs-create`},
     },
+    AboutUs__Img__Create: {
+        path: `${PrefixPath.admin}/about-us/img-create`,
+        getUrl() {return `${PrefixPath.admin}/about-us/img-create`},
+    },
+    AboutUs__Save: {
+        path:`${PrefixPath.admin}/about-us/save`,
+        getUrl() {return `${PrefixPath.admin}/about-us/save`},
+    },
 }
 
 export const ADM_API_RM = AdminAPIRouterManager;

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
-import {useHistory} from "react-router-dom";
 import {runInAction} from "mobx";
 import {Judges_rank_doc} from '../../../types/types'
 import JudgesOrdersItem from "./judges-orders-item";
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 const JudgesOrders = (props) => {
     const classes = useStyles();
-    const history = useHistory()
 
     const [orderType,setOrderType] = useState('')
 

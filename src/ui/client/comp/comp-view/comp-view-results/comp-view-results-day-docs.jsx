@@ -1,8 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import {useParams} from "react-router-dom";
-import {API_URL, HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../../const/const";
+import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../../const/const";
 import pdf from "../../../../../common/assets/image/icons/pdf.png";
 import doc from "../../../../../common/assets/image/icons/doc.png";
 import docx from "../../../../../common/assets/image/icons/docx.png";
@@ -26,7 +25,6 @@ const Icon = {xls, xlsx, doc, docx, pdf}
 
 const CompViewResultsDayDocs = ({item,index}) => {
     const classes = useStyles();
-    const { id } = useParams();
     const extension = item.doc.slice(item.doc.lastIndexOf(".") + 1)
 
     return (

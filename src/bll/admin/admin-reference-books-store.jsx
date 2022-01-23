@@ -187,7 +187,7 @@ class AdminReferenceBooksStore {
                 Store.mediaDelTmp = diff
                 localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
             }
-            const response = await AdminReferenceBooksService.people_save(this.referenceBooks.people.one)
+            const response = await AdminReferenceBooksService.people_save({data:this.referenceBooks.people.one,mediaDel: this.mediaDel})
             if(response.data?.error){
                 runInAction(() => {
                     this.tmp_errors = <div>{response.data.error}</div>

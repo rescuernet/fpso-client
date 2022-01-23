@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import {makeStyles} from "@material-ui/core/styles";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import AdminJudgesOrdersStore from "../../../../bll/admin/admin-judges-orders-store";
 import {Judges_rank} from "../../../../types/types";
 import {Divider, TextField} from "@material-ui/core";

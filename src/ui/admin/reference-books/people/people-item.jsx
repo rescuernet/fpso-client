@@ -11,7 +11,6 @@ import {ADM_RM} from "../../../../routes/admin-routes";
 import {observer} from "mobx-react-lite";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
 import {Role} from "../../../../types/types";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 
 

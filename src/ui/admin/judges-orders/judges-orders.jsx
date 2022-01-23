@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import AdminPageWrapper from "../admin-page-wrapper";
 import {Button, Divider, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import {Judges_rank_doc} from '../../../types/types'
 import {ADM_RM} from "../../../routes/admin-routes";
 import AdminJudgesOrdersStore from "../../../bll/admin/admin-judges-orders-store";

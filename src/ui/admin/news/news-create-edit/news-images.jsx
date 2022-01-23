@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Button} from "@material-ui/core";
 import AdminNewsStore from "../../../../bll/admin/admin-news-store";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
 import NewsImagesItem from "./news-images-item";
 

@@ -54,10 +54,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const w = window.screen.width
-const h = window.screen.height
-
-
 const Main = () => {
     const classes = useStyles();
 

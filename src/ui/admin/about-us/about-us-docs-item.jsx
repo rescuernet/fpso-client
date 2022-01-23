@@ -75,14 +75,22 @@ const AdminAboutUsDocsItem = (props) => {
                 multiline
                 minRows={1}
                 maxRows={10}
+                disabled={!AdminAboutUsStore.aboutUs.edit}
             />
             <a href={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${props.item.doc}`} target={'_blank'} rel="noreferrer">
                 <img src={Icon[extension]} alt="" />
             </a>
-            <Divider orientation={"vertical"} flexItem={true}/>
-            <HighlightOffIcon onClick={() => {
-                DeleteOneDocs(props.index,props.item.doc)
-            }} color={'error'}/>
+            {AdminAboutUsStore.aboutUs.edit && (
+                <>
+                    <Divider orientation={"vertical"} flexItem={true}/>
+                    <HighlightOffIcon
+                        onClick={() => {
+                            DeleteOneDocs(props.index,props.item.doc)
+                        }}
+                        color={'error'}
+                    />
+                </>
+            )}
         </div>
     );
 };

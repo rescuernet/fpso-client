@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import AdminReferenceBooksStore from "../../../../../bll/admin/admin-reference-books-store";
 import {useHistory, useParams} from "react-router-dom";
 import AdminPageWrapper from "../../../admin-page-wrapper";

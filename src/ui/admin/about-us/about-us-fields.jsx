@@ -21,7 +21,9 @@ const AdminAboutUsFields = () => {
 
     return (
         <div className={classes.textFields} >
-            <div>Общая информация</div>
+            {data.edit && (
+                <div>Общая информация</div>
+            )}
             <TextField
                 id="header"
                 label="Заголовок"
@@ -36,8 +38,7 @@ const AdminAboutUsFields = () => {
                 multiline
                 minRows={1}
                 maxRows={2}
-                error={data?.header && data?.header.length > 100}
-                helperText={data?.header && data?.header.length > 100 && 'максимум 100 символов'}
+                disabled={!data.edit}
             />
             <TextField
                 id="text"
@@ -53,8 +54,11 @@ const AdminAboutUsFields = () => {
                 multiline
                 minRows={3}
                 maxRows={10}
+                disabled={!data.edit}
             />
-            <div>Контактная информация</div>
+            {data.edit && (
+                <div>Контактная информация</div>
+            )}
             <TextField
                 id="address"
                 label="Адрес"
@@ -69,6 +73,7 @@ const AdminAboutUsFields = () => {
                 multiline
                 minRows={1}
                 maxRows={2}
+                disabled={!data.edit}
             />
             <TextField
                 id="phone"
@@ -84,6 +89,7 @@ const AdminAboutUsFields = () => {
                 multiline
                 minRows={1}
                 maxRows={2}
+                disabled={!data.edit}
             />
             <TextField
                 id="email"
@@ -99,6 +105,7 @@ const AdminAboutUsFields = () => {
                 multiline
                 minRows={1}
                 maxRows={2}
+                disabled={!data.edit}
             />
         </div>
     );

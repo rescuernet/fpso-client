@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import RUSADA from '../../../common/assets/image/RUSADA.jpg'
 import Store from '../../../bll/store'
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {UI_RM} from "../../../routes/ui-routes";
 
 const useStyles = makeStyles((theme) => ({

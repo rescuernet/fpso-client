@@ -25,7 +25,10 @@ class AdminAboutUsStore {
         runInAction(() => {Store.isLoading = true})
         try {
             const response = await AdminAboutUsService.about_us_get()
-            runInAction(() => {this.aboutUs = response.data})
+            runInAction(() => {
+                this.aboutUs = response.data
+                this.aboutUs.edit = false
+            })
         } catch (e) {
             console.log(e)
         } finally {
@@ -43,7 +46,7 @@ class AdminAboutUsStore {
             runInAction(() => {this.aboutUs.docs.push({title:originName,doc:response.data.doc})})
             Store.setMediaDelTmp(response.data.doc)
         } catch (e) {
-            runInAction(() => {this.news_tmp_errors =
+            runInAction(() => {this.tmp_errors =
                 <div>
                     <div>Документ не загрузился!</div>
                     <div>Максимальный размер 10 мб</div>
@@ -54,6 +57,58 @@ class AdminAboutUsStore {
             runInAction(() => {Store.isLoading = false})
         }
     }
+
+    aboutUsImgCreate = async (image) => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const response = await AdminAboutUsService.about_us_img_create(image);
+            runInAction(() => {this.aboutUs.img.push(response.data.name)})
+            Store.setMediaDelTmp(response.data.name)
+        } catch (e) {
+            runInAction(() => {this.tmp_errors =
+                <div>
+                    <div>Изображение не загрузилось!</div>
+                    <div>Максимальный размер 4 мб</div>
+                    <div>Тип файла JPEG/JPG</div>
+                </div>})
+        } finally {
+            runInAction(() => {Store.isInit = true})
+            runInAction(() => {Store.isLoading = false})
+        }
+    }
+
+    aboutUsSave = async () => {
+        runInAction(() => {Store.isLoading = true})
+        try {
+            const actualMediaArr = []
+            if(localStorage.getItem('mediaDelTmp')){
+                if(this.aboutUs.docs.length > 0){this.aboutUs.docs.map((i)=> actualMediaArr.push(i.doc))}
+                if(this.aboutUs.img.length > 0){this.aboutUs.img.map((i)=> actualMediaArr.push(i))}
+                const mediaDelTmp = toJS(Store.mediaDelTmp)
+                const diff = mediaDelTmp.filter(i=>actualMediaArr.indexOf(i)<0)
+                Store.mediaDelTmp = diff
+                localStorage.setItem('mediaDelTmp',JSON.stringify(toJS(diff)));
+            }
+            const response = await AdminAboutUsService.about_us_save({data: this.aboutUs, mediaDel: this.mediaDel})
+            if(response.data?.error){
+                runInAction(() => {
+                    this.tmp_errors = <div>{response.data.error}</div>
+                })
+            }else{
+                this.clearData()
+                return 200
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            runInAction(() => {
+                Store.isInit = true
+                Store.isLoading = false
+            })
+        }
+    }
+
+
 
 
     /*judgesOrdersId = async (id) => {

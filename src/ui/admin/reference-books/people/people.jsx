@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import AdminPageWrapper from "../../admin-page-wrapper";
 import {Button} from "@material-ui/core";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import AdminReferenceBooksStore from "../../../../bll/admin/admin-reference-books-store";
 import {ADM_RM} from "../../../../routes/admin-routes";
 import {useHistory} from "react-router-dom";

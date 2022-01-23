@@ -57,9 +57,7 @@ class AdminJudgesOrdersStore {
             let response = await AdminJudgesOrdersService.judges_orders_id(id)
             let tmp = []
             if(response.data.judges.length > 0){
-                response.data.judges.map((i)=>{
-                    tmp.push({peopleId: i._id,peopleName: `${i.surname} ${i.name} ${i.patronymic}`,view:i.view})
-                })
+                response.data.judges.map((i) => tmp.push({peopleId: i._id,peopleName: `${i.surname} ${i.name} ${i.patronymic}`,view:i.view}))
             }
             response.data.tmpName = tmp
             runInAction(() => {this.judgesOrders.one = response.data})
@@ -121,9 +119,7 @@ class AdminJudgesOrdersStore {
             }
             let tmp = this.judgesOrders.one
             tmp.judges = []
-            tmp.tmpName.map((i) => {
-                tmp.judges.push(i.peopleId)
-            })
+            tmp.tmpName.map((i) => tmp.judges.push(i.peopleId))
             tmp.tmp = false
             const response = await AdminJudgesOrdersService.judges_orders_save({data: tmp,mediaDel: this.mediaDel})
             if(response.data?.error){

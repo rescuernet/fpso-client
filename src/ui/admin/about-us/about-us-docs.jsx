@@ -34,31 +34,35 @@ const AdminAboutUsDocs = ({compId}) => {
 
     return (
         <div className={classes.docs}>
-            <div>Документы</div>
+            {AdminAboutUsStore.aboutUs.edit && (
+                <div>Документы</div>
+            )}
             {
-                AdminAboutUsStore.aboutUs?.docs.map((item,index)=>(
+                AdminAboutUsStore.aboutUs.docs.map((item,index)=>(
                     <AdminAboutUsDocsItem key={'docs'+index} item={item} index={index}/>
                 ))
             }
-            <div className={classes.add}>
-                <label htmlFor="docs">
-                    <input
-                        style={{ display: 'none' }}
-                        id="docs"
-                        name="docs"
-                        type="file"
-                        onChange={UploadDocs}
-                    />
-                    <Button
-                        color="primary"
-                        size="small"
-                        variant={"outlined"}
-                        component={'span'}
-                    >
-                        добавить документ
-                    </Button>
-                </label>
-            </div>
+            {AdminAboutUsStore.aboutUs.edit && (
+                <div className={classes.add}>
+                    <label htmlFor="docs">
+                        <input
+                            style={{ display: 'none' }}
+                            id="docs"
+                            name="docs"
+                            type="file"
+                            onChange={UploadDocs}
+                        />
+                        <Button
+                            color="primary"
+                            size="small"
+                            variant={"outlined"}
+                            component={'span'}
+                        >
+                            добавить документ
+                        </Button>
+                    </label>
+                </div>
+            )}
         </div>
     );
 };
