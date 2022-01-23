@@ -3,13 +3,13 @@ import {ADM_API_RM} from "../../routes/admin-api-routes";
 import {ADM_RM} from "../../routes/admin-routes";
 
 
-export default class AdminJudgesOrdersService {
+export default class AdminAboutUsService {
 
-    static async judges_orders_create() {
-        return $api.post(ADM_API_RM.Judges_Orders__Create.path)
+    static async about_us_get() {
+        return $api.get(ADM_RM.AboutUs.path)
     }
 
-    static async judges_orders_id(id) {
+    /*static async judges_orders_id(id) {
         return $api.get(ADM_RM.Judges_Orders_Edit.getUrl(id))
     }
 
@@ -27,6 +27,10 @@ export default class AdminJudgesOrdersService {
 
     static async judges_orders_get(orderType) {
         return $api.get(`${ADM_RM.Judges_Orders.path}?ordertype=${orderType}`)
-    }
+    }*/
+
+
+
+
 
 }

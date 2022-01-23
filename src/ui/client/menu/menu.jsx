@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     menuItem: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "Roboto",
         fontWeight: 400,
         color: "#004466",
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
             padding: 0,
             margin: 0
         },
+        textTransform: "uppercase"
     },
     activeLink: {
         color: "#ff6200!important",
@@ -37,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
     },
     menuIcon: {
         fontSize: 40,
-        '@media (max-width: 750px)': {
+        /*'@media (max-width: 750px)': {
             fontSize: 30,
-        },
+        },*/
     },
     divider: {
         backgroundColor: "#ff6200"

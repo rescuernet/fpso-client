@@ -5,6 +5,7 @@ import Main from "../ui/client/main/main";
 import News from "../ui/client/news/news";
 import NewsView from "../ui/client/news/news-view/news-view";
 import Rusada from "../ui/client/rusada/rusada";
+import JudgesOrders from "../ui/client/judges-orders/judges-orders";
 
 
 export const MenuTypes = {
@@ -92,6 +93,20 @@ const UIRouterManager = {
         header: {
             view: true,
             title: 'Соревнования'
+        }
+    },
+    JudgesOrders: {
+        path:'/judges-orders',
+        Component: JudgesOrders,
+        getUrl() {return `/judges-orders`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'Судейский корпус'
+        },
+        menu: {
+            type: MenuTypes.main,
+            title: 'Судейский корпус'
         }
     },
     Rusada: {

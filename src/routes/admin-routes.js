@@ -10,6 +10,7 @@ import AdminJudgesOrders from '../ui/admin/judges-orders/judges-orders'
 import AdminJudgesOrdersEdit from '../ui/admin/judges-orders/judges-orders-edit/judges-orders-edit'
 import AdminReferenceBooksPeople from '../ui/admin/reference-books/people/people'
 import AdminReferenceBooksPeopleEdit from '../ui/admin/reference-books/people/edit/people-edit'
+import AdminAboutUs from '../ui/admin/about-us/about-us'
 
 
 export const MenuTypes = {
@@ -146,7 +147,19 @@ const AdminRouterManager = {
             view: false
         }
     },
-
+    AboutUs: {
+        path:`${PrefixPath.admin}/about-us`,
+        Component: AdminAboutUs,
+        getUrl() {return `${PrefixPath.admin}/about-us`},
+        auth: true,
+        header: {
+            view: false
+        },
+        menu: {
+            type: MenuTypes.admin,
+            title: 'О нас'
+        }
+    },
 }
 
 export const ADM_RM = AdminRouterManager;
