@@ -10,7 +10,6 @@ import AdminPageWrapper from "../admin-page-wrapper";
 const useStyles = makeStyles((theme) => ({
     reference: {
         display: "flex",
-        justifyContent: "center"
     },
     referenceItem: {
         display: "flex",

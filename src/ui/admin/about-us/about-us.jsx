@@ -44,11 +44,6 @@ const AdminAboutUs = (props) => {
         }
     },[])
 
-
-    const cancel = () => {
-        history.push(ADM_RM.AboutUs.path)
-    }
-
     return (
         <AdminPageWrapper title={'О нас'}>
             {AdminAboutUsStore.aboutUs && (

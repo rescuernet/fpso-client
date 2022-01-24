@@ -6,6 +6,7 @@ import News from "../ui/client/news/news";
 import NewsView from "../ui/client/news/news-view/news-view";
 import Rusada from "../ui/client/rusada/rusada";
 import JudgesOrders from "../ui/client/judges-orders/judges-orders";
+import AboutUs from "../ui/client/about-us/about-us";
 
 
 export const MenuTypes = {
@@ -112,7 +113,7 @@ const UIRouterManager = {
     Rusada: {
         path:'/rusada',
         Component: Rusada,
-        getUrl(id) {return `/rusada`},
+        getUrl() {return `/rusada`},
         auth: false,
         header: {
             view: true,
@@ -121,6 +122,20 @@ const UIRouterManager = {
         menu: {
             type: MenuTypes.main,
             title: 'Антидопинг'
+        }
+    },
+    AboutUs: {
+        path:'/about-us',
+        Component: AboutUs,
+        getUrl() {return `/about-us`},
+        auth: false,
+        header: {
+            view: true,
+            title: 'О нас'
+        },
+        menu: {
+            type: MenuTypes.main,
+            title: 'О нас'
         }
     },
     Login: {
