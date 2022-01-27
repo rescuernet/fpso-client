@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#fff',
         overflow: "hidden",
         marginBottom: 40,
+        borderBottom: '1px solid #c4c4c4'
     },
     img: {
         display: "flex",

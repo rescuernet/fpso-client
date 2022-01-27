@@ -87,7 +87,7 @@ const NewsFields = (props) => {
                     error={newsOne?.headerFirst && newsOne?.headerFirst.length > 100}
                     helperText={newsOne?.headerFirst && newsOne?.headerFirst.length > 100 && 'максимум 100 символов'}
                 />
-                <TextField
+                {/*<TextField
                     id="headerSecond"
                     label="Дополнительный заголовок"
                     value={newsOne?.headerSecond}
@@ -102,7 +102,7 @@ const NewsFields = (props) => {
                     maxRows={2}
                     error={newsOne?.headerSecond && newsOne?.headerSecond.length > 100}
                     helperText={newsOne?.headerSecond && newsOne?.headerSecond.length > 100 && 'максимум 100 символов'}
-                />
+                />*/}
                 <TextField
                     id="textMain"
                     required={true}

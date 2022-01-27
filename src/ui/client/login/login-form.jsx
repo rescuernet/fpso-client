@@ -36,7 +36,7 @@ const LoginForm = () => {
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
 
-    if(AuthStore.isAuth){return <Redirect to={ADM_RM.Main.path}/>}
+    if(AuthStore.isAuth){return <Redirect to={ADM_RM.News.path}/>}
     const authError = AuthStore?.authError?.data?.message
 
     const clearAuthError = () => {

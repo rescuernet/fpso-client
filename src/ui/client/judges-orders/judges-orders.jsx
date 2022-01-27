@@ -8,6 +8,7 @@ import JudgesOrdersItem from "./judges-orders-item";
 import UiPageWrapper from "../ui-page-wrapper";
 import BpContainer from "../bp-container";
 import UiJudgesStore from "../../../bll/ui/ui-judges-store";
+import Rusada from "../rusada/rusada-poster";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -46,6 +47,7 @@ const JudgesOrders = (props) => {
     return (
         <UiPageWrapper header={'Судейский корпус'}>
             <BpContainer>
+                <Rusada/>
                 <div className={classes.wrapper}>
                     <div className={classes.control}>
                         <div className={classes.select}>

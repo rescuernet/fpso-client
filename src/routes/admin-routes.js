@@ -1,4 +1,4 @@
-import Admin from "../ui/admin/main/admin";
+/*import Admin from "../ui/admin/main/admin";*/
 import AdminNews from "../ui/admin/news/news";
 import AdminNewsEdit from "../ui/admin/news/news-create-edit/news-create-edit";
 import AdminCompetitions from "../ui/admin/comp/comp";
@@ -23,7 +23,7 @@ const PrefixPath = {
 
 
 const AdminRouterManager = {
-    Main: {
+    /*Main: {
         path: PrefixPath.admin,
         Component: Admin,
         getUrl() {return PrefixPath.admin},
@@ -31,7 +31,7 @@ const AdminRouterManager = {
         header: {
             view: false
         },
-    },
+    },*/
     News: {
         path: `${PrefixPath.admin}/news`,
         Component: AdminNews,

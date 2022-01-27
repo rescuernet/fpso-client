@@ -104,7 +104,7 @@ const Menu = (props) => {
                 )}
                 <ListItem
                     button key={'admin' + 1}
-                    onClick={()=> setLink('/5070/admin/')}
+                    onClick={()=> setLink('/5070/login/')}
                 >
                     {'admin'}
                 </ListItem>

@@ -145,13 +145,13 @@ const AdminMenu = (props) => {
                     </div>
                     <Divider style={{backgroundColor: '#ccc'}}/>
                     <List>
-                        <ListItem
+                        {/*<ListItem
                             button key={'goToMain'+1}
                             className={location === ADM_RM.Main.path ? classes.menuItem + ' ' + classes.activeLink : classes.menuItem}
                             onClick={()=> setLink(ADM_RM.Main.path)}
                         >
                             Главная панель
-                        </ListItem>
+                        </ListItem>*/}
                         {menuItems.map((i) =>
                             i.menu?.type === 'admin' &&
                             (
