@@ -12,10 +12,8 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         flexDirection: "column",
-        width: 320,
+        width: 300,
         marginBottom: 30,
-        backgroundColor: '#fff',
-        border: 'solid 1px #e6e6e6',
         borderRadius: 10,
         overflow: 'hidden',
         boxShadow: '4px 4px 10px rgba(0,0,0,0.2)',
@@ -25,7 +23,6 @@ const useStyles = makeStyles({
         justifyContent: "center",
         flex: '0 0 auto',
         fontSize: 0,
-        padding: 20,
     },
     img: {
         width: 300,
@@ -57,7 +54,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         justifyContent: "center",
         flex: '1 0',
-        margin: '0 15px 15px 15px',
+        padding: 15,
     },
     control: {
         display: "flex",

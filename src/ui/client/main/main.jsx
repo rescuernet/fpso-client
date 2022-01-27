@@ -102,7 +102,7 @@ const Main = () => {
                 {lastComp.length > 0 && (
                     <div className={classes.lastComp}>
                         <NavLink to={UI_RM.Competitions.path}>
-                            <div className={classes.headerSection}>Новые соревнования</div>
+                            <div className={classes.headerSection}>Соревнования</div>
                         </NavLink>
                         <div className={classes.lastCompItems}>
                             {lastComp.map((i,index)=>(

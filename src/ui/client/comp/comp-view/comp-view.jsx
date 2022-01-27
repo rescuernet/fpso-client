@@ -5,13 +5,14 @@ import {runInAction, toJS} from "mobx";
 import UiCompStore from "../../../../bll/ui/ui-comp-store";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import {HTTPS_PROTOCOL, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
+import {HTTPS_PROTOCOL, YA_CRM_BUCKET, YA_ENDPOINT, YA_PUBLIC_BUCKET} from "../../../../const/const";
 import s from "./comp-view.module.css"
 import * as dateFns from "date-fns";
 import CompViewDocs from "./comp-view-docs";
 import CompViewResults from "./comp-view-results/comp-view-results";
 import UiPageWrapper from "../../ui-page-wrapper";
 import BpContainer from "../../bp-container";
+import Store from "../../../../bll/store";
 
 const useStyles = makeStyles({
     root: {
@@ -132,7 +133,7 @@ const CompView = (props) => {
         }
     },[id])
 
-
+    const avatarIMG = comp?.avatar && `${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`
 
     return (
         <UiPageWrapper header={'Соревнования'}>
@@ -142,12 +143,16 @@ const CompView = (props) => {
                         <div className={classes.comp}>
                             <div className={classes.header}>
                                 <div className={classes.avatar}>
-                                    <div className={classes.img}>
-                                        <img className={classes.imgOrig} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
-                                        <div className={classes.imgBackWrapper}>
-                                            <img className={classes.imgBack} src={`${HTTPS_PROTOCOL}${YA_PUBLIC_BUCKET}.${YA_ENDPOINT}/${comp.avatar}`} alt=""/>
-                                        </div>
-                                    </div>
+                                    {
+                                        comp.avatar
+                                            ? <div className={classes.img}>
+                                                <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                                                <div className={classes.imgBackWrapper}>
+                                                    <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                                                </div>
+                                            </div>
+                                            : <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nocompavatar.jpg`} alt="" />
+                                    }
                                 </div>
                                 <div className={classes.dateWrap}>
                                     <div className={classes.date}>

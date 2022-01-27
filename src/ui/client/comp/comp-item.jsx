@@ -108,12 +108,17 @@ const CompItem = ({comp,index}) => {
                 </div>
             }
             <div className={classes.avatar}>
-                <div className={classes.img}>
-                    <img className={classes.imgOrig} src={avatarIMG} alt=""/>
-                    <div className={classes.imgBackWrapper}>
-                        <img className={classes.imgBack} src={avatarIMG} alt=""/>
-                    </div>
-                </div>
+                {
+                    comp.avatar
+                        ? <div className={classes.img}>
+                            <img className={classes.imgOrig} src={avatarIMG} alt=""/>
+                            <div className={classes.imgBackWrapper}>
+                                <img className={classes.imgBack} src={avatarIMG} alt=""/>
+                            </div>
+                        </div>
+                        : <img src={`${HTTPS_PROTOCOL}${YA_CRM_BUCKET}.${YA_ENDPOINT}/nocompavatar.jpg`} alt=""/>
+                }
+
             </div>
             <div className={classes.date}>
                 {comp.dateStart === comp.dateEnd
